@@ -1,13 +1,13 @@
-import {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
-import {Spinner} from 'components/ui/Spinner';
-import {Button} from 'components/ui/Button';
-import {useHistory} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { api, handleError } from 'helpers/api';
+import { Spinner } from 'components/ui/Spinner';
+import { Button } from 'components/ui/Button';
+import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 
-const Player = ({user}) => (
+const Player = ({ user }) => (
   <div className="player container">
     <div className="player username">{user.username}</div>
     <div className="player name">{user.name}</div>
@@ -43,7 +43,12 @@ const Game = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get('/users');
+
+        const token = localStorage.getItem('token');
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+        const response = await api.get('/users', config);
 
         // delays continuous execution of an async operation for 1 second.
         // This is just a fake async call, so that the spinner can be displayed
@@ -72,14 +77,14 @@ const Game = () => {
     fetchData();
   }, []);
 
-  let content = <Spinner/>;
+  let content = <Spinner />;
 
   if (users) {
     content = (
       <div className="game">
         <ul className="game user-list">
           {users.map(user => (
-            <Player user={user} key={user.id}/>
+            <Player user={user} key={user.id} />
           ))}
         </ul>
         <Button
