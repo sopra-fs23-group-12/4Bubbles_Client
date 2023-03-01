@@ -112,7 +112,8 @@ const Profile = (props) => {
     try {
       const requestBody = JSON.stringify({ username, birthday });
       const response = await api.put('/users/' + id, requestBody);
-
+      console.log(response.status);
+      setError("Yey, you updated your profile!");
 
       // Login successfully worked --> navigate to the route /game in the GameRouter
       //history.push(`/overview`);
@@ -126,30 +127,46 @@ const Profile = (props) => {
 
 
   if (user && !props.edit) {
-    let creationDate = new Date(user.creationDate)
-    let birthday = new Date(user.birthday)
+
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    let creationDate = new Date(user.creationDate)
+    let birthdate = null;
+    if (user.birthday != null) {
+      birthdate = new Date(user.birthday)
+    }
 
     content = (
       <div className="game">
         <h2>{user.username}</h2>
         <div>Creation Date: {creationDate.toLocaleDateString('de-DE', options)}</div>
-        <div>Birthday: {birthday.toLocaleDateString('de-DE', options)}</div>
+        <div>Birthday: {birthdate ? birthdate.toLocaleDateString('de-DE', options) : "-"}</div>
         <div>Status: {user.status}</div>
+
+        {id === currentUser ?
+          <div className="login button-container">
+            <Button
+              onClick={() => history.push(`/profile/` + id + `/edit`)}
+              width="100%"
+            >
+              Edit profile
+            </Button>
+          </div> : null}
+
         <div className="login button-container">
-          {id == currentUser ?
-            <div className="sign-up">
-              <Link to={"/profile/" + id + "/edit"}>edit</Link>
-            </div> : null}
+          <Button
+            onClick={() => history.push(`/overview`)}
+            width="100%"
+          >
+            Back to overview
+          </Button>
         </div>
+
       </div>
     );
   }
 
   if (user && props.edit) {
-    let date = new Date(user.creationDate)
-
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     content = (
       <div className="game">
@@ -164,14 +181,22 @@ const Profile = (props) => {
           placeholder={"dd.mm.yyyy"}
           onChange={bd => setBirthday(bd)}
         />
-        <div>Creation Date: {date.toLocaleDateString('de-DE', options)}</div>
-        <div>Status: {user.status}</div>
+        {error ? <div className="error-msg">{error}</div> : null}
+
         <div className="login button-container">
           <Button
             onClick={() => doUpdate()}
             width="100%"
           >
             Save
+          </Button>
+        </div>
+        <div className="login button-container">
+          <Button
+            onClick={() => history.push(`/overview`)}
+            width="100%"
+          >
+            Back to overview
           </Button>
         </div>
       </div>
