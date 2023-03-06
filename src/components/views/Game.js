@@ -5,6 +5,7 @@ import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import logoutRequest from 'helpers/axios';
 import "styles/views/Game.scss";
 
 const Player = ({ user }) => (
@@ -31,9 +32,11 @@ const Game = () => {
   const [users, setUsers] = useState(null);
 
   const logout = () => {
-    localStorage.removeItem('token');
-    history.push('/login');
+    logoutRequest();
+    history.push("/login");
   }
+
+
 
   // the effect hook can be used to react to change in your component.
   // in this case, the effect hook is only run once, the first time the component is mounted

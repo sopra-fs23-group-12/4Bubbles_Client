@@ -7,6 +7,8 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import { Link } from 'react-router-dom';
+import logoutRequest from 'helpers/axios';
+
 const Player = ({ user }) => (
   <li id={user.id}>
     <Link to={"profile/" + user.id}>
@@ -35,8 +37,8 @@ const Dashboard = () => {
   const [users, setUsers] = useState(null);
 
   const logout = () => {
-    localStorage.removeItem('token');
-    history.push('/login');
+    logoutRequest(history);
+    //history.push("/login");
   }
 
   // the effect hook can be used to react to change in your component.
@@ -78,10 +80,6 @@ const Dashboard = () => {
       }
     }
     fetchData();
-    const interval = setInterval(() => fetchData(), 15000)
-    return () => {
-      clearInterval(interval);
-    }
   }, []);
 
   let content = <Spinner />;
@@ -96,7 +94,7 @@ const Dashboard = () => {
         </ul>
         <Button
           width="100%"
-          onClick={() => logout()}
+          onClick={logout}
         >
           Logout
         </Button>

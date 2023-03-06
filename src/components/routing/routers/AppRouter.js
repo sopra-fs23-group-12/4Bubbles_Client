@@ -45,7 +45,7 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
         <Route exact path="/">
-          <Redirect to="/game" />
+          <Redirect to="/login" />
         </Route>
       </Switch>
     </BrowserRouter>

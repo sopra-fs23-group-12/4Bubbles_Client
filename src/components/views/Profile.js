@@ -7,8 +7,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import User from 'models/User';
-import { Link } from 'react-router-dom';
-
+import logoutRequest from 'helpers/axios';
 import { useParams } from 'react-router-dom';
 
 const Player = ({ user }) => (
@@ -53,9 +52,10 @@ const Profile = (props) => {
   const [error, setError] = useState("");
   const currentUser = localStorage.getItem('currentUser');
 
+
   const logout = () => {
-    localStorage.removeItem('token');
-    history.push('/login');
+    logoutRequest();
+    history.push("/login");
   }
 
   let { id } = useParams();
@@ -75,10 +75,15 @@ const Profile = (props) => {
         };
         const response = await api.get('/users/' + id, config);
 
+        // Get the returned user and update a new object.
+
+        const user = new User(response.data);
+
+        console.log(user.id);
         // delays continuous execution of an async operation for 1 second.
         // This is just a fake async call, so that the spinner can be displayed
         // feel free to remove it :)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        //await new Promise(resolve => setTimeout(resolve, 1000));
 
         // Get the returned users and update the state.
         setUser(response.data[0]);
