@@ -46,7 +46,12 @@ const ShowProfile = (props) => {
     async function fetchData() {
       try {
 
-        const response = await api.get('/users/' + id);
+        const headers = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+        const response = await api.get('/users/' + id, headers);
 
         // Get the returned user and update a new object.
 
