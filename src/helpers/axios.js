@@ -2,8 +2,12 @@ import { api } from 'helpers/api';
 
 const logoutRequest = async (history) => {
 
-
-    api.get('/logout').then(() => {
+    const headers = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    }
+    api.get('/logout', headers).then(() => {
         localStorage.removeItem('token');
         history.push("/login");
 

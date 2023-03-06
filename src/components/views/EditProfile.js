@@ -44,8 +44,12 @@ const EditProfile = (props) => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-
-        const response = await api.get('/users/' + id);
+        const headers = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+        const response = await api.get('/users/' + id, headers);
 
         setUser(response.data[0]);
         setUsername(response.data[0].username);
