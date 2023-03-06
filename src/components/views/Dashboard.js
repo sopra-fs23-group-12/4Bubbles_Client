@@ -1,25 +1,31 @@
-import {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
-import {Spinner} from 'components/ui/Spinner';
-import {Button} from 'components/ui/Button';
-import {useHistory} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { api, handleError } from 'helpers/api';
+import { Spinner } from 'components/ui/Spinner';
+import { Button } from 'components/ui/Button';
+import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
+import { Link } from 'react-router-dom';
+import logoutRequest from 'helpers/axios';
 
-const Player = ({user}) => (
-  <div className="player container">
-    <div className="player username">{user.username}</div>
-    <div className="player name">{user.name}</div>
-    <div className="player id">id: {user.id}</div>
-  </div>
+const Player = ({ user }) => (
+  <li id={user.id}>
+    <Link to={"profile/" + user.id}>
+      <div className="player container">
+        <div className="player username">{user.username}</div>
+        <div className="player name">status: {user.status}</div>
+        <div className="player id">id: {user.id}</div>
+      </div >
+    </Link>
+  </li>
 );
 
 Player.propTypes = {
   user: PropTypes.object
 };
 
-const Game = () => {
+const Dashboard = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
 
@@ -31,8 +37,8 @@ const Game = () => {
   const [users, setUsers] = useState(null);
 
   const logout = () => {
-    localStorage.removeItem('token');
-    history.push('/login');
+    logoutRequest(history);
+    //history.push("/login");
   }
 
   // the effect hook can be used to react to change in your component.
@@ -48,7 +54,7 @@ const Game = () => {
         // delays continuous execution of an async operation for 1 second.
         // This is just a fake async call, so that the spinner can be displayed
         // feel free to remove it :)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        //await new Promise(resolve => setTimeout(resolve, 1000));
 
         // Get the returned users and update the state.
         setUsers(response.data);
@@ -68,23 +74,22 @@ const Game = () => {
         alert("Something went wrong while fetching the users! See the console for details.");
       }
     }
-
     fetchData();
   }, []);
 
-  let content = <Spinner/>;
+  let content = <Spinner />;
 
   if (users) {
     content = (
       <div className="game">
         <ul className="game user-list">
           {users.map(user => (
-            <Player user={user} key={user.id}/>
+            <Player user={user} key={user.id} />
           ))}
         </ul>
         <Button
           width="100%"
-          onClick={() => logout()}
+          onClick={logout}
         >
           Logout
         </Button>
@@ -103,4 +108,4 @@ const Game = () => {
   );
 }
 
-export default Game;
+export default Dashboard;

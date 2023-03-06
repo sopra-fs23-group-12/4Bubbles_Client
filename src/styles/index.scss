@@ -31,3 +31,21 @@ button {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+
+h1 {
+  margin-top: 0;
+}
+
+.sign-up {
+  justify-content: center;
+  display: flex;
+  margin-top: 10px;
+  a {
+    color: #fff;
+  }
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}

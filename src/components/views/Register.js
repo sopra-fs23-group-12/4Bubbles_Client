@@ -35,24 +35,25 @@ FormField.propTypes = {
   onChange: PropTypes.func
 };
 
-const Login = props => {
+const Register = props => {
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
 
-  const doLogin = async () => {
+
+  const doRegister = async () => {
     try {
       const requestBody = JSON.stringify({ username, password });
-      const response = await api.post('/login', requestBody);
+      const response = await api.post('/register', requestBody);
 
       // Get the returned user and update a new object.
       const user = new User(response.data);
+      console.log(user);
 
       // Store the token into the local storage.
       localStorage.setItem('token', user.token);
       localStorage.setItem('userId', user.id);
-
 
       // Login successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/overview`);
@@ -66,7 +67,7 @@ const Login = props => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-          <h1>Login</h1>
+          <h1>Sign up</h1>
           <FormField
             label="Username"
             value={username}
@@ -81,14 +82,14 @@ const Login = props => {
           <div className="login button-container">
             <Button
               disabled={!username || !password}
-              onClick={() => doLogin()}
               width="100%"
+              onClick={() => doRegister()}
             >
-              Login
+              Sign up
             </Button>
           </div>
           <div className="sign-up">
-            <Link to={"/register"}>sign up</Link>
+            <Link to={"/login"}>already have an account? Log in!</Link>
           </div>
         </div>
       </div>
@@ -100,4 +101,4 @@ const Login = props => {
  * You can get access to the history object's properties via the withRouter.
  * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
  */
-export default Login;
+export default Register;
