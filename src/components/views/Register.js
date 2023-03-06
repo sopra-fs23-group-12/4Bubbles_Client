@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { api, handleError } from 'helpers/api';
+import { api } from 'helpers/api';
 import User from 'models/User';
 import { useHistory, Link } from 'react-router-dom';
 import { Button } from 'components/ui/Button';
