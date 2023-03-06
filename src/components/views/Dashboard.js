@@ -49,17 +49,12 @@ const Dashboard = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-
-        const token = localStorage.getItem('token');
-        const config = {
-          headers: { Authorization: `Bearer ${token}` }
-        };
-        const response = await api.get('/users', config);
+        const response = await api.get('/users');
 
         // delays continuous execution of an async operation for 1 second.
         // This is just a fake async call, so that the spinner can be displayed
         // feel free to remove it :)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        //await new Promise(resolve => setTimeout(resolve, 1000));
 
         // Get the returned users and update the state.
         setUsers(response.data);

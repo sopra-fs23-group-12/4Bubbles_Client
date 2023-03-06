@@ -22,23 +22,8 @@ Player.propTypes = {
   user: PropTypes.object
 };
 
-const FormField = props => {
-  return (
-    <div className="login field">
-      <label className="login label">
-        {props.label}
-      </label>
-      <input
-        className="login input"
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={e => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
 
-const Profile = (props) => {
+const ShowProfile = (props) => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
   // define a state variable (using the state hook).
@@ -50,7 +35,7 @@ const Profile = (props) => {
   const [username, setUsername] = useState("");
   const [birthday, setBirthday] = useState("");
   const [error, setError] = useState("");
-  const currentUser = localStorage.getItem('currentUser');
+  const currentUser = localStorage.getItem('userId');
 
 
   const logout = () => {
@@ -69,11 +54,7 @@ const Profile = (props) => {
     async function fetchData() {
       try {
 
-        const token = localStorage.getItem('token');
-        const config = {
-          headers: { Authorization: `Bearer ${token}` }
-        };
-        const response = await api.get('/users/' + id, config);
+        const response = await api.get('/users/' + id);
 
         // Get the returned user and update a new object.
 
@@ -88,9 +69,12 @@ const Profile = (props) => {
         // Get the returned users and update the state.
         setUser(response.data[0]);
         setUsername(response.data[0].username);
-        let birthday = new Date(response.data[0].birthday)
-        birthday = birthday.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric' })
-        setBirthday(birthday);
+        if (response.data[0].birthdate != null) {
+          let birthday = new Date(response.data[0].birthday)
+          birthday = birthday.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric' })
+          setBirthday(birthday);
+        }
+
 
         // This is just some data for you to see what is available.
         // Feel free to remove it.
@@ -112,26 +96,10 @@ const Profile = (props) => {
     fetchData();
   }, []);
 
-  const doUpdate = async () => {
-
-    try {
-      const requestBody = JSON.stringify({ username, birthday });
-      const response = await api.put('/users/' + id, requestBody);
-      console.log(response.status);
-      setError("Yey, you updated your profile!");
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      //history.push(`/overview`);
-    } catch (error) {
-      //alert(`Something went wrong during the login: \n${handleError(error)}`);
-      setError(error.response.data.message);
-    }
-  };
-
   let content = <Spinner />;
 
 
-  if (user && !props.edit) {
+  if (user) {
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -171,42 +139,6 @@ const Profile = (props) => {
     );
   }
 
-  if (user && props.edit) {
-
-    content = (
-      <div className="game">
-        <FormField
-          label="Username"
-          value={username}
-          onChange={un => setUsername(un)}
-        />
-        <FormField
-          label="Birthdate"
-          value={birthday}
-          placeholder={"dd.mm.yyyy"}
-          onChange={bd => setBirthday(bd)}
-        />
-        {error ? <div className="error-msg">{error}</div> : null}
-
-        <div className="login button-container">
-          <Button
-            onClick={() => doUpdate()}
-            width="100%"
-          >
-            Save
-          </Button>
-        </div>
-        <div className="login button-container">
-          <Button
-            onClick={() => history.push(`/overview`)}
-            width="100%"
-          >
-            Back to overview
-          </Button>
-        </div>
-      </div>
-    );
-  }
   return (
     <BaseContainer className="login form container">
       {content}
@@ -214,4 +146,4 @@ const Profile = (props) => {
   );
 }
 
-export default Profile;
+export default ShowProfile;
