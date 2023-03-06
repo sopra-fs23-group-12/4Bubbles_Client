@@ -38,10 +38,6 @@ const ShowProfile = (props) => {
   const currentUser = localStorage.getItem('userId');
 
 
-  const logout = () => {
-    logoutRequest();
-    history.push("/login");
-  }
 
   let { id } = useParams();
 
@@ -94,7 +90,7 @@ const ShowProfile = (props) => {
     }
 
     fetchData();
-  }, []);
+  });
 
   let content = <Spinner />;
 

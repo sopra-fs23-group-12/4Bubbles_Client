@@ -1,4 +1,4 @@
-import { api, handleError } from 'helpers/api';
+import { api } from 'helpers/api';
 
 const logoutRequest = async (history) => {
 

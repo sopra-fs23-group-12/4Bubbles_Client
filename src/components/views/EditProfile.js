@@ -5,7 +5,6 @@ import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
-import User from 'models/User';
 import { useParams } from 'react-router-dom';
 
 const FormField = props => {
@@ -36,7 +35,6 @@ const EditProfile = (props) => {
   const [username, setUsername] = useState("");
   const [birthday, setBirthday] = useState("");
   const [error, setError] = useState("");
-  const currentUser = localStorage.getItem('userId');
 
 
 
@@ -66,13 +64,13 @@ const EditProfile = (props) => {
     }
 
     fetchData();
-  }, []);
+  });
 
   const doUpdate = async () => {
 
     try {
       let requestBody;
-      if (birthday != '') {
+      if (birthday !== '') {
         requestBody = JSON.stringify({ username, birthday });
 
       } else {
