@@ -7,7 +7,6 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import User from 'models/User';
-import logoutRequest from 'helpers/axios';
 import { useParams } from 'react-router-dom';
 
 const Player = ({ user }) => (
@@ -32,9 +31,6 @@ const ShowProfile = (props) => {
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [user, setUser] = useState(null);
-  const [username, setUsername] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [error, setError] = useState("");
   const currentUser = localStorage.getItem('userId');
 
 
@@ -64,12 +60,13 @@ const ShowProfile = (props) => {
 
         // Get the returned users and update the state.
         setUser(response.data[0]);
-        setUsername(response.data[0].username);
+
+        /*
         if (response.data[0].birthdate != null) {
           let birthday = new Date(response.data[0].birthday)
           birthday = birthday.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric' })
           setBirthday(birthday);
-        }
+        }*/
 
 
         // This is just some data for you to see what is available.
