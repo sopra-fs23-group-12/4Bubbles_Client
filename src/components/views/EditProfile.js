@@ -93,7 +93,7 @@ const EditProfile = (props) => {
 
     } catch (error) {
       //alert(`Something went wrong during the login: \n${handleError(error)}`);
-      setError("Oups, something went wrong!");
+      setError(error.response.data.message);
     }
   };
 
