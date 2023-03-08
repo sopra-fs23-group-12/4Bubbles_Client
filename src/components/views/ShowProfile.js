@@ -92,7 +92,7 @@ const ShowProfile = (props) => {
     }
 
     fetchData();
-  });
+  }, [id]);
 
   let content = <Spinner />;
 

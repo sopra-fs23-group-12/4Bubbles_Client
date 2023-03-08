@@ -68,7 +68,7 @@ const EditProfile = (props) => {
     }
 
     fetchData();
-  });
+  }, [id]);
 
   const doUpdate = async () => {
 
@@ -81,7 +81,12 @@ const EditProfile = (props) => {
         requestBody = JSON.stringify({ username });
 
       }
-      const response = await api.put('/users/' + id, requestBody);
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+      const response = await api.put('/users/' + id, requestBody, headers);
       console.log(response.status);
       setError("Yey, you updated your profile!");
 
