@@ -89,7 +89,7 @@ const EditProfile = (props) => {
       const response = await api.put('/users/' + id, requestBody, headers);
       console.log(response.status);
       //setError("Yey, you updated your profile!");
-      history.push(`/profile` + id);
+      history.push(`/profile/` + id);
 
 
     } catch (error) {
