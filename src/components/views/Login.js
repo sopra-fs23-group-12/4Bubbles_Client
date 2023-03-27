@@ -7,6 +7,8 @@ import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
+import { Bubble } from 'components/ui/Bubble';
+
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -92,6 +94,7 @@ const Login = props => {
           </div>
         </div>
       </div>
+      <Bubble >Hoi</Bubble>
     </BaseContainer>
   );
 };

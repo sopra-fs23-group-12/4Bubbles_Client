@@ -1,0 +1,42 @@
+@import 'styles/theme';
+
+
+
+.bubble-button {
+  &:hover {
+    transform-origin: center;
+    transform: scale(1.1);
+
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.4;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  transition: all 0.3s ease;
+  display: inline-block;
+  cursor: pointer;
+
+  &__inner {
+    position: relative;
+  }
+
+  &__content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+}
