@@ -14,7 +14,8 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   font-family: $fontDefault;
-  background-image: linear-gradient(135deg, $accent 10%, $accentDark 100%);
+  @include background-gradient;
+  //background-image: linear-gradient(135deg, $accent 10%, $accentDark 100%);
 }
 
 input,
@@ -55,12 +56,12 @@ a {
   text-decoration: none;
 }
 
-.background-gradient {
-  @include background-gradient;
-}
+// .background-gradient {
+//   @include background-gradient;
+// }
 
 
 
-#root {
-  @extend .background-gradient;
-}
+// #root {
+//   @extend .background-gradient;
+// }
