@@ -13,8 +13,8 @@ import "styles/views/Header.scss";
  */
 const Header = props => (
   <div className="header container" style={{height: props.height}}>
-    <h1 className="header title">4Bubbles Trivia Group 12 SoPra FS23</h1>
-    <ReactLogo width="60px" height="60px"/>
+    <h1 className="header title">Welcome to 4Bubbles</h1>
+    {/* <ReactLogo width="60px" height="60px"/> */}
   </div>
 );
 
