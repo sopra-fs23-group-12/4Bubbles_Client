@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "Jockey One";
+    /*Can be any text*/
+    src: local("Jockey One"),
+        url("../fonts/JockeyOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    /*Can be any text*/
+    font-weight: 400;
+    src: local("Roboto"),
+        url("../fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    /*Can be any text*/
+    font-weight: 500;
+    src: local("Roboto"),
+        url("../fonts/Roboto-Medium.ttf") format("truetype");
+}
