@@ -22,6 +22,7 @@
         flex: 1;
         background: rgba(1, 21, 45, 0.85);
         box-shadow: 4px 38px 62px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
 
         input {
             display: none;
@@ -46,5 +47,5 @@
 
 // tbd: wie wird ausgewählter Button angezeigt?
 input[type="radio"]:checked+label {
-    text-decoration: underline;
+    background: rgba(231, 147, 233, 0.31);
 }
