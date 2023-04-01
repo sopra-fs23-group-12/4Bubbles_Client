@@ -1,3 +1,5 @@
+@import 'styles/theme';
+
 .radio-buttons {
     &-container {
         display: flex;
@@ -18,7 +20,8 @@
         display: inline-block;
         margin: 5px;
         flex: 1;
-
+        background: rgba(1, 21, 45, 0.85);
+        box-shadow: 4px 38px 62px rgba(0, 0, 0, 0.5);
 
         input {
             display: none;
@@ -27,7 +30,7 @@
         label {
             display: inline-block;
             padding: 10px 10px;
-            color: rgba(0, 37, 81, 1);
+            color: $white;
             font-weight: 700;
             font-size: 18px;
             font-family: 'Lato';

@@ -1,3 +1,5 @@
+@import 'styles/theme';
+
 *,
 *::before,
 *::after {
@@ -19,6 +21,9 @@ select {
     padding-left: 10px;
     // Stack above custom arrow
     z-index: 1;
+    color: $white;
+    padding-top: 7px;
+    padding-bottom: 7px;
 
     // Remove dropdown arrow in IE10 & IE11
     // @link https://www.filamentgroup.com/lab/select-css.html
@@ -46,7 +51,8 @@ select {
     cursor: pointer;
     line-height: 2;
 
-    background: #EAC070;
+    background: rgba(1, 21, 45, 0.85);
+    //border: 2px solid rgba(1, 21, 45, 0.85);
     border-radius: 10px;
 
     &:not(.select--multiple)::after {
@@ -54,9 +60,10 @@ select {
         justify-self: end;
         width: 16px;
         height: 10px;
-        background-color: #000;
+        background-color: $white;
         clip-path: polygon(100% 0%, 0 0%, 50% 100%);
         margin-right: 10px;
+
     }
 }
 
@@ -71,11 +78,14 @@ select:focus+.focus {
 option {
     display: inline-block;
     padding: 10px 10px;
-    color: rgba(0, 37, 81, 1);
+    color: $white;
     font-weight: 700;
     font-size: 18px;
     font-family: 'Lato';
     cursor: pointer;
     width: 100%;
+    line-height: 2;
+    background: #011A38;
+    border-radius: 0px 0px 10px 10px;
     line-height: 2;
 }
