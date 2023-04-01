@@ -100,7 +100,7 @@ const numberOfQuestions = [
 
 const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
-
+    const navigate = useHistory();
 
     const doSubmit = async () => {
         console.log(reducerState);
@@ -172,6 +172,7 @@ const GameRoom = props => {
 
                 <Bubble onClick={() => doSubmit()}>Start<br />Game</Bubble>
             </div>
+            <div className="back-icon" onClick={() => navigate.goBack()}><img src="/assets/undo-circle.png" alt="back-icon" /></div>
         </BaseContainer>
     );
 };
