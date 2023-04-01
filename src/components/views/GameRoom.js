@@ -7,6 +7,7 @@ import { Bubble } from 'components/ui/Bubble';
 import SettingsContainer from 'components/ui/SettingsContainer';
 import RadioButtons from 'components/ui/RadioButtons';
 import Select from 'components/ui/Select';
+import BackIcon from 'components/ui/BackIcon';
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -172,7 +173,7 @@ const GameRoom = props => {
 
                 <Bubble onClick={() => doSubmit()}>Start<br />Game</Bubble>
             </div>
-            <div className="back-icon" onClick={() => navigate.goBack()}><img src="/assets/undo-circle.png" alt="back-icon" /></div>
+            <BackIcon />
         </BaseContainer>
     );
 };

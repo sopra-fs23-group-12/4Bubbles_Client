@@ -5,15 +5,3 @@
     color: rgba(1, 21, 45, 0.85);
 
 }
-
-.back-icon {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    cursor: pointer;
-    transition: all ease-in-out 0.1s;
-
-    &:hover {
-        transform: rotate(15deg);
-    }
-}
