@@ -21,7 +21,7 @@
     padding-left: 37px;
     padding-right: 37px;
     //border-radius: 0.75em;
-    background-color: black; //TODO
+    //background-color: black; //TODO
     transition: opacity 0.5s ease, transform 0.5s ease;
     //box-shadow: $dropShadow;
   }
@@ -58,14 +58,14 @@
     margin-left: auto;
     margin-right: auto;
     img{height: 180px; width: 180px;}
-    background: transparentize(white, 0.85); //TODO
+    //background: transparentize(white, 0.85); //TODO
   }
   &.button-container2{
     display: flex;
     justify-content: left;
     margin-top: 0.5em;
     img{height: 130px; width: 130px;}
-    background: transparentize(rgb(43, 173, 54), 0.85); //TODO
+    //background: transparentize(rgb(43, 173, 54), 0.85); //TODO
   }
 
   &.sopra-text{
