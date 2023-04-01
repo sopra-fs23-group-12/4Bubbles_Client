@@ -46,10 +46,6 @@ const gameModes = [
 
 const gameTopics = [
     {
-        name: 'choose a question topic',
-        value: 'null',
-    },
-    {
         name: 'general knowledge',
         value: 'general knowledge',
     },
@@ -138,10 +134,10 @@ const GameRoom = props => {
                         name="number-of-questions"
                         items={gameTopics}
                         value={reducerState.topic}
-                        onChange={(e) =>
+                        onChange={(value) =>
                             dispatch({
                                 type: 'UPDATE',
-                                value: e.target.value,
+                                value: value,
                                 key: 'topic',
                             })} />
                 </SettingsContainer>
