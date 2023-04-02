@@ -3,6 +3,12 @@
 
 
 .bubble-button {
+  &.enterGame {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    margin-left: -100px; 
+  }
   &:hover {
     transform-origin: center;
     transform: scale(1.1);
@@ -17,6 +23,8 @@
       transform: none;
     }
   }
+
+  
 
   transition: all 0.3s ease;
   display: inline-block;

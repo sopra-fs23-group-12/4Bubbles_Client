@@ -7,6 +7,7 @@ import Dashboard from "components/views/Dashboard";
 import ShowProfile from "components/views/ShowProfile";
 import EditProfile from "components/views/EditProfile";
 import JoinGameRoom from "components/views/JoinGameRoom";
+import CreateRoom from "components/views/CreateRoom";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -28,6 +29,11 @@ const AppRouter = () => {
         <Route path="/joinRoom">
           <GameGuard>
             <JoinGameRoom />
+          </GameGuard>
+        </Route>
+        <Route path="/createRoom">
+          <GameGuard>
+            <CreateRoom />
           </GameGuard>
         </Route>
         <Route path="/profile/:id/edit">

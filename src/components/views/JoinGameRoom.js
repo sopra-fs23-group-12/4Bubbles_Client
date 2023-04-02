@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import { api, handleError } from 'helpers/api';
-import { Spinner } from 'components/ui/Spinner';
-import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
-import { Link } from 'react-router-dom';
-import logoutRequest from 'helpers/axios';
 
-import { Bubble } from 'components/ui/Bubble';
+
+import {EnterGameBubble } from 'components/ui/Bubble';
+import { BackButton } from 'components/ui/BackButton';
 
 const FormField = props => {
     return (
@@ -36,14 +34,23 @@ const FormField = props => {
 const JoinGameRoom = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
+  const[roomCode, setRoomCode] = useState("");
+  const[userId, setUserId] = useState(localStorage.getItem("id"));
 
+  const joinRoom = async () => {
+    try {
+      const requestBody = JSON.stringify({
+        roomCode: roomCode,
+        userId: userId
 
-  // define a state variable (using the state hook).
-  // if this variable changes, the component will re-render, but the variable will
-  // keep its value throughout render cycles.
-  // a component can have as many state variables as you like.
-  // more information can be found under https://reactjs.org/docs/hooks-state.html
-  const [users, setUsers] = useState(null);
+      });
+      const response = await api.get('/joinRoom', requestBody);
+      console.log(response);
+    }
+    catch (error) {
+        alert(`Something went wrong while joining a room: \n${handleError(error)}`);
+    }
+  }
 
   const toHomepage = () => {
     history.push("/overview");
@@ -53,11 +60,11 @@ const JoinGameRoom = () => {
     <BaseContainer className="join container">
         <FormField
         label = "Enter a RoomCode"
+        value = {roomCode}
+        onChange = {rC => setRoomCode(rC)}
         ></FormField>
-        <Bubble 
-        padding bottom ="10px"
-        onClick={toHomepage}
-        > Enter Game </Bubble>
+        <EnterGameBubble onClick={joinRoom}> Enter Game </EnterGameBubble>
+        <BackButton onClick={toHomepage}></BackButton>
     </BaseContainer>
   );
 }
