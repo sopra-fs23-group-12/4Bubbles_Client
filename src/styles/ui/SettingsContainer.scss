@@ -1,0 +1,14 @@
+@import 'styles/theme';
+
+.settings-container {
+    //background-color: $blue;
+    // Frage ans Design-Team: Wie viele verschiedene blaus gibt es? Wollen wir Variablen definieren?!
+    color: $white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+
+    h2 {
+        line-height: 1.5;
+    }
+}
