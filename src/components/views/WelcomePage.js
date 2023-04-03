@@ -89,19 +89,30 @@ const WelcomePage = props => {
                 <h1>4Bubbles</h1>
 
                 <div className="welcomepage-bubbles">
-                    <Bubble onClick={() => doStartNewGame()}>start new game</Bubble>
+                    <div className="welcomepage button-container-left">
+                        <Bubble onClick={() => doStartNewGame()}>start new game</Bubble>
+                    </div>
                     <br/>
-                    <Bubble onClick={() => doJoinGame()}>join game</Bubble>
+                    <div className="welcomepage button-container-right">
+                        <Bubble onClick={() => doJoinGame()}>join game</Bubble>
+                    </div>
                     <br/>
-                    <Bubble onClick={() => doViewMyProfile(user)}>view my profile</Bubble>
+                    <div className="welcomepage button-container-left">
+                        <Bubble onClick={() => doViewMyProfile(user)}>view my profile</Bubble>
+                    </div>
                     <br/>
-                    <Bubble onClick={() => doFriendList()}>access my<br /> friends list</Bubble>
-                    <Button 
+                    <div className="welcomepage button-container-right">
+                        <Bubble onClick={() => doFriendList()}>access my<br /> friends list</Bubble>
+                    </div>
+                </div>
+                <Button 
                     width="100%"
                     onClick={logout}
                     >Logout
                     </Button>
-                </div>
+            </div>
+            <div className="login sopra-text">
+                by sopra 2023
             </div>
         </BaseContainer>
     );
