@@ -3,11 +3,14 @@
 .header {
   &.container {
     @include center;
+    min-height: 200px;
   }
 
   &.title {
     font-weight: bold;
     color: $background;
     text-align: center;
+    line-height: 1;
+
   }
 }
