@@ -4,6 +4,7 @@ import 'styles/views/WelcomePage.scss';
 import BaseContainer from "components/ui/BaseContainer";
 
 import { Bubble } from 'components/ui/Bubble';
+import { Button } from 'components/ui/Button';
 import logoutRequest from "../../helpers/axios";
 import {api, handleError} from "../../helpers/api";
 import User from "../../models/User";
@@ -31,23 +32,28 @@ const WelcomePage = props => {
         history.push('/friendlist')
     }
 
+    const logout = () => {
+        logoutRequest(history);
+    }
+
 
     const doStartNewGame = () =>{
+        history.push('/gameroom')
 
     }
 
 
     const doJoinGame = () =>{
+        history.push('/joingame')
 
     }
 
     const doViewMyProfile = (user) =>{
-
-
         history.push ("profile/" + user.id)
     }
 
-    useEffect(() => {
+    //not needed code
+    /* useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchData() {
             try {
@@ -73,7 +79,7 @@ const WelcomePage = props => {
 
             }
         }fetchData();
-    }, []);
+    }, []); */
 
 
 
@@ -90,6 +96,11 @@ const WelcomePage = props => {
                     <Bubble onClick={() => doViewMyProfile(user)}>view my profile</Bubble>
                     <br/>
                     <Bubble onClick={() => doFriendList()}>access my<br /> friends list</Bubble>
+                    <Button 
+                    width="100%"
+                    onClick={logout}
+                    >Logout
+                    </Button>
                 </div>
             </div>
         </BaseContainer>

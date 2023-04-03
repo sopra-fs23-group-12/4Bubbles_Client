@@ -56,7 +56,7 @@ const Register = props => {
       localStorage.setItem('userId', user.id);
 
       // Login successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/overview`);
+      history.push(`/welcomepage`);
     } catch (error) {
       //alert(`Something went wrong during the login: \n${handleError(error)}`);
       setError(error.response.data.message);
