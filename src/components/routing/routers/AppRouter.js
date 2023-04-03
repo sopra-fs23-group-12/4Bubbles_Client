@@ -7,7 +7,9 @@ import Dashboard from "components/views/Dashboard";
 import ShowProfile from "components/views/ShowProfile";
 import EditProfile from "components/views/EditProfile";
 import GameRoom from "components/views/GameRoom";
+import WaitingRoom from "components/views/WaitingRoom";
 
+import JoinGameRoom from "components/views/JoinGameRoom";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -24,9 +26,17 @@ const AppRouter = () => {
         <Route path="/gameroom">
           <GameRoom />
         </Route>
+        <Route path="/waitingroom">
+          <WaitingRoom />
+        </Route>
         <Route path="/overview">
           <GameGuard>
             <Dashboard />
+          </GameGuard>
+        </Route>
+        <Route path="/joinRoom">
+          <GameGuard>
+            <JoinGameRoom />
           </GameGuard>
         </Route>
         <Route path="/profile/:id/edit">
