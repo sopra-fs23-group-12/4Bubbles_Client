@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import BaseContainer from "components/ui/BaseContainer";
+import { Button } from 'components/ui/Button';
 import { api } from 'helpers/api';
 import User from 'models/User';
-import { useHistory, Link } from 'react-router-dom';
-import { Button } from 'components/ui/Button';
-import 'styles/views/Login.scss';
-import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import 'styles/views/Login.scss';
 import { Bubble } from 'components/ui/Bubble';
 
 /*
@@ -18,12 +17,12 @@ specific components that belong to the main one in the same file.
 const FormField = props => {
   return (
     <div className="login field">
-      <label className="login label">
+      {/* <label className="login label">
         {props.label}
-      </label>
+      </label> */}
       <input
         className="login input"
-        placeholder="enter here.."
+        placeholder={props.label}
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
       />
@@ -68,33 +67,38 @@ const Login = props => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-          <h1>Login</h1>
-          <FormField
-            label="Username"
+          <FormField 
+            label="username"
             value={username}
             onChange={un => setUsername(un)}
-          />
+            />
           <FormField
-            label="Password"
+            label="password"
             value={password}
             onChange={n => setPassword(n)}
           />
           {error ? <div className="error-msg">{error}</div> : null}
           <div className="login button-container">
-            <Button
+            <Bubble
               disabled={!username || !password}
               onClick={() => doLogin()}
               width="100%"
             >
               Login
-            </Button>
+            </Bubble>
           </div>
-          <div className="sign-up">
-            <Link to={"/register"}>sign up</Link>
+          <div className="login button-container2">
+            <Bubble 
+            onClick={() => history.push(`/register`)}
+            >
+              <font size="4">sign up</font> 
+            </Bubble>
           </div>
         </div>
       </div>
-      <Bubble >Hoi</Bubble>
+      <div className="login sopra-text">
+       by sopra 2023
+      </div>
     </BaseContainer>
   );
 };
