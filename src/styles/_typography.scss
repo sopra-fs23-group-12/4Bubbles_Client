@@ -20,3 +20,11 @@
     src: local("Roboto"),
         url("../fonts/Roboto-Medium.ttf") format("truetype");
 }
+
+@font-face {
+    font-family: "Lato";
+    /*Can be any text*/
+    font-weight: 700;
+    src: local("Lato"),
+        url("../fonts/Lato-Bold.ttf") format("truetype");
+}

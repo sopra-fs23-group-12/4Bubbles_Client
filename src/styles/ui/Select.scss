@@ -1,0 +1,88 @@
+.custom-select {
+    position: relative;
+    font-family: Arial;
+}
+
+.custom-select select {
+    display: none;
+    /*hide original SELECT element:*/
+}
+
+.select-selected {
+    background: rgba(1, 21, 45, 0.85);
+    border: 2px solid rgba(1, 21, 45, 0.85);
+    border-radius: 10px;
+    line-height: 1.5;
+    color: white;
+    font-family: 'Jockey One';
+    font-size: 20px;
+    position: relative;
+
+    .arrow-wrapper {
+        position: absolute;
+        right: 10px;
+        transition: all ease-in-out 0.3s;
+        transform: rotate(-180deg);
+    }
+
+    &.is-open {
+        border-radius: 10px 10px 0px 0px;
+
+        .arrow-wrapper {
+            transform: rotate(0);
+        }
+    }
+
+
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,
+.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+    position: absolute;
+    background: #011A38;
+    border-radius: 0px 0px 10px 10px;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    color: white;
+    font-family: 'Jockey One';
+    font-size: 20px;
+
+    div {
+        border-top: 1px solid #C4C4C4;
+        line-height: 1.5;
+
+        &.is-active {
+            background-color: rgba(231, 147, 233, 0.31);
+        }
+
+    }
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: rgba(231, 147, 233, 0.31);
+}

@@ -9,7 +9,6 @@ import AppRouter from "components/routing/routers/AppRouter";
 const App = () => {
   return (
     <div className="app-container background-gradient">
-      <Header height="100" />
       <AppRouter />
     </div>
   );
