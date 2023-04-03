@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 
 
-import {EnterGameBubble } from 'components/ui/Bubble';
-import { BackButton } from 'components/ui/BackButton';
+import {Bubble } from 'components/ui/Bubble';
+import BackIcon from 'components/ui/BackIcon';
 
 const FormField = props => {
     return (
@@ -44,7 +44,16 @@ const JoinGameRoom = () => {
         userId: userId
 
       });
-      const response = await api.get('/joinRoom', requestBody);
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+      const response = await api.put('/joinRoom', requestBody, headers);
+      history.push({
+        pathname: "/waitingroom", 
+        state: response.data
+      });
       console.log(response);
     }
     catch (error) {
@@ -58,13 +67,14 @@ const JoinGameRoom = () => {
 
   return (
     <BaseContainer className="join container">
+      <h1>Enter a room code</h1>
         <FormField
         label = "Enter a RoomCode"
         value = {roomCode}
         onChange = {rC => setRoomCode(rC)}
         ></FormField>
-        <EnterGameBubble onClick={joinRoom}> Enter Game </EnterGameBubble>
-        <BackButton onClick={toHomepage}></BackButton>
+        <Bubble onClick={joinRoom}> Enter Game </Bubble>
+        <BackIcon onClick={toHomepage}></BackIcon>
     </BaseContainer>
   );
 }

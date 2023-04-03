@@ -7,6 +7,7 @@ import Dashboard from "components/views/Dashboard";
 import ShowProfile from "components/views/ShowProfile";
 import EditProfile from "components/views/EditProfile";
 import GameRoom from "components/views/GameRoom";
+import WaitingRoom from "components/views/WaitingRoom";
 
 import JoinGameRoom from "components/views/JoinGameRoom";
 /**
@@ -25,6 +26,9 @@ const AppRouter = () => {
         <Route path="/gameroom">
           <GameRoom />
         </Route>
+        <Route path="/waitingroom">
+          <WaitingRoom />
+        </Route>
         <Route path="/overview">
           <GameGuard>
             <Dashboard />
@@ -33,11 +37,6 @@ const AppRouter = () => {
         <Route path="/joinRoom">
           <GameGuard>
             <JoinGameRoom />
-          </GameGuard>
-        </Route>
-        <Route path="/createRoom">
-          <GameGuard>
-            <CreateRoom />
           </GameGuard>
         </Route>
         <Route path="/profile/:id/edit">
