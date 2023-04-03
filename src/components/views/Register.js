@@ -6,6 +6,7 @@ import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import { Bubble } from 'components/ui/Bubble';
 
 /*
 It is possible to add multiple components inside a single file,
@@ -16,12 +17,9 @@ specific components that belong to the main one in the same file.
 const FormField = props => {
   return (
     <div className="login field">
-      <label className="login label">
-        {props.label}
-      </label>
       <input
         className="login input"
-        placeholder="enter here.."
+        placeholder={props.label}
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
       />
@@ -67,31 +65,37 @@ const Register = props => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-          <h1>Sign up</h1>
           <FormField
-            label="Username"
+            label="username"
             value={username}
             onChange={un => setUsername(un)}
           />
           <FormField
-            label="Password"
+            label="password"
             value={password}
             onChange={n => setPassword(n)}
           />
           {error ? <div className="error-msg">{error}</div> : null}
           <div className="login button-container">
-            <Button
+            <Bubble
               disabled={!username || !password}
               width="100%"
               onClick={() => doRegister()}
             >
-              Sign up
-            </Button>
+              sign up
+            </Bubble>
           </div>
-          <div className="sign-up">
-            <Link to={"/login"}>already have an account?</Link>
-          </div>
+          <div className="login button-container2">
+          <Bubble 
+            onClick={() => history.push(`/login`)}
+            >
+              <font size="4"><center>back to <br/>login</center></font> 
+            </Bubble>
+            </div>
         </div>
+      </div>
+      <div className="login sopra-text">
+       by sopra 2023
       </div>
     </BaseContainer>
   );
