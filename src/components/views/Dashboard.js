@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import { Link } from 'react-router-dom';
 import logoutRequest from 'helpers/axios';
+import { Bubble } from 'components/ui/Bubble';
 
 const Player = ({ user }) => (
   <li id={user.id}>
@@ -39,6 +40,14 @@ const Dashboard = () => {
   const logout = () => {
     logoutRequest(history);
     //history.push("/login");
+  }
+
+  const joinRoom = () => {
+    history.push("/joinRoom");
+  }
+
+  const createRoom = () => {
+    history.push("/createRoom");
   }
 
   // the effect hook can be used to react to change in your component.
@@ -86,7 +95,7 @@ const Dashboard = () => {
 
   let content = <Spinner />;
 
-  if (users) {
+  /* if (users) {
     content = (
       <div className="game">
         <ul className="game user-list">
@@ -94,23 +103,21 @@ const Dashboard = () => {
             <Player user={user} key={user.id} />
           ))}
         </ul>
-        <Button
-          width="100%"
+        
+      </div>
+    );
+  } */
+
+  return (
+    <BaseContainer className="game container">
+      <Bubble onClick={joinRoom}> Join Room</Bubble>
+      <Bubble onClick={createRoom}> Create Room</Bubble>
+      <Button
+          width="20%"
           onClick={logout}
         >
           Logout
         </Button>
-      </div>
-    );
-  }
-
-  return (
-    <BaseContainer className="game container">
-      <h2>Happy Coding!</h2>
-      <p className="game paragraph">
-        Get all users from secure endpoint:
-      </p>
-      {content}
     </BaseContainer>
   );
 }

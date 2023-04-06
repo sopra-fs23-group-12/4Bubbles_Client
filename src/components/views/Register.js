@@ -63,6 +63,7 @@ const Register = props => {
 
   return (
     <BaseContainer>
+    <h1>Welcome to 4Bubbles</h1>
       <div className="login container">
         <div className="login form">
           <FormField
