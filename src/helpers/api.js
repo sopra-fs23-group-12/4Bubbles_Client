@@ -33,3 +33,9 @@ export const handleError = error => {
     return error.message;
   }
 };
+
+export const headers = {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+};

@@ -1,5 +1,5 @@
 import {useState } from 'react';
-import { api, handleError } from 'helpers/api';
+import { api, handleError, headers } from 'helpers/api';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
@@ -44,11 +44,6 @@ const JoinGameRoom = () => {
         userId: userId
 
       });
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }
       const response = await api.put('/joinRoom', requestBody, headers);
       history.push({
         pathname: "/waitingroom", 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api, handleError } from 'helpers/api';
+import { api, handleError, headers } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
@@ -58,12 +58,7 @@ const Dashboard = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const headers = {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        }
-        const response = await api.get('/users', headers);
+            const response = await api.get('/users', headers);
 
         // delays continuous execution of an async operation for 1 second.
         // This is just a fake async call, so that the spinner can be displayed

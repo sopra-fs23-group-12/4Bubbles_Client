@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api, handleError } from 'helpers/api';
+import { api, handleError, headers } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
@@ -44,11 +44,6 @@ const EditProfile = (props) => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const headers = {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        }
         const response = await api.get('/users/' + id, headers);
 
         setUser(response.data[0]);
@@ -80,11 +75,6 @@ const EditProfile = (props) => {
       } else {
         requestBody = JSON.stringify({ username });
 
-      }
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
       }
       const response = await api.put('/users/' + id, requestBody, headers);
       console.log(response.status);
