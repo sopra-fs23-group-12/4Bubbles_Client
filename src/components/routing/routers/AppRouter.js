@@ -38,7 +38,7 @@ const AppRouter = () => {
             <WaitingRoom />
           </GameGuard>
         </Route>
-        <Route path="/joinRoom">
+        <Route path="/joingame">
           <GameGuard>
             <JoinGameRoom />
           </GameGuard>

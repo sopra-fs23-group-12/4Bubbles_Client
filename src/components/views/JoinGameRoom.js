@@ -17,7 +17,7 @@ const FormField = props => {
         </label>
         <input
           className="login input"
-          placeholder="Enter RoomCode here.."
+          placeholder="RoomCode.."
           value={props.value}
           onChange={e => props.onChange(e.target.value)}
         />
@@ -35,7 +35,7 @@ const JoinGameRoom = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
   const[roomCode, setRoomCode] = useState("");
-  const[userId, setUserId] = useState(localStorage.getItem("id"));
+  const userId = useState(localStorage.getItem("id"));
 
   const joinRoom = async () => {
     try {
@@ -66,13 +66,14 @@ const JoinGameRoom = () => {
   }  
 
   return (
-    <BaseContainer className="join container">
+    <BaseContainer>
       <h1>Enter a room code</h1>
+      <div className="login field">
         <FormField
-        label = "Enter a RoomCode"
         value = {roomCode}
         onChange = {rC => setRoomCode(rC)}
         ></FormField>
+      </div>
         <Bubble onClick={joinRoom}> Enter Game </Bubble>
         <BackIcon onClick={toHomepage}></BackIcon>
     </BaseContainer>
