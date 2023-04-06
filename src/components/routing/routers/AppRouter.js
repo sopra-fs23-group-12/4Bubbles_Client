@@ -3,12 +3,12 @@ import { GameGuard } from "components/routing/routeProtectors/GameGuard";
 import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
-import Dashboard from "components/views/Dashboard";
 import ShowProfile from "components/views/ShowProfile";
 import EditProfile from "components/views/EditProfile";
 import WelcomePage from "../../views/WelcomePage";
 import GameRoom from "components/views/GameRoom";
 import WaitingRoom from "components/views/WaitingRoom";
+import JoinGameRoom from "components/views/JoinGameRoom";
 
 /**
  * Main router of your application.
@@ -24,13 +24,19 @@ const AppRouter = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/welcomepage">
+          <GameGuard>
             <WelcomePage />
+          </GameGuard>
         </Route>
         <Route path="/gameroom">
-          <GameRoom />
+          <GameGuard>
+            <GameRoom />
+          </GameGuard>
         </Route>
         <Route path="/waitingroom">
-          <WaitingRoom />
+          <GameGuard>
+            <WaitingRoom />
+          </GameGuard>
         </Route>
         <Route path="/joinRoom">
           <GameGuard>
