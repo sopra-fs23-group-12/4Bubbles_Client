@@ -127,7 +127,7 @@ const ShowProfile = (props) => {
 
         <div className="login button-container">
           <Button
-            onClick={() => history.push(`/overview`)}
+            onClick={() => history.push(`/welcomepage`)}
             width="100%"
           >
             Back to overview
