@@ -39,8 +39,8 @@ const WelcomePage = props => {
 
     }
 
-    const doViewMyProfile = (user) =>{
-        history.push ("profile/" + user.id)
+    const doViewMyProfile = (currentUser) =>{
+        history.push (`profile/` + currentUser)
     }
 
     return (
