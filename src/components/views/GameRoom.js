@@ -8,6 +8,7 @@ import SettingsContainer from 'components/ui/SettingsContainer';
 import RadioButtons from 'components/ui/RadioButtons';
 import Select from 'components/ui/Select';
 import BackIcon from 'components/ui/BackIcon';
+import {api, headers, handleError} from 'helpers/api';
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -29,7 +30,7 @@ function reducer(state, action) {
     }
 }
 
-const gameModes = [
+const gameMode = [
     {
         name: 'standard',
         value: 'standard',
@@ -44,7 +45,7 @@ const gameModes = [
     },
 ]
 
-const gameTopics = [
+const questionTopic = [
     {
         name: 'general knowledge',
         value: 'general knowledge',
@@ -75,7 +76,7 @@ const gameTopics = [
     },
 ]
 
-const numberOfQuestions = [
+const numOfQuestions = [
     {
         name: '3',
         value: '3',
@@ -92,7 +93,7 @@ const numberOfQuestions = [
         name: '15',
         value: '15',
     },
-]
+] 
 
 
 const GameRoom = props => {
@@ -100,30 +101,24 @@ const GameRoom = props => {
     const navigate = useHistory();
 
     const doSubmit = async () => {
-        console.log(reducerState);
+        try{
+            const requestBody = JSON.stringify({
+                questionTopic: reducerState.topic,
+                gameMode: reducerState.gamemode,
+                numOfQuestions: reducerState.numOfQuestions,
+                leaderId: localStorage.getItem("userId")
+            })
+            console.log(requestBody)
+            const response = await api.post('/createRoom', requestBody, headers)
+            navigate.push({
+                pathname : "/waitingroom",
+                state: response.data
+            })
+        }catch(error){
+            alert(`Something went wrong while creating a room: \n${handleError(error)}`);
+        }
     }
 
-    /*
-    const doLogin = async () => {
-        try {
-            const requestBody = JSON.stringify({ username, password });
-            const response = await api.post('/login', requestBody);
-    
-            // Get the returned user and update a new object.
-            const user = new User(response.data);
-    
-            // Store the token into the local storage.
-            localStorage.setItem('token', user.token);
-            localStorage.setItem('userId', user.id);
-    
-    
-            // Login successfully worked --> navigate to the route /game in the GameRouter
-            history.push(`/overview`);
-        } catch (error) {
-            //alert(`Something went wrong during the login: \n${handleError(error)}`);
-            setError(error.response.data.message);
-        }
-    };*/
 
     return (
         <BaseContainer>
@@ -132,7 +127,7 @@ const GameRoom = props => {
                 <SettingsContainer >
                     <Select
                         name="number-of-questions"
-                        items={gameTopics}
+                        items={questionTopic}
                         value={reducerState.topic}
                         onChange={(value) =>
                             dispatch({
@@ -144,7 +139,7 @@ const GameRoom = props => {
                 <SettingsContainer title="Choose a game mode:">
                     <RadioButtons
                         name="gamemode"
-                        items={gameModes}
+                        items={gameMode}
                         value={reducerState.gamemode}
                         onChange={(e) =>
                             dispatch({
@@ -156,13 +151,13 @@ const GameRoom = props => {
                 <SettingsContainer title="Select the number of questions:">
                     <RadioButtons
                         name="number-of-questions"
-                        items={numberOfQuestions}
-                        value={reducerState.numberOfQuestions}
+                        items={numOfQuestions}
+                        value={reducerState.numOfQuestions}
                         onChange={(e) =>
                             dispatch({
                                 type: 'UPDATE',
                                 value: e.target.value,
-                                key: 'numberOfQuestions',
+                                key: 'numOfQuestions',
                             })} />
                 </SettingsContainer>
 

@@ -35,21 +35,24 @@ const JoinGameRoom = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
   const[roomCode, setRoomCode] = useState("");
-  const userId = useState(localStorage.getItem("id"));
+  const userId = localStorage.getItem("userId");
 
   const joinRoom = async () => {
     try {
-      const requestBody = JSON.stringify({
+      const requestBody = ({
         roomCode: roomCode,
         userId: userId
 
       });
+      console.log("data: ", requestBody);
+
       const response = await api.put('/joinRoom', requestBody, headers);
+      console.log(response);
       history.push({
         pathname: "/waitingroom", 
         state: response.data
       });
-      console.log(response);
+      
     }
     catch (error) {
         alert(`Something went wrong while joining a room: \n${handleError(error)}`);
