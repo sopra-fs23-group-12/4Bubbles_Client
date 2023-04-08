@@ -4,6 +4,20 @@
     grid-template-rows: 1fr 1fr;
     height: 100vh;
 
+    input {
+        display: none;
+    }
+
+    input[type="radio"]:checked+label {
+        background: transparent;
+
+        img {
+            transform: scale(1.8);
+            transition: transform ease-in-out 0.3s;
+        }
+    }
+
+
     @keyframes example {
         0% {
             transform: translate(0, 5px) scale(1);

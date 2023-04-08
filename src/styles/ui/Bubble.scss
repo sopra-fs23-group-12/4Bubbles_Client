@@ -60,6 +60,8 @@
 
     img {
       width: 300px;
+      transform: scale(1);
+      transition: transform ease-in-out 0.3s;
     }
   }
 
