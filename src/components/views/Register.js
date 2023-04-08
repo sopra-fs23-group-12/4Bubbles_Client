@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { api } from 'helpers/api';
 import User from 'models/User';
-import { useHistory, Link } from 'react-router-dom';
-import { Button } from 'components/ui/Button';
+import { useHistory} from 'react-router-dom';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+//import { useHistory } from 'react-router-dom';
 import 'styles/views/Gameroom.scss';
 import BaseContainer from "components/ui/BaseContainer";
 
@@ -18,7 +18,7 @@ the data from the backend is received but only the question Topic can be display
 roomcode is also be displayed 
  */
 
-const gameModes = [
+const gameMode = [
     {
         name: 'standard',
         value: 'standard',
@@ -33,7 +33,7 @@ const gameModes = [
     },
 ]
 
-const gameTopics = [
+const questionTopic = [
     {
         name: 'general knowledge',
         value: 'general knowledge',
@@ -64,7 +64,9 @@ const gameTopics = [
     },
 ]
 
-const numberOfQuestions = [
+//for the number of questions to be displayed the values from the list and the backend
+//have to have the same type -> .toString() is used at line  123 
+const numOfQuestions = [
     {
         name: '3',
         value: '3',
@@ -87,16 +89,13 @@ const numberOfQuestions = [
 
 
 const WaitingRoom = (props) => {
-    const history = useHistory();
+    //const history = useHistory();
     const data = useLocation();
     console.log("data:", data);
 
     
     //const so that only leader can start game, does nothing usefull yet
     const doStart = () => {
-        if (data.state.leader == localStorage.getItem('userId')) {
-            history.push(`/profile/${localStorage.getItem('userId')}`);
-        }
     }
 
     return (
@@ -105,27 +104,24 @@ const WaitingRoom = (props) => {
                 <h1>Game Room <br/> {data.state.roomCode}</h1>
                 <SettingsContainer >
                     <Select
-                        name="number-of-questions"
-                        items={gameTopics}
+                        name="questionTopic"
+                        items={questionTopic}
                         value={data.state.questionTopic}
-                        onChange={(value) =>
-                            null} />
+                        onChange={null} />
                 </SettingsContainer>
                 <SettingsContainer title="Choose a game mode:">
                     <RadioButtons
                         name="gamemode"
-                        items={gameModes}
-                        value={data.state.gamemode}
-                        onChange={(e) =>
-                            null} />
+                        items={gameMode}
+                        value={data.state.gameMode}
+                        onChange={null} />
                 </SettingsContainer>
                 <SettingsContainer title="Select the number of questions:">
                     <RadioButtons
                         name="number-of-questions"
-                        items={numberOfQuestions}
-                        value={data.state.numOfQuestions}
-                        onChange={(e) =>
-                            null} />
+                        items={numOfQuestions}
+                        value={data.state.numOfQuestions.toString()}
+                        onChange={null} />
                 </SettingsContainer>
 
                 

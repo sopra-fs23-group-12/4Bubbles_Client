@@ -1,10 +1,9 @@
 import BaseContainer from "components/ui/BaseContainer";
-import { Button } from 'components/ui/Button';
 import { api } from 'helpers/api';
 import User from 'models/User';
 import PropTypes from "prop-types";
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import {useHistory } from 'react-router-dom';
 import 'styles/views/Login.scss';
 import { Bubble } from 'components/ui/Bubble';
 
