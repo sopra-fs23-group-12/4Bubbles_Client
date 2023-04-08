@@ -24,9 +24,9 @@ export default function Question() {
                 <Bubble className="bubble-button--question">{question}</Bubble>
             </div>
             {answer.map((item, index) => {
-                return <div className={cssClasses[index]}>
+                return <div key={index} className={cssClasses[index]}>
                     <input type="radio" id={item} name="fav_language" value={item} />
-                    <label for={item}>
+                    <label htmlFor={item}>
                         <Bubble className="bubble-button--answer">{item}</Bubble>
                     </label>
                 </div>
