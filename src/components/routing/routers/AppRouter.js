@@ -9,6 +9,7 @@ import WelcomePage from "../../views/WelcomePage";
 import GameRoom from "components/views/GameRoom";
 import WaitingRoom from "components/views/WaitingRoom";
 import JoinGameRoom from "components/views/JoinGameRoom";
+import Question from "components/views/Question";
 
 /**
  * Main router of your application.
@@ -62,6 +63,9 @@ const AppRouter = () => {
           <LoginGuard>
             <Register />
           </LoginGuard>
+        </Route>
+        <Route exact path="/question">
+          <Question />
         </Route>
         <Route exact path="/">
           <Redirect to="/login" />
