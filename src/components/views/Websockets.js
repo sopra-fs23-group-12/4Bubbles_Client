@@ -6,6 +6,9 @@ import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import io from "socket.io-client";
+import {useEffect} from "react";
+import { format } from 'react-string-format';
 
 /*
 It is possible to add multiple components inside a single file,
@@ -36,17 +39,46 @@ FormField.propTypes = {
 };
 
 
-
 const Websockets = props => {
     const history = useHistory();
     const [error, setError] = useState("");
     const [inputMessage, setInputMessage] = useState("");
     const [displayMessage, setDisplayMessage] = useState("");
+    const [room, setRoom] = useState("a");
 
-    const displayDisplayMessage = async() =>{
-        setDisplayMessage(inputMessage)
-        setInputMessage('')
+    //add the url of the backend to make the connection to the server
+    const url = format("http://localhost:9092?room={0}", room);
+    const socket = io.connect(url,{transports: ['websocket'], upgrade: false, room: room});
+
+
+    const displayDisplayMessage = () =>{
+        console.log("display message method reached")
+        setDisplayMessage(inputMessage);
+        try{
+            sendMessage();
+        }catch (Exception){
+            console.log("send message throws an error")
+        }
+
+        setInputMessage('');
     }
+
+    const sendMessage = () =>{
+        console.log("send message method reached")
+        socket.emit("send_message", {
+                room: room,
+                content: inputMessage,
+                messageType: "CLIENT",
+        })
+    }
+
+    //everytime an event happens triggered by the socket, this function is called
+    useEffect(async () =>{
+        socket.on("receive_message", (data) =>{
+            console.log("message received")
+            alert(data.message)
+        })
+    })
 
 
     return (
