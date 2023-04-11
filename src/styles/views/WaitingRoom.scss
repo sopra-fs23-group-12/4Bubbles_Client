@@ -1,0 +1,91 @@
+.waiting-room-wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+
+    input {
+        display: none;
+    }
+
+    input[type="radio"]:checked+label {
+        background: transparent;
+
+        .bubble-button__splash {
+            display: block;
+        }
+
+        .bubble-button__content {
+            text-decoration: underline;
+        }
+    }
+
+
+    @keyframes example {
+        0% {
+            transform: translate(0, 5px) scale(1);
+        }
+
+        50% {
+            transform: translate(0, -5px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0, 5px) scale(1);
+        }
+    }
+
+    @keyframes wiggle {
+        0% {
+            transform: translate(0, 5px) scale(1);
+        }
+
+        50% {
+            transform: translate(0, -5px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0, 5px) scale(1);
+        }
+    }
+
+    .bubble-item {
+        grid-column-start: 3;
+        grid-column-end: 5;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bubble-button {
+            animation-name: wiggle;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-delay: 1s;
+        }
+    }
+
+
+}
+
+.room-code{
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.game-info{
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.player-info{
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.exit-button{
+    margin-top: 1em;
+    margin-left: 1em;
+}
