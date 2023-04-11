@@ -9,6 +9,8 @@ export default function Question() {
 
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [popupValue, setPopupValue] = useState(null);
+    const [radioValue, setRadioValue] = useState(null);
+
     const question = "Which river has the most capital cities on it?"
     const answer = [
         "Amazon",
@@ -25,9 +27,10 @@ export default function Question() {
     ]
 
     const revealAnswer = () => {
-        setCorrectAnswer(1);
+        setCorrectAnswer(0);
         const timer = setTimeout(() => {
-            setPopupValue(true);
+            console.log(radioValue === answer[0]);
+            setPopupValue(radioValue === answer[0]);
         }, 2000);
         return () => clearTimeout(timer);
     }
@@ -37,7 +40,6 @@ export default function Question() {
         setCorrectAnswer(null);
     }
 
-
     return (
         <div className="question-wrapper">
             <div className="question-item">
@@ -45,7 +47,7 @@ export default function Question() {
             </div>
             {answer.map((item, index) => {
                 return <div key={index} className={cssClasses[index]}>
-                    <input type="radio" id={item} name="fav_language" value={item} />
+                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => setRadioValue(item)} />
                     <label htmlFor={item}>
                         <Bubble className={(correctAnswer === null | index === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                     </label>
