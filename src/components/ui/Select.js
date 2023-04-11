@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import 'styles/ui/Select.scss';
 
 export default function Select(props) {

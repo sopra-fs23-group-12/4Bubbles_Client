@@ -10,6 +10,7 @@ export const Bubble = props => (
             <img src="../assets/bubble.svg" alt="bubble" />
             <img className="bubble-button__splash" alt="splash" src="../assets/bubble-splash.svg" />
 
+
             <div className="bubble-button__content">
                 {props.children}
 
