@@ -20,19 +20,17 @@ const WaitingRoom = (props) => {
     //const [reducerState, dispatch] = useReducer();
     console.log("data:", data);
 
-    const nrOfQuestions = data.questionTopic;
-    console.log("nrOfQuestions:", nrOfQuestions);
-    console.log("KEY", Object.keys(data));
-    console.log("HERE", data.state.questionTopic);
+    // const nrOfQuestions = data.questionTopic;
+    // console.log("nrOfQuestions:", nrOfQuestions);
+    // console.log("KEY", Object.keys(data));
+    // console.log("HERE", data.state.questionTopic);
     //const so that only leader can start game, does nothing usefull yet
     const startGame = () => {
+        history.push(`/question`);
     }
 
     const exitGame = () => {
         history.push(`/welcomepage`);
-    }
-
-    const roomcode = () => {
     }
 
     // const topic = async () => {
@@ -48,18 +46,29 @@ const WaitingRoom = (props) => {
     //   }
     // };
 
-        const topic =  () => {
-            //data.questionTopic
-
-    };
-
-
+    //     const playerList =  () => {
+    //         for (let i = 0; i < data.state.members.length; i++) {
+    //             console.log("user", data.state.members.username);
+    //             return data.state.members.username;
+    //         }
+    //         <div className="player id">id: {data.state.leader.username}</div>
+    //         // for (let i = 0; i < data.state.users.length; i++) {
+    //         //     console.log(data.state.users[i].username);
+    //         //     return data.state.users[i].username;
+    //         // }
+    // };
 
     return (
         <div className="waiting-room-wrapper">
 
             <div className="player-info">
                 already joined:
+                <div className="player-list">
+                    {data.state.members.map((member) => {
+                        return (
+                            <div className="player">{member.username}</div>
+                    )})}
+                </div>
             </div>
 
             <div className="bubble-item">
