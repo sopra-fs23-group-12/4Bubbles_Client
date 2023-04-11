@@ -1,25 +1,27 @@
+@import 'styles/theme';
+
 .waiting-room-wrapper {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1fr 1fr;
     height: 100vh;
 
+
     input {
         display: none;
     }
 
-    input[type="radio"]:checked+label {
-        background: transparent;
+    // input[type="radio"]:checked+label {
+    //     background: transparent;
 
-        .bubble-button__splash {
-            display: block;
-        }
+    //     .bubble-button__splash {
+    //         display: block;
+    //     }
 
-        .bubble-button__content {
-            text-decoration: underline;
-        }
-    }
-
+    //     .bubble-button__content {
+    //         text-decoration: underline;
+    //     }
+    // }
 
     @keyframes example {
         0% {
@@ -58,34 +60,70 @@
         justify-content: center;
         align-items: center;
 
+
         .bubble-button {
             animation-name: wiggle;
             animation-duration: 4s;
             animation-iteration-count: infinite;
             animation-timing-function: ease-in-out;
             animation-delay: 1s;
+            
         }
     }
 
 
 }
 
+.bubble-container{
+    //top: 20px;
+    background: transparentize(white, 0.85); 
+ 
+}
+
+
+
 .room-code{
     margin-top: 1em;
-    margin-left: 1em;
+    margin-left: 1.5em;
+    color: white;
+    font-family: 'Jockey One';
+    font-size: 45px;
+    top: 0.4em;
+    position: absolute;
+    text-align: center;
+    background: transparentize(white, 0.85); 
 }
 
 .game-info{
-    margin-top: 1em;
-    margin-left: 1em;
+    margin-top: 13em;
+    margin-left: 2em;
+    font-family: 'Roboto';
+    font-size: 18px;
+    color: white;
+    line-height: 32px;
+    position: relative;
+    background: transparentize(white, 0.85); 
+    width: 300px;
+
 }
 
 .player-info{
     margin-top: 1em;
-    margin-left: 1em;
+    position: absolute;
+    right: 5em;
+    font-family: 'Jockey One';
+    font-size: 20px;
+    color: white;
+    top: 1.5em;
+    background: transparentize(white, 0.85); 
 }
 
 .exit-button{
-    margin-top: 1em;
-    margin-left: 1em;
+    margin-left: 15px;
+    top: 15px;
+    position: absolute;
+    color: white;
+    font-family: 'Jockey One';
+    font-size: 20px;
+    text-decoration: underline;
 }
