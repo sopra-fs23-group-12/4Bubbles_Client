@@ -8,6 +8,7 @@ import '../../styles/views/Question.scss';
 export default function Question() {
 
     const [correctAnswer, setCorrectAnswer] = useState(null);
+    const [popupValue, setPopupValue] = useState(null);
     const question = "Which river has the most capital cities on it?"
     const answer = [
         "Amazon",
@@ -25,20 +26,22 @@ export default function Question() {
 
     const revealAnswer = () => {
         setCorrectAnswer(1);
+        const timer = setTimeout(() => {
+            setPopupValue(true);
+        }, 2000);
+        return () => clearTimeout(timer);
     }
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            revealAnswer();
-        }, 5000);
-        return () => clearTimeout(timer);
-    }, []);
+    const nextQuestion = () => {
+        setPopupValue(null);
+        setCorrectAnswer(null);
+    }
 
 
     return (
         <div className="question-wrapper">
             <div className="question-item">
-                <Bubble className="bubble-button--question">{question}</Bubble>
+                <Bubble onClick={revealAnswer} className="bubble-button--question">{question}</Bubble>
             </div>
             {answer.map((item, index) => {
                 return <div key={index} className={cssClasses[index]}>
@@ -48,6 +51,19 @@ export default function Question() {
                     </label>
                 </div>
             })}
-        </div>
+
+
+            {(popupValue !== null) ?
+                <div className="pop-up">
+                    <div className="pop-up__container">
+                        <span>{popupValue ? 'Your answer was correct! ✌️' : 'Your answer was wrong... 😱'}</span>
+                        <button onClick={nextQuestion} className="primary-button">ok</button></div>
+                </div >
+                : null
+            }
+
+        </div >
+
+
     )
 }
