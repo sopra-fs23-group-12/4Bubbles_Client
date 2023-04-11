@@ -12,18 +12,6 @@
         display: none;
     }
 
-    // input[type="radio"]:checked+label {
-    //     background: transparent;
-
-    //     .bubble-button__splash {
-    //         display: block;
-    //     }
-
-    //     .bubble-button__content {
-    //         text-decoration: underline;
-    //     }
-    // }
-
     @keyframes example {
         0% {
             transform: translate(0, 5px) scale(1);
@@ -71,8 +59,6 @@
             
         }
     }
-
-
 }
 
 .bubble-container{
@@ -143,4 +129,6 @@
     border-radius: 10px;
     padding-left: 10px;
     padding-right: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
