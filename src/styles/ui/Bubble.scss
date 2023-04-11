@@ -103,5 +103,9 @@
       animation-duration: 2s;
       animation-fill-mode: forwards;
     }
+
+    .bubble-button__content {
+      visibility: hidden;
+    }
   }
 }

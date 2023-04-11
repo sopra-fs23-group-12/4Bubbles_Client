@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bubble } from 'components/ui/Bubble';
 
 import '../../styles/views/Question.scss';
 
+
+
 export default function Question() {
+
+    const [correctAnswer, setCorrectAnswer] = useState(null);
     const question = "Which river has the most capital cities on it?"
     const answer = [
         "Amazon",
@@ -18,6 +22,19 @@ export default function Question() {
         "answer-item-bottom-right",
         "answer-item-bottom-left",
     ]
+
+    const revealAnswer = () => {
+        setCorrectAnswer(1);
+    }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            revealAnswer();
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, []);
+
+
     return (
         <div className="question-wrapper">
             <div className="question-item">
@@ -27,7 +44,7 @@ export default function Question() {
                 return <div key={index} className={cssClasses[index]}>
                     <input type="radio" id={item} name="fav_language" value={item} />
                     <label htmlFor={item}>
-                        <Bubble className="bubble-button--answer">{item}</Bubble>
+                        <Bubble className={(correctAnswer === null | index === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                     </label>
                 </div>
             })}
