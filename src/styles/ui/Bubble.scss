@@ -1,6 +1,14 @@
 @import 'styles/theme';
 
+@keyframes splash {
+  from {
+    opacity: 1;
+  }
 
+  to {
+    opacity: 0;
+  }
+}
 
 .bubble-button {
   &:hover {
@@ -18,7 +26,6 @@
     }
   }
 
-  
 
   transition: all 0.3s ease;
   display: inline-block;
@@ -49,5 +56,56 @@
     text-align: center;
     line-height: 1;
 
+  }
+
+  &--question,
+  &--answer {
+    .bubble-button__content {
+      padding: 15px;
+      font-size: 21px;
+    }
+
+    img {
+      width: 300px;
+      transform: scale(1);
+      transition: transform ease-in-out 0.3s;
+    }
+  }
+
+  &--answer {
+    img {
+      width: 100px;
+    }
+  }
+
+
+  &__splash {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+  }
+
+  &--splashed {
+    img {
+      visibility: hidden;
+    }
+
+    .bubble-button__splash {
+      display: block;
+      visibility: visible;
+      transform: scale(2);
+      transition: all ease-in-out 0.2;
+      animation-name: splash;
+      animation-duration: 2s;
+      animation-fill-mode: forwards;
+    }
+
+    .bubble-button__content {
+      visibility: hidden;
+    }
   }
 }

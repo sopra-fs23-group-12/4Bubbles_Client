@@ -1,0 +1,168 @@
+.question-wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+
+    input {
+        display: none;
+    }
+
+    input[type="radio"]:checked+label {
+        background: transparent;
+
+        .bubble-button__splash {
+            display: block;
+        }
+
+        .bubble-button__content {
+            text-decoration: underline;
+        }
+    }
+
+
+    @keyframes example {
+        0% {
+            transform: translate(0, 5px) scale(1);
+        }
+
+        50% {
+            transform: translate(0, -5px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0, 5px) scale(1);
+        }
+    }
+
+    @keyframes wiggle {
+        0% {
+            transform: translate(0, 5px) scale(1);
+        }
+
+        50% {
+            transform: translate(0, -5px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0, 5px) scale(1);
+        }
+    }
+
+    .question-item {
+        grid-column-start: 3;
+        grid-column-end: 5;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bubble-button {
+            animation-name: wiggle;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-delay: 1s;
+        }
+    }
+
+    .answer-item-top-left {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bubble-button {
+            animation-name: example;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-delay: 2s;
+        }
+    }
+
+    .answer-item-top-right {
+        grid-column-start: 5;
+        grid-column-end: 7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bubble-button {
+            animation-name: example;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-delay: 1.5s;
+        }
+    }
+
+    .answer-item-bottom-right {
+        grid-column-start: 5;
+        grid-column-end: 7;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bubble-button {
+            animation-name: example;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-delay: 0.5s;
+        }
+    }
+
+
+    .answer-item-bottom-left {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bubble-button {
+            animation-name: example;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+    }
+}
+
+.pop-up {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+
+    &__container {
+        display: inline-block;
+        background: #01152D;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 350px;
+        color: white;
+        font-family: 'Jockey One';
+        font-size: 24px;
+        line-height: 2;
+        display: flex;
+        flex-direction: column;
+
+        span {
+            margin-bottom: 15px;
+        }
+    }
+}
