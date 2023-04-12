@@ -39,16 +39,27 @@ FormField.propTypes = {
 };
 
 
+
 const Websockets = props => {
+
+
     const history = useHistory();
     const [error, setError] = useState("");
     const [inputMessage, setInputMessage] = useState("");
     const [displayMessage, setDisplayMessage] = useState("");
     const [room, setRoom] = useState("a");
 
+
+    //because input message is updated, and a state variable of the websockets component, the component is rerendered and the connection restablished
+    //this is the dynamic version of the connect. It uses the state variable 'room' and is therefore inside this component, which unfortunately is rerendered every time input message is changed
+
     //add the url of the backend to make the connection to the server
     const url = format("http://localhost:9092?room={0}", room);
     const socket = io.connect(url,{transports: ['websocket'], upgrade: false, room: room});
+    console.log("socket acknowledged as connected:");
+    console.log(socket.connected);
+
+
 
 
     const displayDisplayMessage = () =>{
@@ -65,15 +76,19 @@ const Websockets = props => {
 
     const sendMessage = () =>{
         console.log("send message method reached")
-        socket.emit("send_message", {
+        socket.emit( {client: "CLIENT", data: "hellloo"}
+            /*"send_message", {
                 room: room,
                 content: inputMessage,
                 messageType: "CLIENT",
-        })
+           }
+             */
+        )
     }
 
     //everytime an event happens triggered by the socket, this function is called
     useEffect(async () =>{
+        console.log("use effect executed")
         socket.on("receive_message", (data) =>{
             console.log("message received")
             alert(data.message)
@@ -86,15 +101,10 @@ const Websockets = props => {
             <div className="input container">
                 <div className="input form">
                     <h1>Websockets test environment</h1>
-                    <FormField
-                        label="message"
-                        value={inputMessage}
-                        onChange={message => setInputMessage(message)}
-                    />
-                    {error ? <div className="error-msg">{error}</div> : null}
+
                     <div className="login button-container">
                         <Button
-                            onClick={() => displayDisplayMessage()}
+                            onClick={() => sendMessage()}
                             width="100%"
                         >
                             display
@@ -102,10 +112,7 @@ const Websockets = props => {
                     </div>
                 </div>
             </div>
-            <div id={'message-container'} >
 
-                <p> value = {displayMessage} </p>
-            </div>
         </BaseContainer>
     );
 };
