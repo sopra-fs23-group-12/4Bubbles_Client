@@ -27,11 +27,12 @@
     margin-top: 0.5em;
     //margin: auto;
     margin-left: 40%;
+
     //margin-right: 10%;
     img {
       height: 100%
     }
-    background: transparentize(white, 0.85); //TODO
+
   }
 
   &.button-container-left {
@@ -48,7 +49,6 @@
       height: 100%
     }
 
-    background: transparentize(white, 0.85); //TODO
   }
 
 
@@ -65,14 +65,14 @@
 }
 
 .header {
-  &.title{
+  &.title {
     visibility: hidden;
     height: 0px;
   }
-  &.container{
+
+  &.container {
     visibility: hidden;
     height: 0px;
-     }
+  }
 
 }
-
