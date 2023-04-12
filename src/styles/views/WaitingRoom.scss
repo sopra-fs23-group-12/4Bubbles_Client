@@ -1,0 +1,134 @@
+@import 'styles/theme';
+
+.waiting-room-wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+    margin: auto;
+
+
+    input {
+        display: none;
+    }
+
+    @keyframes example {
+        0% {
+            transform: translate(0, 5px) scale(1);
+        }
+
+        50% {
+            transform: translate(0, -5px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0, 5px) scale(1);
+        }
+    }
+
+    @keyframes wiggle {
+        0% {
+            transform: translate(0, 5px) scale(1);
+        }
+
+        50% {
+            transform: translate(0, -5px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0, 5px) scale(1);
+        }
+    }
+
+    .bubble-item {
+        grid-column-start: 3;
+        grid-column-end: 5;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+        .bubble-button {
+            animation-name: wiggle;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-delay: 1s;
+            
+        }
+    }
+}
+
+.bubble-container{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    img{height: 250px; width: 250px;}
+}
+
+.room-code{
+    margin-top: 1em;
+    margin-left: 0.9em;
+    color: white;
+    font-family: 'Jockey One';
+    font-size: 45px;
+    top: 0.4em;
+    position: absolute;
+    text-align: center;
+    //background: transparentize(white, 0.85); 
+}
+
+.game-info{
+    margin-top: 13em;
+    margin-left: 2em;
+    font-family: 'Roboto';
+    font-size: 18px;
+    color: white;
+    line-height: 32px;
+    position: relative;
+    //background: transparentize(white, 0.85); 
+    width: 300px;
+
+}
+.player-list{
+    border-radius: 10px;
+}
+
+.player-info{
+    margin-top: 1em;
+    position: absolute;
+    left: 29em;
+    font-family: 'Jockey One';
+    font-size: 20px;
+    color: white;
+    top: 1.5em;
+}
+
+.exit-button{
+    margin-left: 15px;
+    top: 15px;
+    position: absolute;
+    color: white;
+    font-family: 'Jockey One';
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.player{
+    margin-top: 10px;
+    background-color: rgba(1, 21, 45, 0.85);
+    line-height: 32px;
+    box-shadow: $dropShadow;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
