@@ -46,7 +46,6 @@ const Websockets = props => {
     const history = useHistory();
     const [error, setError] = useState("");
     const [inputMessage, setInputMessage] = useState("");
-    const [displayMessage, setDisplayMessage] = useState("");
     const [room, setRoom] = useState("a");
 
 
@@ -60,19 +59,6 @@ const Websockets = props => {
 
 
 
-
-    const displayDisplayMessage = () =>{
-        console.log("display message method reached")
-        setDisplayMessage(inputMessage);
-        try{
-            sendMessage();
-        }catch (Exception){
-            console.log("send message throws an error")
-        }
-
-        setInputMessage('');
-    }
-
     const sendMessage = () =>{
         console.log("socket acknowledged as connected:");
         console.log(socket.connected);
@@ -80,17 +66,14 @@ const Websockets = props => {
             message : "hello this is the client",
             room: room,
             content: inputMessage,
-            type: "CLIENT"}
-        )
-
-
+            type: "CLIENT"})
     }
      
 
 
-    //everytime an event happens triggered by the socket, this function is called
+
     useEffect(async () =>{
-        console.log("use effect executed")
+        //everytime an event happens triggered by the socket, this function is called
         socket.on("get_message", (data) =>{
             console.log("message received:")
             console.log(data.message)
@@ -119,8 +102,5 @@ const Websockets = props => {
     );
 };
 
-/**
- * You can get access to the history object's properties via the withRouter.
- * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
- */
+
 export default Websockets;
