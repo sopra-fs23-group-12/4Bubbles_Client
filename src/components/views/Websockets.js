@@ -56,8 +56,7 @@ const Websockets = props => {
     //add the url of the backend to make the connection to the server
     const url = format("http://localhost:9092?room={0}", room);
     const socket = io.connect(url,{transports: ['websocket'], upgrade: false, room: room});
-    console.log("socket acknowledged as connected:");
-    console.log(socket.connected);
+
 
 
 
@@ -75,23 +74,26 @@ const Websockets = props => {
     }
 
     const sendMessage = () =>{
-        console.log("send message method reached")
-        socket.emit( {client: "CLIENT", data: "hellloo"}
-            /*"send_message", {
-                room: room,
-                content: inputMessage,
-                messageType: "CLIENT",
-           }
-             */
+        console.log("socket acknowledged as connected:");
+        console.log(socket.connected);
+        socket.emit('send_message', {
+            message : "hello this is the client",
+            room: room,
+            content: inputMessage,
+            type: "CLIENT"}
         )
+
+
     }
+     
+
 
     //everytime an event happens triggered by the socket, this function is called
     useEffect(async () =>{
         console.log("use effect executed")
-        socket.on("receive_message", (data) =>{
-            console.log("message received")
-            alert(data.message)
+        socket.on("get_message", (data) =>{
+            console.log("message received:")
+            console.log(data.message)
         })
     })
 
