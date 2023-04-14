@@ -26,7 +26,7 @@ export default function Select(props) {
                     return <option key={item.value} value={item.value}>{item.name}</option>;
                 })}
             </select>
-            <div onClick={toggle} className={isOpen ? "select-selected select-arrow-active is-open" : "select-selected"} > {value === undefined ? "Choose a question topic" : value}<span className="arrow-wrapper"><img src="/arrow.png" alt="arrow" /></span></div>
+            <div onClick={toggle} className={isOpen ? "select-selected select-arrow-active is-open" : "select-selected"} > {value === undefined ? "Choose a question topic" : value}<span className="arrow-wrapper"><img src="./media/arrow.png" alt="arrow" /></span></div>
             <div className={isOpen ? " select-items" : "select-items select-hide"}>
                 {items.map((item) => {
                     return <div className={item.value === value ? "is-active" : null} key={item.value} onClick={() => select(item.value)}>{item.name}</div>;
