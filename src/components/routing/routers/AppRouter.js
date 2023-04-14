@@ -10,7 +10,7 @@ import GameRoom from "components/views/GameRoom";
 import WaitingRoom from "components/views/WaitingRoom";
 import JoinGameRoom from "components/views/JoinGameRoom";
 import Question from "components/views/Question";
-
+import Websockets from "../../views/Websockets";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -23,6 +23,9 @@ import Question from "components/views/Question";
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      <Route exact path="/websockets">
+        <Websockets />
+      </Route>
       <Switch>
         <Route path="/welcomepage">
           <GameGuard>
