@@ -22,3 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .idea
+.vscode
+.sonar_lock
+report-task.txt
