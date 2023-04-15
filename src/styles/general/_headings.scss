@@ -9,7 +9,6 @@ h1 {
     line-height: 2;
     margin: 0;
     text-align: center;
-    ;
 
     @include breakpoint('large') {
         font-size: 64px;

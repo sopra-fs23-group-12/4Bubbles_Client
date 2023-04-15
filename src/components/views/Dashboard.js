@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { api, handleError, headers } from 'helpers/api';
-import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
 import { useHistory, Link } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
@@ -38,7 +37,6 @@ const Dashboard = () => {
 
   const logout = () => {
     logoutRequest(history);
-    //history.push("/login");
   }
 
   const joinRoom = () => {
@@ -86,21 +84,6 @@ const Dashboard = () => {
     }
     fetchData();
   }, []);
-
-  let content = <Spinner />;
-
-  /* if (users) {
-    content = (
-      <div className="game">
-        <ul className="game user-list">
-          {users.map(user => (
-            <Player user={user} key={user.id} />
-          ))}
-        </ul>
-        
-      </div>
-    );
-  } */
 
   return (
     <BaseContainer className="game container">
