@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import io from "socket.io-client";
 import {useEffect} from "react";
 import { format } from 'react-string-format';
+import {getDomainSocket} from "../../helpers/getDomainSocket";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -46,18 +47,22 @@ const Websockets = props => {
     const history = useHistory();
     const [error, setError] = useState("");
     const [inputMessage, setInputMessage] = useState("");
-    const [room, setRoom] = useState("a");
+    const [room, setRoom] = useState("1");
+    const [counter, setCounter] = useState('lets count');
 
 
-    //because input message is updated, and a state variable of the websockets component, the component is rerendered and the connection restablished
-    //this is the dynamic version of the connect. It uses the state variable 'room' and is therefore inside this component, which unfortunately is rerendered every time input message is changed
-
-    //add the url of the backend to make the connection to the server
-    const url = format("http://localhost:9092?room={0}", room);
+    //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
+    const url = format(getDomainSocket() + "?room={0}", room);
     const socket = io.connect(url,{transports: ['websocket'], upgrade: false, room: room});
 
 
-
+    const startTimer = () => {
+        console.log("timer started");
+        socket.emit('start_timer',{
+            message : "",
+            room: room,
+            type: "CLIENT"})
+    }
 
     const sendMessage = () =>{
         console.log("socket acknowledged as connected:");
@@ -75,8 +80,18 @@ const Websockets = props => {
     useEffect(async () =>{
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_message", (data) =>{
-            console.log("message received:")
+            console.log("get message received:")
             console.log(data.message)
+        })
+
+        socket.on("timer_message", (data) =>{
+            console.log("timer message received:")
+            console.log(data.message)
+        })
+
+        socket.on("timer_count", (data) =>{
+            console.log(data.message)
+            setCounter(data.message);
         })
     })
 
@@ -95,6 +110,22 @@ const Websockets = props => {
                             display
                         </Button>
                     </div>
+
+                    <div className= "button">
+                        <Button
+                            onClick={() => startTimer()}
+                            width="100%"
+                        >
+                            start Timer
+                        </Button>
+                    </div>
+
+                    <div className="counter room-code">
+                        <div className = "counter room-code">
+                            {counter}
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
