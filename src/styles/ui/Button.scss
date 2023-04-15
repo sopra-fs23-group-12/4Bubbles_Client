@@ -55,4 +55,10 @@
   /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
   ,
   #F1B04E;
+
+  &__continue {
+    width: auto;
+    text-transform: capitalize;
+    display: block;
+  }
 }
