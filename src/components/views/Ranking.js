@@ -66,6 +66,8 @@ export default function Ranking(props) {
 
     return (
         <div className="ranking-page">
+            {!final ? <div className="exit-button" onClick={() => history.push('/welcomepage')}>exit</div> : null}
+            
             <h1>{final ? "🏁 final ranking 🏁" : "intermediate ranking 🔥"}</h1>
             <div className="ranking-wrapper">
                 {users ? users.map((item, i) => {
@@ -90,12 +92,12 @@ export default function Ranking(props) {
                 :
                 <div className="align-center">
                     <Button
-                        onClick={() => history.push('/question')}
+                        onClick={() => history.push('/gameroom')}
                         className="primary-button__continue"
                     >play again
                     </Button>
                     <Button
-                        onClick={() => history.push('/question')}
+                        onClick={() => history.push('/welcomepage')}
                         className="primary-button__continue"
                     >exit
                     </Button>
