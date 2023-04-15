@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import { api } from 'helpers/api';
 import User from 'models/User';
 import { useHistory, Link } from 'react-router-dom';
@@ -39,8 +39,6 @@ FormField.propTypes = {
     onChange: PropTypes.func
 };
 
-
-
 const Websockets = props => {
 
 
@@ -51,9 +49,9 @@ const Websockets = props => {
     const [counter, setCounter] = useState('lets count');
 
 
-    //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
+//add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
     const url = format(getDomainSocket() + "?room={0}", room);
-    const socket = io.connect(url,{transports: ['websocket'], upgrade: false, room: room});
+    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, room: room }), []);
 
 
     const startTimer = () => {
@@ -73,11 +71,11 @@ const Websockets = props => {
             content: inputMessage,
             type: "CLIENT"})
     }
-     
 
 
 
-    useEffect(async () =>{
+
+    useEffect(async () => {
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_message", (data) =>{
             console.log("get message received:")
@@ -93,7 +91,7 @@ const Websockets = props => {
             console.log(data.message)
             setCounter(data.message);
         })
-    })
+    }, [])
 
 
     return (
