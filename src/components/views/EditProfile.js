@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { api, handleError, headers } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
-import { useParams } from 'react-router-dom';
+
 
 const FormField = props => {
   return (
