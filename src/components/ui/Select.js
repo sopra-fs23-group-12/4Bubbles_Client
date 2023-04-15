@@ -7,13 +7,11 @@ export default function Select(props) {
 
     const toggle = () => {
         setIsOpen(!isOpen);
-        console.log(isOpen);
     }
 
     const select = (item) => {
-        console.log(item);
         setIsOpen(!isOpen);
-        document.getElementById('test').value = item;
+        document.getElementById('select-box').value = item;
         onChange(item);
     }
 
@@ -21,7 +19,7 @@ export default function Select(props) {
 
     return (
         <div className="custom-select">
-            <select id="test" onChange={onChange} value={value}>
+            <select id="select-box" onChange={onChange} value={value}>
                 {items.map((item) => {
                     return <option key={item.value} value={item.value}>{item.name}</option>;
                 })}

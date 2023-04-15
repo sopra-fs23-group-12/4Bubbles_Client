@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 import 'styles/views/Gameroom.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -61,7 +61,8 @@ const gameMode = [
 ]
 
 const questionTopic = [];
-getTopics();
+
+
 
 const numOfQuestions = [
     {
@@ -86,6 +87,13 @@ const numOfQuestions = [
 const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
     const navigate = useHistory();
+
+    useEffect(() => {
+        getTopics()
+    
+    }, [] )
+
+    
     const doSubmit = async () => {
         try{
             const requestBody = JSON.stringify({

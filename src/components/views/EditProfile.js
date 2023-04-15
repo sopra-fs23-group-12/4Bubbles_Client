@@ -78,12 +78,10 @@ const EditProfile = (props) => {
       }
       const response = await api.put('/users/' + id, requestBody, headers);
       console.log(response.status);
-      //setError("Yey, you updated your profile!");
       history.push(`/profile/` + id);
 
 
     } catch (error) {
-      //alert(`Something went wrong during the login: \n${handleError(error)}`);
       setError(error.response.data.message);
     }
   };
