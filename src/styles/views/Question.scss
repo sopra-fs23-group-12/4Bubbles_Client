@@ -149,13 +149,12 @@
     backdrop-filter: blur(5px);
 
     &__container {
-        display: inline-block;
         background: #01152D;
         padding: 20px;
         border-radius: 10px;
         max-width: 350px;
         color: white;
-        font-family: 'Jockey One';
+        font-family: 'Jockey One', sans-serif;
         font-size: 24px;
         line-height: 2;
         display: flex;
