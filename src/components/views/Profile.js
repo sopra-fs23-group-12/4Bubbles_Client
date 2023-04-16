@@ -30,7 +30,7 @@ const ShowProfile = (props) => {
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [user, setUser] = useState(null);
-  const currentUser = localStorage.getItem('userId');
+  //const currentUser = localStorage.getItem('userId');
 
 
 
@@ -89,10 +89,10 @@ const ShowProfile = (props) => {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     let creationDate = new Date(user.creationDate)
-    let birthdate = null;
-    if (user.birthday != null) {
-      birthdate = new Date(user.birthday)
-    }
+    // let birthdate = null;
+    // if (user.birthday != null) {
+    //   birthdate = new Date(user.birthday)
+    // }
 
     content = (
       <div className="profile-page-wrapper">
