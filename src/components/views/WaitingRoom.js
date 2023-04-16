@@ -1,8 +1,9 @@
-//import { useHistory } from 'react-router-dom';
 import 'styles/views/WaitingRoom.scss';
 import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
+import React, { } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
 import {format} from "react-string-format";
 import io from "socket.io-client";
@@ -65,7 +66,6 @@ const WaitingRoom = (props) => {
             <div className="player-info">
                 already joined:
                 <div className="player-list">
-
                 </div>
             </div>
 

@@ -56,12 +56,12 @@
             animation-iteration-count: infinite;
             animation-timing-function: ease-in-out;
             animation-delay: 1s;
-            
+
         }
     }
 }
 
-.bubble-container{
+.bubble-container {
     position: absolute;
     margin: auto;
     top: 0;
@@ -70,14 +70,18 @@
     left: 0;
     width: 250px;
     height: 250px;
-    img{height: 250px; width: 250px;}
+
+    img {
+        height: 250px;
+        width: 250px;
+    }
 }
 
-.room-code{
+.room-code {
     margin-top: 1em;
     margin-left: 0.9em;
     color: white;
-    font-family: 'Jockey One';
+    font-family: 'Jockey One', sans-serif;
     font-size: 45px;
     top: 0.4em;
     position: absolute;
@@ -85,10 +89,10 @@
     //background: transparentize(white, 0.85); 
 }
 
-.game-info{
+.game-info {
     margin-top: 13em;
     margin-left: 2em;
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     font-size: 18px;
     color: white;
     line-height: 32px;
@@ -97,31 +101,32 @@
     width: 300px;
 
 }
-.player-list{
+
+.player-list {
     border-radius: 10px;
 }
 
-.player-info{
+.player-info {
     margin-top: 1em;
     position: absolute;
     left: 29em;
-    font-family: 'Jockey One';
+    font-family: 'Jockey One', sans-serif;
     font-size: 20px;
     color: white;
     top: 1.5em;
 }
 
-.exit-button{
+.exit-button {
     margin-left: 15px;
     top: 15px;
     position: absolute;
     color: white;
-    font-family: 'Jockey One';
+    font-family: 'Jockey One', sans-serif;
     font-size: 20px;
     text-decoration: underline;
 }
 
-.player{
+.player {
     margin-top: 10px;
     background-color: rgba(1, 21, 45, 0.85);
     line-height: 32px;

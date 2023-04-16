@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { api, handleError, headers } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
-import { useParams } from 'react-router-dom';
+
 
 const FormField = props => {
   return (
@@ -78,12 +78,10 @@ const EditProfile = (props) => {
       }
       const response = await api.put('/users/' + id, requestBody, headers);
       console.log(response.status);
-      //setError("Yey, you updated your profile!");
       history.push(`/profile/` + id);
 
 
     } catch (error) {
-      //alert(`Something went wrong during the login: \n${handleError(error)}`);
       setError(error.response.data.message);
     }
   };

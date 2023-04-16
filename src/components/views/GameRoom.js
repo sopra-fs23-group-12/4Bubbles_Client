@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 import 'styles/views/Gameroom.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -30,6 +30,21 @@ function reducer(state, action) {
     }
 }
 
+async function getTopics(){
+    const response = await api.get("/categories", headers)
+    console.log("Respones: ",response.data)
+    response.data.forEach(element => {
+        const topic = {
+            name: element.topicName, 
+            value: element.topicName,
+            id: element.id
+        }
+        questionTopic.push(topic);
+    });
+    console.log("Complete list: ",questionTopic)
+    return questionTopic;
+}
+
 const gameMode = [
     {
         name: 'standard',
@@ -45,36 +60,9 @@ const gameMode = [
     },
 ]
 
-const questionTopic = [
-    {
-        name: 'general knowledge',
-        value: 'general knowledge',
-    },
-    {
-        name: 'art',
-        value: 'art',
-    },
-    {
-        name: 'history',
-        value: 'history',
-    },
-    {
-        name: 'food and drinks',
-        value: 'food and drinks',
-    },
-    {
-        name: 'sports',
-        value: 'sports',
-    },
-    {
-        name: 'geography',
-        value: 'geography',
-    },
-    {
-        name: 'nature',
-        value: 'nature',
-    },
-]
+const questionTopic = [];
+
+
 
 const numOfQuestions = [
     {
@@ -100,10 +88,17 @@ const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
     const navigate = useHistory();
 
+    useEffect(() => {
+        getTopics()
+    
+    }, [] )
+
+    
     const doSubmit = async () => {
         try{
             const requestBody = JSON.stringify({
                 questionTopic: reducerState.topic,
+                questionTopicId: questionTopic.find(topic => topic.name === reducerState.topic).id,
                 gameMode: reducerState.gamemode,
                 numOfQuestions: reducerState.numOfQuestions,
                 leaderId: localStorage.getItem("userId")
@@ -119,7 +114,7 @@ const GameRoom = props => {
         }
     }
 
-
+    
     return (
         <BaseContainer>
             <div className="gameroom-container">
