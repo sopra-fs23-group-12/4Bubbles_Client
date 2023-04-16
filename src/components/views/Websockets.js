@@ -45,20 +45,20 @@ const Websockets = props => {
     const history = useHistory();
     const [error, setError] = useState("");
     const [inputMessage, setInputMessage] = useState("");
-    const [room, setRoom] = useState("1");
+    const [roomCode, setRoom] = useState("1");
     const [counter, setCounter] = useState('lets count');
 
 
 //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
-    const url = format(getDomainSocket() + "?room={0}", room);
-    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, room: room }), []);
+    const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    const socket =  io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
 
 
     const startTimer = () => {
         console.log("timer started");
         socket.emit('start_timer',{
             message : "",
-            room: room,
+            roomCode: roomCode,
             type: "CLIENT"})
     }
 
@@ -67,7 +67,7 @@ const Websockets = props => {
         console.log(socket.connected);
         socket.emit('send_message', {
             message : "hello this is the client",
-            room: room,
+            roomCode: roomCode,
             content: inputMessage,
             type: "CLIENT"})
     }

@@ -9,12 +9,20 @@ import RadioButtons from 'components/ui/RadioButtons';
 import Select from 'components/ui/Select';
 import BackIcon from 'components/ui/BackIcon';
 import {api, headers, handleError} from 'helpers/api';
+import {format} from "react-string-format";
+import {getDomainSocket} from "../../helpers/getDomainSocket";
+import io from "socket.io-client";
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
+
+// establish a websocket connection (joins namespace for only the sender client)
+const url = format(getDomainSocket() );
+const socket = io.connect(url,{transports: ['websocket'], upgrade: false});
+
 
 
 function reducer(state, action) {
@@ -105,6 +113,20 @@ const GameRoom = props => {
             })
             console.log(requestBody)
             const response = await api.post('/createRoom', requestBody, headers)
+            const roomCode = response.data.roomCode.toString()
+            localStorage.setItem("roomCode", roomCode);
+            console.log("local storage roomCode set to:", response.data.roomCode.toString());
+
+            const userId = localStorage.getItem("userId");
+            const bearerToken = localStorage.getItem("token");
+
+            socket.emit('join_room', {
+                userId : userId,
+                bearerToken : bearerToken,
+                roomCode: roomCode,
+                type: "CLIENT"})
+
+
             navigate.push({
                 pathname : "/waitingroom",
                 state: response.data

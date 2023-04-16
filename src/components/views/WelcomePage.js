@@ -24,6 +24,7 @@ const WelcomePage = props => {
     }
 
     const logout = () => {
+        localStorage.clear();
         logoutRequest(history);
     }
 
