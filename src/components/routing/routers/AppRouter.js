@@ -11,6 +11,7 @@ import WaitingRoom from "components/views/WaitingRoom";
 import JoinGameRoom from "components/views/JoinGameRoom";
 import Question from "components/views/Question";
 import Ranking from "components/views/Ranking";
+import ObscurePage from "components/views/ObscurePage";
 
 /**
  * Main router of your application.
@@ -34,6 +35,9 @@ const AppRouter = () => {
           <GameGuard>
             <GameRoom />
           </GameGuard>
+        </Route>
+        <Route path= "/obscurePage">
+          <ObscurePage/>
         </Route>
         <Route path="/waitingroom">
           <GameGuard>
