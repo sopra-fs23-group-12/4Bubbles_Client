@@ -46,10 +46,10 @@ export default function Question() {
                 <Bubble onClick={revealAnswer} className="bubble-button--question">{question}</Bubble>
             </div>
             {answer.map((item, index) => {
-                return <div key={index} className={cssClasses[index]}>
+                return <div key={item} className={cssClasses[index]}>
                     <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => setRadioValue(item)} />
                     <label htmlFor={item}>
-                        <Bubble className={(correctAnswer === null | index === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                        <Bubble className={(correctAnswer === null || index === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                     </label>
                 </div>
             })}

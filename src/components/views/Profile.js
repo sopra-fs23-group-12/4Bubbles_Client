@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { api, handleError, headers } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Profile.scss";
 import User from 'models/User';
-import { useParams } from 'react-router-dom';
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -59,13 +58,6 @@ const ShowProfile = (props) => {
 
         // Get the returned users and update the state.
         setUser(response.data[0]);
-
-        /*
-        if (response.data[0].birthdate != null) {
-          let birthday = new Date(response.data[0].birthday)
-          birthday = birthday.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric' })
-          setBirthday(birthday);
-        }*/
 
 
         // This is just some data for you to see what is available.

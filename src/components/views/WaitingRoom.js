@@ -1,8 +1,6 @@
-//import { useHistory } from 'react-router-dom';
 import 'styles/views/WaitingRoom.scss';
 import React, { } from 'react';
-import { useLocation } from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
 
 
@@ -25,7 +23,7 @@ const WaitingRoom = (props) => {
                 <div className="player-list">
                     {data.state.members.map((member) => {
                         return (
-                            <div className="player">{member.username}</div>
+                            <div key={member.username} className="player">{member.username}</div>
                     )})}
                 </div>
             </div>
