@@ -5,7 +5,7 @@ import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import "styles/views/Game.scss";
+import "styles/views/Profile.scss";
 import User from 'models/User';
 import { useParams } from 'react-router-dom';
 
@@ -103,13 +103,34 @@ const ShowProfile = (props) => {
     }
 
     content = (
-      <div className="game">
-        <h2>{user.username}</h2>
-        <div>Creation Date: {creationDate.toLocaleDateString('de-DE', options)}</div>
-        <div>Birthday: {birthdate ? birthdate.toLocaleDateString('de-DE', options) : "-"}</div>
+      <div className="profile-page-wrapper">
+
+        <div className ="username"> 
+        {user.username}
+        </div>
+
+        <div className = "info" >
+        overall ranking: 
+        <div className = "infoBox"> ranking </div>
+        </div>
+
+        <div className = "info" >
+        points scored: 
+        <div className = "infoBox"> points </div>
+        </div>
+
+        <div className = "info" >
+        games played: 
+        <div className = "infoBox"> games </div>
+        </div>
+
+        <div>
+          Creation Date: 
+          <br/>{creationDate.toLocaleDateString('de-DE', options)}</div>
+        {/* <div>Birthday: {birthdate ? birthdate.toLocaleDateString('de-DE', options) : "-"}</div> */}
         <div>Status: {user.status}</div>
 
-        {id === currentUser ?
+        {/* {id === currentUser ?
           <div className="login button-container">
             <Button
               onClick={() => history.push(`/profile/` + id + `/edit`)}
@@ -117,14 +138,13 @@ const ShowProfile = (props) => {
             >
               Edit profile
             </Button>
-          </div> : null}
+          </div> : null} */}
 
-        <div className="login button-container">
+        <div className="button">
           <Button
             onClick={() => history.push(`/welcomepage`)}
             width="100%"
-          >
-            Back to overview
+          >Back 
           </Button>
         </div>
 

@@ -3,7 +3,7 @@ import { GameGuard } from "components/routing/routeProtectors/GameGuard";
 import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
-import ShowProfile from "components/views/ShowProfile";
+import ShowProfile from "components/views/Profile";
 import EditProfile from "components/views/EditProfile";
 import WelcomePage from "../../views/WelcomePage";
 import GameRoom from "components/views/GameRoom";
