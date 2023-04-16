@@ -10,6 +10,7 @@ import GameRoom from "components/views/GameRoom";
 import WaitingRoom from "components/views/WaitingRoom";
 import JoinGameRoom from "components/views/JoinGameRoom";
 import Question from "components/views/Question";
+import Ranking from "components/views/Ranking";
 import ObscurePage from "components/views/ObscurePage";
 
 /**
@@ -70,6 +71,12 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/question">
           <Question />
+        </Route>
+        <Route exact path="/ranking">
+          <Ranking final={false} />
+        </Route>
+        <Route exact path="/final-ranking">
+          <Ranking final={true} />
         </Route>
         <Route exact path="/">
           <Redirect to="/login" />
