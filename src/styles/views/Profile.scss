@@ -1,0 +1,85 @@
+@import 'styles/theme';
+
+
+.profile-page-wrapper{
+    width: 115%;
+    height: 580px;
+    //display: grid;
+    //margin: auto;
+    //background: transparentize(white, 0.85); 
+    // //position: relative;
+    // margin-left: auto;
+    // margin-right: auto;
+    // //width: 80%;
+    // //height: 80%;
+    //  //margin: 0 auto;
+   //margin: 0 -15px 0 -15px;
+
+.username{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Jockey One';
+    margin-bottom: 40px;
+}
+
+.info{
+    color: white;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoBox{
+    margin-bottom: 10px;
+    background-color: rgba(1, 21, 45, 0.85);
+    line-height: 32px;
+    box-shadow: $dropShadow;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100px;
+    //margin: auto;
+    right: 0;
+    text-align: center;
+    color: white;
+    //font-size: 5;
+}
+
+.button{
+    box-shadow: $dropShadow;
+    //align-items: center;
+    //position: fixed;
+    //width: relative;
+    //height: absolute;
+    
+    //top: 70%; 
+    
+    //justify-content: center;
+    //width: 100%;
+    // margin-left: relative;
+    // margin-right: relative;
+    //position: center;
+    //bottom: 30px;
+    
+    //width: 310px;
+    //display:grid;
+    //margin: auto;
+    //margin-top: 120%;
+    //margin-bottom: 10%;
+//     margin-left: auto;
+//   padding-left: 15px;
+//   margin-right: auto;
+//   padding-right: 15px;
+//margin: 0.5em 0;
+    // margin-left: 15%;
+    // margin-right: 15%;
+    margin-top: 50%;
+    //padding-bottom: 5px;
+    // position: absolute;
+    // bottom: 90px;
+}
+
+}
