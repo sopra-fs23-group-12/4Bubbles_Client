@@ -1,5 +1,5 @@
 import 'styles/views/WaitingRoom.scss';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
 import {format} from "react-string-format";
@@ -12,6 +12,7 @@ import {Button} from "../ui/Button";
 const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
+    const [members, setMembers] = useState(data.state.members)
     console.log("data:", data);
 
 
@@ -49,10 +50,12 @@ const WaitingRoom = (props) => {
             console.log(incomingData.message)
         })
 
+        //returns a list of members since that is the only thing in the state that changes
         socket.on("new_player_joined", (incomingData) => {
             console.log("new_player_joined")
+            console.log(data);
             console.log(incomingData);
-            data.state = incomingData;
+            setMembers(incomingData);
             //TODO; it seems that the action actually takes place, but the member list is not rerendered
         })
 
@@ -64,7 +67,7 @@ const WaitingRoom = (props) => {
             <div className="player-info">
                 already joined:
                 <div className="player-list">
-                    {data.state.members.map((member) => {
+                    {members.map((member) => {
                         return (
                             <div key={member.username} className="player">{member.username}</div>
                         )})}

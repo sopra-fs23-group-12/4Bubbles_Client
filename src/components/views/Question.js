@@ -7,6 +7,13 @@ import '../../styles/views/Question.scss';
 
 export default function Question() {
 
+    //websockets need to communicate:
+    // timing
+    // votes
+    // questions (initial)
+    // questions (reveal)
+    // bubble sizes?
+
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
