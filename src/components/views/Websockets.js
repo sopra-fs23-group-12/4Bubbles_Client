@@ -11,12 +11,7 @@ import {useEffect} from "react";
 import { format } from 'react-string-format';
 import {getDomainSocket} from "../../helpers/getDomainSocket";
 
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
+
 const FormField = props => {
     return (
         <div className="display field">
@@ -39,17 +34,56 @@ FormField.propTypes = {
     onChange: PropTypes.func
 };
 
+    /*
+    this is a demo side for the websockets with socketio client implementation
+
+    there are three main socket.io functionalities:
+        - joining a namespace (="room")
+        - emitting an event to the server
+        - receiving an event from the server
+
+
+    joining an event:
+
+        io.connect
+
+        we need to specify the url we want to connect to. This is done via the getDomainSocket class. Info: Websockets run on port 9092 serverside.
+        The namespace we connect with is specified as URL parameter. This is the URL we send as the request, not the URL in the client browser.
+        The other parameters are part of multiple measures to keep the client from constantly reconnecting. The function returns the socket we can
+        use for further operations on that connection going forward
+
+    emitting an event:
+
+        socket.emit(*"event name"", {*object you want to send*})
+
+        The attributes for .emit have to match the listener in the backend, or they wont be received. The corresponding server listener in the
+        backend will execute the method that is defined for it, when it receives a message with that event name.
+
+
+    receiving an event:
+
+        useEffect(async () => {
+            socket.on(*"event name"*, (data) =>{
+            ...
+            })
+
+        Methods like these have to be specified in useEffect(). They listen for an event/call from the server with the message name they need.
+        Together with an event name, the server might send a Json Data Object, which can be accessed. Upon such a reception, the specified method is executed.
+
+     */
+
+
+
 const Websockets = props => {
 
 
     const history = useHistory();
-    const [error, setError] = useState("");
     const [inputMessage, setInputMessage] = useState("");
     const [roomCode, setRoom] = useState("1");
     const [counter, setCounter] = useState('lets count');
 
 
-//add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
+    //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
     const socket =  io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
 

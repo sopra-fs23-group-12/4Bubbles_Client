@@ -9,6 +9,11 @@ import {Button} from "../ui/Button";
 
 
 
+
+// establish a websocket connection (joins namespace for only the sender client)
+const url = format(getDomainSocket() );
+const socket = io.connect(url,{transports: ['websocket'], upgrade: false});
+
 const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
@@ -16,17 +21,11 @@ const WaitingRoom = (props) => {
     console.log("data:", data);
 
 
-//this should ofc not be constant, the room code is contained in 'data.getRoom()' but that doesnt work for some reason
+    // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
     const roomCode = data.state.roomCode
-    const userId = localStorage.getItem("userId");
-    const bearerToken = localStorage.getItem("token");
-
-// join the namespace for the room that you joined
-// add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
     const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
 
-    console.log("socket request sent to:", roomCode)
 
 
     const startGame = () => {
@@ -40,23 +39,15 @@ const WaitingRoom = (props) => {
         history.push(`/question`);
     }
 
-    //used to receive data from the server
+
     useEffect(async () =>{
-        //everytime an event happens triggered by the socket, this function is called
-
-
-        socket.on("get_message", (incomingData) =>{
-            console.log("get message received:")
-            console.log(incomingData.message)
-        })
 
         //returns a list of members since that is the only thing in the state that changes
-        socket.on("new_player_joined", (incomingData) => {
+        socket.on("joined_players", (incomingData) => {
             console.log("new_player_joined")
-            console.log(data);
-            console.log(incomingData);
+            console.log("new member player list: ", incomingData);
             setMembers(incomingData);
-            //TODO; it seems that the action actually takes place, but the member list is not rerendered
+            data.state.members = incomingData;
         })
 
     })

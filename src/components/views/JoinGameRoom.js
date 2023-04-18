@@ -50,24 +50,16 @@ const JoinGameRoom = () => {
 
   const joinRoom = async () => {
     try {
-      const requestBody = ({
-        roomCode: roomCode,
-        userId: userId
 
-      });
-      console.log("data: ", requestBody);
-
-
-
+      //sending the event + info to the client to join the specified room
+      console.log("emitting join_room to server")
       socket.emit('join_room', {
         userId : userId,
         bearerToken : bearerToken,
         roomCode: roomCode,
         type: "CLIENT"})
 
-      //const response = await api.put('/joinRoom', requestBody, headers);
-      //console.log(response);
-
+      //putting the room Code the user typed in localStorage for later use
       localStorage.setItem("roomCode", roomCode);
 
       
@@ -78,18 +70,17 @@ const JoinGameRoom = () => {
   }
 
   useEffect(async () => {
+
     //everytime an event happens triggered by the socket, this function is called
     socket.on("room_is_joined", (response) =>{
-      console.log("room is joined received received:")
+      console.log("room_is_joined received from the server, response: ")
       console.log(response)
+      // the response should contain a Json Object for the GameRoomDTO, specifying all the room configurations
 
-
-      //T
       history.push({
         pathname: "/waitingroom",
         state: response
       });
-
     })
 
 
