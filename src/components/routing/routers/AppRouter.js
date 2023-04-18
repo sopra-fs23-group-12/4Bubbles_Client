@@ -3,7 +3,7 @@ import { GameGuard } from "components/routing/routeProtectors/GameGuard";
 import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
-import ShowProfile from "components/views/ShowProfile";
+import ShowProfile from "components/views/Profile";
 import EditProfile from "components/views/EditProfile";
 import WelcomePage from "../../views/WelcomePage";
 import GameRoom from "components/views/GameRoom";
@@ -11,6 +11,7 @@ import WaitingRoom from "components/views/WaitingRoom";
 import JoinGameRoom from "components/views/JoinGameRoom";
 import Question from "components/views/Question";
 import Websockets from "../../views/Websockets";
+import Ranking from "components/views/Ranking";
 import ObscurePage from "components/views/ObscurePage";
 
 /**
@@ -74,6 +75,12 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/question">
           <Question />
+        </Route>
+        <Route exact path="/ranking">
+          <Ranking final={false} />
+        </Route>
+        <Route exact path="/final-ranking">
+          <Ranking final={true} />
         </Route>
         <Route exact path="/">
           <Redirect to="/login" />

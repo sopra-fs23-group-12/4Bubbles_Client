@@ -5,7 +5,7 @@ import { Button } from 'components/ui/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import "styles/views/Game.scss";
+import "styles/views/Profile.scss";
 import User from 'models/User';
 
 const Player = ({ user }) => (
@@ -30,7 +30,7 @@ const ShowProfile = (props) => {
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [user, setUser] = useState(null);
-  const currentUser = localStorage.getItem('userId');
+  //const currentUser = localStorage.getItem('userId');
 
 
 
@@ -89,19 +89,40 @@ const ShowProfile = (props) => {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     let creationDate = new Date(user.creationDate)
-    let birthdate = null;
-    if (user.birthday != null) {
-      birthdate = new Date(user.birthday)
-    }
+    // let birthdate = null;
+    // if (user.birthday != null) {
+    //   birthdate = new Date(user.birthday)
+    // }
 
     content = (
-      <div className="game">
-        <h2>{user.username}</h2>
-        <div>Creation Date: {creationDate.toLocaleDateString('de-DE', options)}</div>
-        <div>Birthday: {birthdate ? birthdate.toLocaleDateString('de-DE', options) : "-"}</div>
+      <div className="profile-page-wrapper">
+
+        <div className ="username"> 
+        {user.username}
+        </div>
+
+        <div className = "info" >
+        overall ranking: 
+        <div className = "infoBox"> ranking </div>
+        </div>
+
+        <div className = "info" >
+        points scored: 
+        <div className = "infoBox"> points </div>
+        </div>
+
+        <div className = "info" >
+        games played: 
+        <div className = "infoBox"> games </div>
+        </div>
+
+        <div>
+          Creation Date: 
+          <br/>{creationDate.toLocaleDateString('de-DE', options)}</div>
+        {/* <div>Birthday: {birthdate ? birthdate.toLocaleDateString('de-DE', options) : "-"}</div> */}
         <div>Status: {user.status}</div>
 
-        {id === currentUser ?
+        {/* {id === currentUser ?
           <div className="login button-container">
             <Button
               onClick={() => history.push(`/profile/` + id + `/edit`)}
@@ -109,14 +130,13 @@ const ShowProfile = (props) => {
             >
               Edit profile
             </Button>
-          </div> : null}
+          </div> : null} */}
 
-        <div className="login button-container">
+        <div className="button">
           <Button
             onClick={() => history.push(`/welcomepage`)}
             width="100%"
-          >
-            Back to overview
+          >Back 
           </Button>
         </div>
 
