@@ -30,13 +30,12 @@ const WaitingRoom = (props) => {
 
     const startGame = () => {
 
+        // add a condition that only the leader can click this
         console.log("game started");
         socket.emit('start_game',{
             message : "",
             roomCode: roomCode,
             type: "CLIENT"})
-
-        history.push(`/question`);
     }
 
 
@@ -48,6 +47,11 @@ const WaitingRoom = (props) => {
             console.log("new member player list: ", incomingData);
             setMembers(incomingData);
             data.state.members = incomingData;
+        })
+
+        socket.on("game_started", (incomingData) =>{
+            console.log("game_started received");
+            history.push(`/question`);
         })
 
     })
