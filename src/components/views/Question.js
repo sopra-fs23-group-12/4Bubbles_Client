@@ -23,7 +23,11 @@ const Question = props => {
     const [radioValue, setRadioValue] = useState(null);
     const [timerValue, setTimerValue] = useState(null);
     const [question, setQuestionValue] = useState(null);
-    const [answer2, setAnswerValue] = useState(null);
+    const [answer1, setAnswer1Value] = useState(null);
+    const [answer2, setAnswer2Value] = useState(null);
+    const [answer3, setAnswer3Value] = useState(null);
+    const [answer4, setAnswer4Value] = useState(null);
+    //const [answerx, setAnswer1Valuex] = useState(null);
 
     const data = useLocation();
     console.log("data: ", data);
@@ -43,12 +47,26 @@ const Question = props => {
 
     //const question = "Which river has the most capital cities on it?"
 
-    const answer = [
-        "Amazon",
-        "Nile",
-        "Congo River",
-        "Danube"
+    // const answer = [
+    //     answer1,
+    //     answer2,
+    //     answer3,
+    //     answer4
+    // ]
+
+        const answer = [
+        answer1,
+        answer2,
+        answer3,
+        answer4
     ]
+
+    // const answer = [
+    //     "Amazon",
+    //     "Nile",
+    //     "Congo River",
+    //     "Danube"
+    // ]
 
     const cssClasses = [
         "answer-item-top-left",
@@ -129,7 +147,15 @@ const Question = props => {
         })
 
         socket.on("get_answers", (data) =>{
+            //let newStr = data.slice(-1,-1);
+            let newStr = data.substr(1, data.length - 2);
+            const answersArray = newStr.split(",")
+            setAnswer1Value(answersArray[0])
+            setAnswer2Value(answersArray[1])
+            setAnswer3Value(answersArray[2])
+            setAnswer4Value(answersArray[3])
             console.log("answers arrived:", data)
+            console.log("CUTTED answers arrived:", newStr)
         })
 
         socket.on("timer_count", (data) =>{
