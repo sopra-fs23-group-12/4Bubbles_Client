@@ -17,12 +17,20 @@ const Question = props => {
     // questions (reveal)
     // bubble sizes?
 
+
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
-    const [roomCode, setRoom] = useState("1");
+    const [timerValue, setTimerValue] = useState(null);
+    const [question, setQuestionValue] = useState(null);
+    const [answer2, setAnswerValue] = useState(null);
+
     const data = useLocation();
-  
+    console.log("data: ", data);
+    console.log("localStorage: ", localStorage);
+    console.log("roomCode: ", localStorage.roomCode);
+    
+    const roomCode = localStorage.roomCode
 
     //url from backend for websocket connection
     // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
@@ -30,10 +38,11 @@ const Question = props => {
 
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
     const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
-
+    console.log("useMemo roomCode: ", roomCode);
     console.log("socket acknowledged as connected:", socket.connected);
 
     //const question = "Which river has the most capital cities on it?"
+
     const answer = [
         "Amazon",
         "Nile",
@@ -49,6 +58,7 @@ const Question = props => {
     ]
 
     const revealAnswer = () => {
+        //startCountdown(5);
         setCorrectAnswer(0);
         const timer = setTimeout(() => {
             console.log('answer correct:', radioValue === answer[0]);
@@ -72,11 +82,28 @@ const Question = props => {
         setPopupValue(null);
         setCorrectAnswer(null);
     }
-    const question = null;
+
+        // //prototype counter
+        // function startCountdown(seconds) {
+        //     setTimerValue(timerValue = seconds);
+              
+        //     const interval = setInterval(() => {
+        //       //console.log(timerValue);
+        //       setTimerValue(timerValue--);
+                
+        //       if (timerValue < 0 ) {
+        //         clearInterval(interval);
+        //         console.log('End of counter!');
+        //       }
+        //     }, 1000);
+        //   }
+
+
+    //const question = null;
 
     useEffect(async () => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
-        console.log("roomCode: ", roomCode);
+        console.log("roomCode at emit: ", roomCode);
 
         socket.emit('start_game',{
             message : "",
@@ -85,15 +112,35 @@ const Question = props => {
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) =>{
-            console.log("question arrived:")
-            console.log(data.message)
-            question = data.message;
+            console.log("question arrived:", data)
+            //timerValue = data
+
+            setQuestionValue(data)
+
+            //socket.emit('get_question', qu); 
+
+            // const showQuestion = async (data) => {
+            //     return data
+            // }
+            // console.log("data.message of question:")
+            // console.log(data.message)
+            //console.log("roundcounter: ", data.getQuestions())
+            //question2 = data
         })
 
         socket.on("get_answers", (data) =>{
-            console.log("answers arrived:")
-            console.log(data.message)
+            console.log("answers arrived:", data)
         })
+
+        socket.on("timer_count", (data) =>{
+            setTimerValue(data)
+            //console.log(data)
+        })
+
+        // socket.on("game_started", (data) =>{
+        //     console.log("game start came back:")
+        //     console.log(data.message)
+        // })
 
         // socket.on("game_started", (incomingData) =>{
         //     console.log("game_started received", incomingData);
@@ -102,10 +149,6 @@ const Question = props => {
         // socket.on("timer_message", (data) =>{
         //     console.log("timer message received:")
         //     console.log(data.message)
-        // })
-        // socket.on("timer_count", (data) =>{
-        //     console.log(data.message)
-        //     setCounter(data.message);
         // })
 
     }, [])
@@ -121,8 +164,15 @@ const Question = props => {
     return (
         <div className="question-wrapper">
             <div className="question-item">
-                <Bubble onClick={revealAnswer} className="bubble-button--question">{question}</Bubble>
+            counter here: {timerValue} 
+            <br/>
+
+                <Bubble 
+                onClick={revealAnswer} className="bubble-button--question">{question}
+                </Bubble>
+
             </div>
+
             {answer.map((item, index) => {
                 return <div key={item} className={cssClasses[index]}>
                     <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => setRadioValue(item)} />
