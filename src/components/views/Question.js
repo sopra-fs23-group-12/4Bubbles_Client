@@ -54,12 +54,13 @@ const Question = props => {
     //     answer4
     // ]
 
-        const answer = [
-        answer1,
-        answer2,
-        answer3,
-        answer4
-    ]
+    const answer = [
+            answer1,
+            answer2,
+            answer3,
+            answer4
+        ]
+
 
     // const answer = [
     //     "Amazon",
@@ -189,10 +190,14 @@ const Question = props => {
 
     return (
         <div className="question-wrapper">
-            <div className="question-item">
-            counter here: {timerValue} 
-            <br/>
 
+
+
+            <div className="question-item">
+            <div className="timer">
+            {timerValue} 
+            </div>
+           
                 <Bubble 
                 onClick={revealAnswer} className="bubble-button--question">{question}
                 </Bubble>
@@ -200,6 +205,8 @@ const Question = props => {
             </div>
 
             {answer.map((item, index) => {
+                if (item === null) {
+                    return null;}
                 return <div key={item} className={cssClasses[index]}>
                     <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => setRadioValue(item)} />
                     <label htmlFor={item}>
