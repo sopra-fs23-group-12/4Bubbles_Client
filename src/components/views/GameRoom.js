@@ -132,7 +132,12 @@ const GameRoom = props => {
             //server call via socketio to join the namespace (would join the GameRoom as well, but this is the Leader anyways, who's already joined the GameRoom when they created it
             const userId = localStorage.getItem("userId");
             const bearerToken = localStorage.getItem("token");
-            const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
+
+            const response2 = await api.get(`/questions/?roomCode=${response.data.roomCode}`, headers)
+            
+            //alternative request in case of troubles:
+            //const response2 = await api.get('/questions/?roomCode', headers)
+            
             console.log("Response for api call /questions: ",response2.data)
 
 

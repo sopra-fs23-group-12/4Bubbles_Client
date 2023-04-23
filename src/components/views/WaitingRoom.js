@@ -31,21 +31,20 @@ const WaitingRoom = (props) => {
 
 
     const startGame = async () => {
-        console.log("socket acknowledged as connected:", socket.connected);
-        const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
-        console.log("Response for api call /questions: ",response2.data)
+        console.log("socket acknowledged as connected pressing start:", socket.connected);
+        //const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
+        //console.log("Response for api call /questions: ",response2.data)
         // add a condition that only the leader can click this
-        console.log("game started");
-        socket.emit('start_game',{
-            message : "",
-            roomCode: roomCode,
-            type: "CLIENT"})
+        // socket.emit('start_game',{
+        //     message : "",
+        //     roomCode: roomCode,
+        //     type: "CLIENT"})
         
         // socket.emit('get_Question',{
         //     message : "",
         //     roomCode: roomCode,
         //     type: "CLIENT"})
-        //history.push(`/question`);
+        history.push(`/question`);
     }
 
 
@@ -62,13 +61,14 @@ const WaitingRoom = (props) => {
             data.state.members = incomingData;
         })
 
-        socket.on("game_started", (incomingData) =>{
-            console.log("game_started received");
-            history.push(`/question`);
-        })
+        // socket.on("game_started", (incomingData) =>{
+        //     console.log("game_started received");
+        //     history.push(`/question`);
+        // })
 
         socket.on("get_Question", (incomingData) =>{
             console.log("question arrived", incomingData);
+            history.push(`/question`);
         })
 
     })

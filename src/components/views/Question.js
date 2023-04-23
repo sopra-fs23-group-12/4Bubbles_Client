@@ -76,6 +76,12 @@ const Question = props => {
 
     useEffect(async () => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
+        console.log("roomCode: ", roomCode);
+
+        socket.emit('start_game',{
+            message : "",
+            roomCode: roomCode,
+            type: "CLIENT"})
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) =>{
