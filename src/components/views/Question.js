@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useReducer, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Bubble } from 'components/ui/Bubble';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {getDomainSocket} from "../../helpers/getDomainSocket";
 import { format } from 'react-string-format';
 import io from "socket.io-client";
@@ -87,11 +87,12 @@ const Question = props => {
     }
 
     const nextQuestion = () => {
+
         console.log("socket acknowledged as connected with nextQuestion:", socket.connected);
-        socket.emit('start_game', {
-            message : "",
-            roomCode: roomCode,
-            type: "CLIENT"})
+        // socket.emit('start_game', {
+        //     message : "",
+        //     roomCode: roomCode,
+        //     type: "CLIENT"})
           
         // socket.emit('start_timer', {
         //     message : "",
@@ -132,19 +133,7 @@ const Question = props => {
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) =>{
             console.log("question arrived:", data)
-            //timerValue = data
-
             setQuestionValue(data)
-
-            //socket.emit('get_question', qu); 
-
-            // const showQuestion = async (data) => {
-            //     return data
-            // }
-            // console.log("data.message of question:")
-            // console.log(data.message)
-            //console.log("roundcounter: ", data.getQuestions())
-            //question2 = data
         })
 
         socket.on("get_answers", (data) =>{
@@ -164,21 +153,7 @@ const Question = props => {
             //console.log(data)
         })
 
-        // socket.on("game_started", (data) =>{
-        //     console.log("game start came back:")
-        //     console.log(data.message)
-        // })
-
-        // socket.on("game_started", (incomingData) =>{
-        //     console.log("game_started received", incomingData);
-        // })
-
-        // socket.on("timer_message", (data) =>{
-        //     console.log("timer message received:")
-        //     console.log(data.message)
-        // })
-
-    }, [])
+    }, [roomCode, socket])
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
     // const roomCode = data.state.roomCode
