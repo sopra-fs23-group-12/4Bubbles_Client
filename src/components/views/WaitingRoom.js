@@ -5,6 +5,8 @@ import { Bubble } from 'components/ui/Bubble';
 import {format} from "react-string-format";
 import io from "socket.io-client";
 import {getDomainSocket} from "../../helpers/getDomainSocket";
+import {Button} from "../ui/Button";
+import {api, headers, handleError} from 'helpers/api';
 
 
 
@@ -22,24 +24,35 @@ const WaitingRoom = (props) => {
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
     const roomCode = data.state.roomCode
-    const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
+    
+    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    // const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
 
 
 
-    const startGame = () => {
-
+    const startGame = async () => {
+        console.log("socket acknowledged as connected pressing start:", socket.connected);
+        //const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
+        //console.log("Response for api call /questions: ",response2.data)
         // add a condition that only the leader can click this
-        console.log("game started");
-        socket.emit('start_game',{
-            message : "",
-            roomCode: roomCode,
-            type: "CLIENT"})
+        // socket.emit('start_game',{
+        //     message : "",
+        //     roomCode: roomCode,
+        //     type: "CLIENT"})
+        
+        // socket.emit('get_Question',{
+        //     message : "",
+        //     roomCode: roomCode,
+        //     type: "CLIENT"})
+        history.push(`/question`);
     }
 
 
     useEffect(async () =>{
-
+        console.log("socket acknowledged as connected:", socket.connected);
+        // const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
+        // console.log("Response for api call /questions: ",response2.data)
+        //infos oming from backend
         //returns a list of members since that is the only thing in the state that changes
         socket.on("joined_players", (incomingData) => {
             console.log("new_player_joined")
@@ -48,8 +61,13 @@ const WaitingRoom = (props) => {
             data.state.members = incomingData;
         })
 
-        socket.on("game_started", (incomingData) =>{
-            console.log("game_started received");
+        // socket.on("game_started", (incomingData) =>{
+        //     console.log("game_started received");
+        //     history.push(`/question`);
+        // })
+
+        socket.on("get_Question", (incomingData) =>{
+            console.log("question arrived", incomingData);
             history.push(`/question`);
         })
 
