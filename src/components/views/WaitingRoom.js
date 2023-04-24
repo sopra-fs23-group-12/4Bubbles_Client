@@ -1,19 +1,60 @@
 import 'styles/views/WaitingRoom.scss';
-import React, { } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
+import {format} from "react-string-format";
+import io from "socket.io-client";
+import {getDomainSocket} from "../../helpers/getDomainSocket";
+import {Button} from "../ui/Button";
 
 
 
+
+// establish a websocket connection (joins namespace for only the sender client)
+const url = format(getDomainSocket() );
+const socket = io.connect(url,{transports: ['websocket'], upgrade: false});
 
 const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
+    const [members, setMembers] = useState(data.state.members)
     console.log("data:", data);
 
+
+    // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
+    const roomCode = data.state.roomCode
+    const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
+
+
+
     const startGame = () => {
-        history.push(`/question`);
+
+        // add a condition that only the leader can click this
+        console.log("game started");
+        socket.emit('start_game',{
+            message : "",
+            roomCode: roomCode,
+            type: "CLIENT"})
     }
+
+
+    useEffect(async () =>{
+
+        //returns a list of members since that is the only thing in the state that changes
+        socket.on("joined_players", (incomingData) => {
+            console.log("new_player_joined")
+            console.log("new member player list: ", incomingData);
+            setMembers(incomingData);
+            data.state.members = incomingData;
+        })
+
+        socket.on("game_started", (incomingData) =>{
+            console.log("game_started received");
+            history.push(`/question`);
+        })
+
+    })
 
     return (
         <div className="waiting-room-wrapper">
@@ -21,10 +62,10 @@ const WaitingRoom = (props) => {
             <div className="player-info">
                 already joined:
                 <div className="player-list">
-                    {data.state.members.map((member) => {
+                    {members.map((member) => {
                         return (
                             <div key={member.username} className="player">{member.username}</div>
-                    )})}
+                        )})}
                 </div>
             </div>
 
@@ -33,9 +74,9 @@ const WaitingRoom = (props) => {
                     <Bubble onClick={startGame} className="bubble-button--waitingroom">Wait for players: Press to start!</Bubble>
                 </div>
             </div>
-        
+
             <div className="room-code">
-                room code: 
+                room code:
                 <br/>
                 {data.state.roomCode}
             </div>
