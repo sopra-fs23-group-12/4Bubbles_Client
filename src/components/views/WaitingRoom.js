@@ -72,9 +72,10 @@ const WaitingRoom = (props) => {
 
         socket.on("timer_count", (data) => {
             console.log(data.message)
-            setCounter(data.message);
             if(data.message === 'time over') {
                 startGame();
+            } else {
+                setCounter(data.message);
             }
         })
 
