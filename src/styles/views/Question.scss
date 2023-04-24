@@ -3,6 +3,7 @@
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1fr 1fr;
     height: 100vh;
+    
 
     input {
         display: none;
@@ -50,6 +51,7 @@
     }
 
     .question-item {
+        //background: transparentize(white, 0.85); 
         grid-column-start: 3;
         grid-column-end: 5;
         grid-row-start: 1;
@@ -57,6 +59,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        .timer{
+            color: white;
+            font-family: 'Jockey One', sans-serif;
+            font-size: 45px; 
+            position: absolute;
+            top: 20px;
+
+
+        }
 
         .bubble-button {
             animation-name: wiggle;
@@ -165,3 +177,4 @@
         }
     }
 }
+

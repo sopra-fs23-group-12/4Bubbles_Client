@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useReducer, useMemo } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import 'styles/views/Gameroom.scss';
 import BaseContainer from "components/ui/BaseContainer";
 
@@ -95,11 +95,13 @@ const numOfQuestions = [
 const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
     const navigate = useHistory();
+   
 
     useEffect(() => {
         getTopics()
     
     }, [] )
+
 
     
     const doSubmit = async () => {
@@ -114,17 +116,30 @@ const GameRoom = props => {
                 leaderId: localStorage.getItem("userId")
             })
             console.log(requestBody)
-            const response = await api.post('/createRoom', requestBody, headers)
 
+            const response = await api.post('/createRoom', requestBody, headers)
+            console.log('headers', headers)
             //put the roomCode into localStorage for later use
             const roomCode = response.data.roomCode.toString()
+            
             localStorage.setItem("roomCode", roomCode);
+            
+            
+
             console.log("local storage roomCode set to: ", response.data.roomCode.toString());
 
 
             //server call via socketio to join the namespace (would join the GameRoom as well, but this is the Leader anyways, who's already joined the GameRoom when they created it
             const userId = localStorage.getItem("userId");
             const bearerToken = localStorage.getItem("token");
+
+            const response2 = await api.get(`/questions/?roomCode=${response.data.roomCode}`, headers)
+            
+            //alternative request in case of troubles:
+            //const response2 = await api.get('/questions/?roomCode', headers)
+            
+            console.log("Response for api call /questions: ",response2.data)
+
 
             socket.emit('join_room', {
                 userId : userId,
