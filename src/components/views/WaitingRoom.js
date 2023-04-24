@@ -5,7 +5,6 @@ import { Bubble } from 'components/ui/Bubble';
 import { format } from "react-string-format";
 import io from "socket.io-client";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
-import {getDomainSocket} from "../../helpers/getDomainSocket";
 import {Button} from "../ui/Button";
 import {api, headers, handleError} from 'helpers/api';
 
@@ -56,22 +55,22 @@ const WaitingRoom = (props) => {
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        // socket.emit('start_game',{
-        //     message : "",
-        //     roomCode: roomCode,
-        //     type: "CLIENT"})
+    //     // socket.emit('start_game',{
+    //     //     message : "",
+    //     //     roomCode: roomCode,
+    //     //     type: "CLIENT"})
         
-        // socket.emit('get_Question',{
-        //     message : "",
-        //     roomCode: roomCode,
-        //     type: "CLIENT"})
-        history.push(`/question`);
-    }
+    //     // socket.emit('get_Question',{
+    //     //     message : "",
+    //     //     roomCode: roomCode,
+    //     //     type: "CLIENT"})
+    //     history.push(`/question`);
+    // }
 
 
-    useEffect(async () =>{
+    useEffect(async () => {
         console.log("socket acknowledged as connected:", socket.connected);
         // const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
         // console.log("Response for api call /questions: ",response2.data)
