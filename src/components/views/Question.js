@@ -130,6 +130,11 @@ const Question = props => {
             roomCode: roomCode,
             type: "CLIENT"})
 
+        socket.emit('send_vote',{
+            message : "",
+            roomCode: roomCode,
+            type: "CLIENT"})
+
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) =>{
             console.log("question arrived:", data)
@@ -174,7 +179,9 @@ const Question = props => {
             </div>
            
                 <Bubble 
-                onClick={revealAnswer} className="bubble-button--question">{question}
+                onClick={revealAnswer} 
+                
+                className="bubble-button--question">{question}
                 </Bubble>
 
             </div>
