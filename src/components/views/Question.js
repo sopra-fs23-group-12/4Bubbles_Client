@@ -153,7 +153,7 @@ const Question = props => {
             //console.log(data)
         })
 
-    }, [roomCode, socket])
+    }, [])
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
     // const roomCode = data.state.roomCode
