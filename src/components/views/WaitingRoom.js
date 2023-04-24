@@ -5,7 +5,6 @@ import { Bubble } from 'components/ui/Bubble';
 import {format} from "react-string-format";
 import io from "socket.io-client";
 import {getDomainSocket} from "../../helpers/getDomainSocket";
-import {Button} from "../ui/Button";
 
 
 
