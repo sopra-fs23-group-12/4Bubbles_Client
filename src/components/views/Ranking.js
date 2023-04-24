@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
+import io from "socket.io-client";
+import { format } from 'react-string-format';
+import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import '../../styles/views/Ranking.scss';
 
@@ -34,40 +37,53 @@ const RankingItem = (props) => {
 
 export default function Ranking(props) {
     const { final } = props;
-    const [users, setUsers] = useState(null);
     const history = useHistory();
+    const [roomCode, setRoom] = useState("1");
+
+    const tmpUsers = [
+        {
+            "name": "user123",
+            "points": 97
+        },
+        {
+            "name": "edith6",
+            "points": 96
+        },
+        {
+            "name": "leonie20",
+            "points": 83
+        },
+        {
+            "name": "bubblebo",
+            "points": 55
+        },
+        {
+            "name": "judith5",
+            "points": 34
+        },
+    ];
+
+    const [users, setUsers] = useState(tmpUsers);
+
+
+    //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
+    const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    const socket = io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
 
     useEffect(() => {
-        const tmpUsers = [
-            {
-                "name": "user123",
-                "points": 97
-            },
-            {
-                "name": "edith6",
-                "points": 96
-            },
-            {
-                "name": "leonie20",
-                "points": 83
-            },
-            {
-                "name": "bubblebo",
-                "points": 55
-            },
-            {
-                "name": "judith5",
-                "points": 34
-            },
-        ];
+        socket.on("get_ranking", (data) => {
+            console.log("ranking message received:")
+            console.log(data.message)
+            setUsers(data.message);
+        })
 
-        setUsers(tmpUsers);
+
     }, []);
 
     return (
         <div className="ranking-page">
             {!final ? <div className="exit-button" onClick={() => history.push('/welcomepage')}>exit</div> : null}
-            
+
             <h1>{final ? "🏁 final ranking 🏁" : "intermediate ranking 🔥"}</h1>
             <div className="ranking-wrapper">
                 {users ? users.map((item, i) => {
