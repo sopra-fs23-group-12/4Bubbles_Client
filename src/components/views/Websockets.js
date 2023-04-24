@@ -1,7 +1,4 @@
-import React, {useMemo, useState} from 'react';
-import { api } from 'helpers/api';
-import User from 'models/User';
-import { useHistory, Link } from 'react-router-dom';
+import React, {useState} from 'react';
 import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -76,10 +73,8 @@ FormField.propTypes = {
 
 const Websockets = props => {
 
-
-    const history = useHistory();
-    const [inputMessage, setInputMessage] = useState("");
-    const [roomCode, setRoom] = useState("1");
+    const [inputMessage] = useState("");
+    const [roomCode] = useState("1");
     const [counter, setCounter] = useState('lets count');
 
 
