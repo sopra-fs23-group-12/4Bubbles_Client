@@ -37,7 +37,6 @@ const RankingItem = (props) => {
 
 export default function Ranking(props) {
     const { final } = props;
-    const [users, setUsers] = useState(tmpUsers);
     const history = useHistory();
     const [roomCode, setRoom] = useState("1");
 
@@ -63,6 +62,9 @@ export default function Ranking(props) {
             "points": 34
         },
     ];
+
+    const [users, setUsers] = useState(tmpUsers);
+
 
     //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
