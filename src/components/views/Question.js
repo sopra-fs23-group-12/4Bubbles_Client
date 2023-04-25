@@ -132,10 +132,12 @@ const Question = props => {
             type: "CLIENT"})
 
         socket.emit('send_vote',{
-            remainingTime : 5,
-            message : "jo",
+            userId: localStorage.userId,
+            remainingTime : timerValue,
+            message : "vote",
             roomCode: roomCode,
-            type: "CLIENT"})
+            type: "CLIENT"}
+            )
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) =>{
@@ -151,8 +153,7 @@ const Question = props => {
             setAnswer2Value(answersArray[1])
             setAnswer3Value(answersArray[2])
             setAnswer4Value(answersArray[3])
-            //console.log("answers arrived:", data)
-            //console.log("CUTTED answers arrived:", newStr)
+            console.log("answers arrived:", data)
         })
 
         //WE NEED A SOCKET.ON GET CORRECT ANSWER
@@ -160,10 +161,15 @@ const Question = props => {
         socket.on("timer_count", (data) =>{
             //console.log("timer arrived:", data)
             setTimerValue(data)
+            console.log("timerValue:", timerValue)
             if (timerValue === 1)
-                {(console.log("YES"))}
+                {(console.log("hello"))}
                    })
-            
+
+        socket.on("somebody_voted", (data) =>{
+            console.log("somebody voted:", data)   
+        })
+
     }, [])
 
     return (
