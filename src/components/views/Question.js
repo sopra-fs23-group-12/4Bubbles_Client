@@ -32,7 +32,7 @@ const Question = props => {
     const data = useLocation();
     console.log("data: ", data);
     console.log("localStorage: ", localStorage);
-    console.log("roomCode: ", localStorage.roomCode);
+    //console.log("roomCode: ", localStorage.roomCode);
     
     const roomCode = localStorage.roomCode
 
@@ -42,7 +42,7 @@ const Question = props => {
 
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
     const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
-    console.log("useMemo roomCode: ", roomCode);
+    //console.log("useMemo roomCode: ", roomCode);
     console.log("socket acknowledged as connected:", socket.connected);
 
     //const question = "Which river has the most capital cities on it?"
@@ -78,6 +78,7 @@ const Question = props => {
 
     const revealAnswer = () => {
         //startCountdown(5);
+        //enter correct answer here
         setCorrectAnswer(0);
         const timer = setTimeout(() => {
             console.log('answer correct:', radioValue === answer[0]);
@@ -123,7 +124,7 @@ const Question = props => {
 
     useEffect(async () => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
-        console.log("roomCode at emit: ", roomCode);
+        //console.log("roomCode at emit: ", roomCode);
 
         socket.emit('start_game',{
             message : "",
@@ -131,7 +132,8 @@ const Question = props => {
             type: "CLIENT"})
 
         socket.emit('send_vote',{
-            message : "",
+            remainingTime : 5,
+            message : "jo",
             roomCode: roomCode,
             type: "CLIENT"})
 
@@ -149,24 +151,20 @@ const Question = props => {
             setAnswer2Value(answersArray[1])
             setAnswer3Value(answersArray[2])
             setAnswer4Value(answersArray[3])
-            console.log("answers arrived:", data)
-            console.log("CUTTED answers arrived:", newStr)
+            //console.log("answers arrived:", data)
+            //console.log("CUTTED answers arrived:", newStr)
         })
+
+        //WE NEED A SOCKET.ON GET CORRECT ANSWER
 
         socket.on("timer_count", (data) =>{
+            //console.log("timer arrived:", data)
             setTimerValue(data)
-            //console.log(data)
-        })
-
+            if (timerValue === 1)
+                {(console.log("YES"))}
+                   })
+            
     }, [])
-
-    // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
-    // const roomCode = data.state.roomCode
-    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    // const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
-
-    
-
 
     return (
         <div className="question-wrapper">
@@ -176,11 +174,11 @@ const Question = props => {
             <div className="question-item">
             <div className="timer">
             {timerValue} 
+
             </div>
            
-                <Bubble 
+                <Bubble //question bubble
                 onClick={revealAnswer} 
-                
                 className="bubble-button--question">{question}
                 </Bubble>
 
