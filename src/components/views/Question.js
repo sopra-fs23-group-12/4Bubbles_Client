@@ -32,6 +32,7 @@ const Question = props => {
     const data = useLocation();
     console.log("data: ", data);
     console.log("localStorage: ", localStorage);
+   //console.log("SEARCHED VALUEEEEEE:",radioValue)
     //console.log("roomCode: ", localStorage.roomCode);
     
     const roomCode = localStorage.roomCode
@@ -134,7 +135,7 @@ const Question = props => {
         socket.emit('send_vote',{
             userId: localStorage.userId,
             remainingTime : timerValue,
-            message : "vote",
+            message : radioValue,
             roomCode: roomCode,
             type: "CLIENT"}
             )
@@ -159,6 +160,7 @@ const Question = props => {
         //WE NEED A SOCKET.ON GET CORRECT ANSWER
 
         socket.on("timer_count", (data) =>{
+            
             //console.log("timer arrived:", data)
             setTimerValue(data)
             console.log("timerValue:", timerValue)
@@ -191,6 +193,7 @@ const Question = props => {
             </div>
 
             {answer.map((item, index) => {
+                
                 if (item === null) {
                     return null;}
                 return <div key={item} className={cssClasses[index]}>
