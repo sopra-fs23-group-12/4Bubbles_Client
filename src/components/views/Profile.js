@@ -44,7 +44,7 @@ const ShowProfile = (props) => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get('/users/' + id, headers);
+        const response = await api.get('/users/' + id, headers());
 
         // Get the returned user and update a new object.
 
