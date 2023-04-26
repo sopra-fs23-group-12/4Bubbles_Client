@@ -89,6 +89,7 @@ const Question = props => {
 
         socket.emit('end_of_question',{
             message : "",
+            roomCode: roomCode,
         })
     }
 
