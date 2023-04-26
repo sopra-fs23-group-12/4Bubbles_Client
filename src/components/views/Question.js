@@ -91,7 +91,7 @@ const Question = props => {
 
     const sendVote = (item) => {
         setRadioValue(item)
-        console.log("sendVote:", item);
+        console.log("sendVote of:", item);
 
         socket.emit('send_vote',{
             userId: localStorage.userId,
@@ -185,7 +185,7 @@ const Question = props => {
             setTimerValue(data)
             //console.log("timerValue:", timerValue)
             if (timerValue === 1)
-                {(console.log("hello"))}
+                {(console.log("timer_count active"))}
                    })
 
         socket.on("somebody_voted", (data) =>{
