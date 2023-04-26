@@ -1,15 +1,10 @@
 import 'styles/views/WaitingRoom.scss';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
 import {format} from "react-string-format";
 import io from "socket.io-client";
 import {getDomainSocket} from "../../helpers/getDomainSocket";
-import {Button} from "../ui/Button";
-import {api, headers, handleError} from 'helpers/api';
-
-
-
 
 // establish a websocket connection (joins namespace for only the sender client)
 const url = format(getDomainSocket() );
@@ -23,7 +18,7 @@ const WaitingRoom = (props) => {
 
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
-    const roomCode = data.state.roomCode
+    //const roomCode = data.state.roomCode
     
     // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
     // const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
