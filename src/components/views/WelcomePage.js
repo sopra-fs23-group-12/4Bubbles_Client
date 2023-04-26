@@ -50,19 +50,19 @@ const WelcomePage = props => {
                 <h1>4Bubbles</h1>
 
                 <div className="welcomepage-bubbles">
-                    <div className="welcomepage button-container-left">
+                    <div className="welcomepage button-container-upper-left">
                         <Bubble onClick={() => doStartNewGame()}>start new game</Bubble>
                     </div>
 
-                    <div className="welcomepage button-container-right">
+                    <div className="welcomepage button-container-upper-right">
                         <Bubble onClick={() => doJoinGame()}>join game</Bubble>
                     </div>
 
-                    <div className="welcomepage button-container-left">
+                    <div className="welcomepage button-container-lower-left">
                         <Bubble onClick={() => doViewMyProfile(currentUser)}>view my profile</Bubble>
                     </div>
 
-                    <div className="welcomepage button-container-right">
+                    <div className="welcomepage button-container-lower-right">
                         <Bubble onClick={() => doFriendList()}>access my<br /> friends list</Bubble>
                     </div>
                     <br/>
