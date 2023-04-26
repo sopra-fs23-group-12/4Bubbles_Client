@@ -174,6 +174,8 @@ const Question = props => {
             setAnswer3Value(answersArray[2])
             setAnswer4Value(answersArray[3])
             console.log("answers arrived:", data)
+            setTimeout(revealAnswer, 10000)
+
         })
 
         socket.on("get_right_answer", (data) =>{
@@ -206,10 +208,8 @@ const Question = props => {
             {timerValue} 
 
             </div>
-           
-                <Bubble //question bubble
-                onClick={revealAnswer} 
-                className="bubble-button--question">{question}
+
+                <Bubble className="bubble-button--question">{question}
                 </Bubble>
 
             </div>
