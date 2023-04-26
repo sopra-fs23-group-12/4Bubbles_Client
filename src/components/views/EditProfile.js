@@ -44,7 +44,7 @@ const EditProfile = (props) => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get('/users/' + id, headers);
+        const response = await api.get('/users/' + id, headers());
 
         setUser(response.data[0]);
         setUsername(response.data[0].username);
@@ -76,7 +76,7 @@ const EditProfile = (props) => {
         requestBody = JSON.stringify({ username });
 
       }
-      const response = await api.put('/users/' + id, requestBody, headers);
+      const response = await api.put('/users/' + id, requestBody, headers());
       console.log(response.status);
       history.push(`/profile/` + id);
 

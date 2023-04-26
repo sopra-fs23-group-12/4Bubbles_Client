@@ -34,8 +34,12 @@ export const handleError = error => {
   }
 };
 
-export const headers = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`
-  }
+export function headers() {
+  var token = localStorage.getItem('token');
+  return {
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  };
+  
 };

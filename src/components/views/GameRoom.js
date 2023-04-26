@@ -39,7 +39,7 @@ function reducer(state, action) {
 }
 
 async function getTopics(){
-    const response = await api.get("/categories", headers)
+    const response = await api.get("/categories", headers())
     console.log("Response for api call /categories: ",response.data)
     response.data.forEach(element => {
         const topic = {
@@ -55,16 +55,16 @@ async function getTopics(){
 
 const gameMode = [
     {
-        name: 'standard',
-        value: 'standard',
+        name: 'easy',
+        value: 'easy',
     },
     {
-        name: 'time tells',
-        value: 'time tells',
+        name: 'medium',
+        value: 'medium',
     },
     {
-        name: 'trust or bust',
-        value: 'trust or bust',
+        name: 'hard',
+        value: 'hard',
     },
 ]
 
@@ -117,8 +117,8 @@ const GameRoom = props => {
             })
             console.log(requestBody)
 
-            const response = await api.post('/createRoom', requestBody, headers)
-            console.log('headers', headers)
+            const response = await api.post('/createRoom', requestBody, headers())
+            console.log('headers()', headers())
             //put the roomCode into localStorage for later use
             const roomCode = response.data.roomCode.toString()
             
@@ -132,13 +132,6 @@ const GameRoom = props => {
             //server call via socketio to join the namespace (would join the GameRoom as well, but this is the Leader anyways, who's already joined the GameRoom when they created it
             const userId = localStorage.getItem("userId");
             const bearerToken = localStorage.getItem("token");
-
-            const response2 = await api.get(`/questions/?roomCode=${response.data.roomCode}`, headers)
-            
-            //alternative request in case of troubles:
-            //const response2 = await api.get('/questions/?roomCode', headers)
-            
-            console.log("Response for api call /questions: ",response2.data)
 
 
             socket.emit('join_room', {
@@ -176,7 +169,7 @@ const GameRoom = props => {
                                 key: 'topic',
                             })} />
                 </SettingsContainer>
-                <SettingsContainer title="Choose a game mode:">
+                <SettingsContainer title="Choose a difficulty:">
                     <RadioButtons
                         name="gamemode"
                         items={gameMode}

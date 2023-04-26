@@ -32,7 +32,7 @@ const WaitingRoom = (props) => {
 
     const startGame = async () => {
         console.log("socket acknowledged as connected pressing start:", socket.connected);
-        //const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
+        //const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
         //console.log("Response for api call /questions: ",response2.data)
         // add a condition that only the leader can click this
         // socket.emit('start_game',{
@@ -50,7 +50,7 @@ const WaitingRoom = (props) => {
 
     useEffect(async () =>{
         console.log("socket acknowledged as connected:", socket.connected);
-        // const response2 = await api.get('/questions/?roomCode={roomCode}', headers)
+        // const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
         // console.log("Response for api call /questions: ",response2.data)
         //infos oming from backend
         //returns a list of members since that is the only thing in the state that changes
@@ -66,7 +66,7 @@ const WaitingRoom = (props) => {
         //     history.push(`/question`);
         // })
 
-        socket.on("get_Question", (incomingData) =>{
+        socket.on("get_question", (incomingData) =>{
             console.log("question arrived", incomingData);
             history.push(`/question`);
         })
