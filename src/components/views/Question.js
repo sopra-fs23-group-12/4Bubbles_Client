@@ -88,6 +88,20 @@ const Question = props => {
         return () => clearTimeout(timer);
     }
 
+
+    const sendVote = (item) => {
+        setRadioValue(item)
+        console.log("sendVote:", item);
+
+        socket.emit('send_vote',{
+            userId: localStorage.userId,
+            remainingTime : timerValue,
+            message : radioValue,
+            roomCode: roomCode,
+            type: "CLIENT"}
+            )
+    }
+
     const nextQuestion = () => {
 
         console.log("socket acknowledged as connected with nextQuestion:", socket.connected);
@@ -132,13 +146,13 @@ const Question = props => {
             roomCode: roomCode,
             type: "CLIENT"})
 
-        socket.emit('send_vote',{
-            userId: localStorage.userId,
-            remainingTime : timerValue,
-            message : radioValue,
-            roomCode: roomCode,
-            type: "CLIENT"}
-            )
+        // socket.emit('send_vote',{
+        //     userId: localStorage.userId,
+        //     remainingTime : timerValue,
+        //     message : radioValue,
+        //     roomCode: roomCode,
+        //     type: "CLIENT"}
+        //     )
         
         socket.emit('end_of_question',{
             message : "",
@@ -176,6 +190,7 @@ const Question = props => {
 
         socket.on("somebody_voted", (data) =>{
             console.log("somebody voted:", data)   
+            //will later be needed to show bigger bubbles sizes
         })
 
     }, [])
@@ -203,7 +218,7 @@ const Question = props => {
                 if (item === null) {
                     return null;}
                 return <div key={item} className={cssClasses[index]}>
-                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => setRadioValue(item)} />
+                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                     <label htmlFor={item}>
                         <Bubble className={(correctAnswer === null || index === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                     </label>
