@@ -92,11 +92,12 @@ const Question = props => {
     const sendVote = (item) => {
         setRadioValue(item)
         console.log("sendVote of:", item);
+        console.log("radioValue:", radioValue);
 
         socket.emit('send_vote',{
             userId: localStorage.userId,
             remainingTime : timerValue,
-            message : radioValue,
+            message : item,
             roomCode: roomCode,
             type: "CLIENT"}
             )
