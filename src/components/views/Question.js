@@ -86,6 +86,10 @@ const Question = props => {
             setPopupValue(radioValue === answer[0]);
         }, 2000);
         return () => clearTimeout(timer);
+
+        socket.emit('end_of_question',{
+            message : "",
+        })
     }
 
 
@@ -155,9 +159,6 @@ const Question = props => {
         //     type: "CLIENT"}
         //     )
         
-        socket.emit('end_of_question',{
-            message : "",
-        })
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) =>{
