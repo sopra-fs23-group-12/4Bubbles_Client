@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer, useMemo } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import React, { useEffect, useReducer, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import 'styles/views/Gameroom.scss';
 import BaseContainer from "components/ui/BaseContainer";
 
@@ -38,20 +38,7 @@ function reducer(state, action) {
     }
 }
 
-async function getTopics(){
-    const response = await api.get("/categories", headers())
-    console.log("Response for api call /categories: ",response.data)
-    response.data.forEach(element => {
-        const topic = {
-            name: element.topicName, 
-            value: element.topicName,
-            id: element.id
-        }
-        questionTopic.push(topic);
-    });
-    console.log("Complete list of topics: ",questionTopic)
-    return questionTopic;
-}
+
 
 const gameMode = [
     {
@@ -95,13 +82,29 @@ const numOfQuestions = [
 const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
     const navigate = useHistory();
+    const [questionTopic, setQuestionTopic] = useState([]);
    
 
     useEffect(() => {
-        getTopics()
+        getTopics();
     
     }, [] )
 
+    async function getTopics(){
+    const response = await api.get("/categories", headers())
+    console.log("Response for api call /categories: ",response.data)
+    let questionTopicArray = []
+    response.data.forEach(element => {
+        const topic = {
+            name: element.topicName, 
+            value: element.topicName,
+            id: element.id
+        }
+        questionTopicArray.push(topic);
+    });
+    console.log("Complete list of topics: ",questionTopicArray)
+    setQuestionTopic(questionTopicArray);
+}
 
     
     const doSubmit = async () => {
