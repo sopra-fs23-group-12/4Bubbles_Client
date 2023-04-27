@@ -42,13 +42,20 @@ export default function Ranking(props) {
 
     console.log(final);
 
+    /*
     const tmpUsers = ranking.map((item, i) => {
         console.log(item);
         let id = Object.keys(item)[0];
         console.log({"name": id, "points": item[id]})
         return {"name": id, "points": item[id]};
-    })
+    })*/
 
+    const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
+        console.log(item);
+        let id = item;
+        console.log({"name": id, "points": ranking[0][id]})
+        return {"name": id, "points": ranking[0][id]};
+    })
 
     /*
     const tmpUsers = [
