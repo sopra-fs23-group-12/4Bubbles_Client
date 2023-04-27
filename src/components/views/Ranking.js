@@ -86,7 +86,8 @@ export default function Ranking(props) {
 
     //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
+    //const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
+    const socket = io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
 
     useEffect(() => {
         socket.on("get_ranking", (data) => {
