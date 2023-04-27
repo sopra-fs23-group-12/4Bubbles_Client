@@ -30,10 +30,10 @@ const WaitingRoom = (props) => {
         //const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
         //console.log("Response for api call /questions: ",response2.data)
         // add a condition that only the leader can click this
-        // socket.emit('start_game',{
-        //     message : "",
-        //     roomCode: roomCode,
-        //     type: "CLIENT"})
+         socket.emit('start_game',{
+             message : "",
+             roomCode: roomCode,
+             type: "CLIENT"})
         
         // socket.emit('get_Question',{
         //     message : "",
@@ -56,10 +56,10 @@ const WaitingRoom = (props) => {
             data.state.members = incomingData;
         })
 
-        // socket.on("game_started", (incomingData) =>{
-        //     console.log("game_started received");
-        //     history.push(`/question`);
-        // })
+         socket.on("game_started", (incomingData) =>{
+              console.log("game_started received");
+              history.push(`/question`);
+          })
 
         socket.on("get_question", (incomingData) =>{
             console.log("question arrived", incomingData);
