@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
 import io from "socket.io-client";
@@ -86,7 +86,7 @@ export default function Ranking(props) {
 
     //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    const socket = io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
+    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
 
     useEffect(() => {
         socket.on("get_ranking", (data) => {
