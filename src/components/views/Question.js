@@ -36,32 +36,15 @@ const Question = props => {
     //const [answerx, setAnswer1Valuex] = useState(null);
 
     const data = useLocation();
-    console.log("data: ", data);
-    console.log("localStorage: ", localStorage);
+    // console.log("data: ", data);
+    // console.log("localStorage: ", localStorage);
     //console.log("SEARCHED VALUEEEEEE:",radioValue)
     //console.log("roomCode: ", localStorage.roomCode);
 
     const roomCode = localStorage.roomCode
 
-    //url from backend for websocket connection
-    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    // const socket =  io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
-
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-
     const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
-    //console.log("useMemo roomCode: ", roomCode);
-
-    console.log("socket acknowledged as connected:", socket.connected);
-
-    //const question = "Which river has the most capital cities on it?"
-
-    // const answer = [
-    //     answer1,
-    //     answer2,
-    //     answer3,
-    //     answer4
-    // ]
 
     const answer = [
         answer1,
@@ -69,14 +52,6 @@ const Question = props => {
         answer3,
         answer4
     ]
-
-
-    // const answer = [
-    //     "Amazon",
-    //     "Nile",
-    //     "Congo River",
-    //     "Danube"
-    // ]
 
     const cssClasses = [
         "answer-item-top-left",
@@ -86,18 +61,6 @@ const Question = props => {
     ]
 
     const revealAnswer = () => {
-        socket.emit('end_of_question', {
-            message: "",
-            roomCode: roomCode,
-        })
-        //startCountdown(5);
-        //enter correct answer here
-        setCorrectAnswer(1);
-        const timer = setTimeout(() => {
-            console.log('answer correct:', radioValue === answer[0]);
-            setPopupValue(radioValue === answer[0]);
-        }, 2000);
-        return () => clearTimeout(timer);
 
 
     }
@@ -105,8 +68,8 @@ const Question = props => {
 
     const sendVote = (item) => {
         setRadioValue(item)
-        console.log("sendVote of:", item);
-        console.log("radioValue:", radioValue);
+        // console.log("sendVote of:", item);
+        // console.log("radioValue:", radioValue);
 
         socket.emit('send_vote', {
             userId: localStorage.userId,
@@ -133,44 +96,42 @@ const Question = props => {
 
         setPopupValue(null);
         setCorrectAnswer(null);
+        //setRadioValue(null);
     }
 
-    // //prototype counter
-    // function startCountdown(seconds) {
-    //     setTimerValue(timerValue = seconds);
+    //prototype counter
+    function startCountdown(seconds) {
+        //setTimerValue(seconds);
 
-    //     const interval = setInterval(() => {
-    //       //console.log(timerValue);
-    //       setTimerValue(timerValue--);
+        const interval = setInterval(() => {
+            seconds = seconds -1;
+          //console.log(timerValue);
+          setTimerValue(seconds);
 
-    //       if (timerValue < 0 ) {
-    //         clearInterval(interval);
-    //         console.log('End of counter!');
-    //       }
-    //     }, 1000);
-    //   }
+          if (seconds < 1) {
+            clearInterval(interval);
+            console.log('End of counter!');
+
+            socket.emit('end_of_question', {
+                message: "",
+                roomCode: roomCode,
+            })
+
+            const timer = setTimeout(() => {
+                console.log('answer correct:', radioValue === correctAnswer);
+                setPopupValue(radioValue === correctAnswer);
+            }, 2000);
+            return () => clearTimeout(timer);
+
+          }
+        }, 1000);
+      }
 
 
     //const question = null;
 
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
-        //console.log("roomCode at emit: ", roomCode);
-
-
-        //        socket.emit('start_game',{
-        //          message : "",
-        //        roomCode: roomCode,
-        //      type: "CLIENT"})
-
-        // socket.emit('send_vote',{
-        //     userId: localStorage.userId,
-        //     remainingTime : timerValue,
-        //     message : radioValue,
-        //     roomCode: roomCode,
-        //     type: "CLIENT"}
-        //     )
-
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
@@ -187,6 +148,7 @@ const Question = props => {
             console.log(fin);
             setRanking(rank);
             setFinal(fin);
+            setRadioValue(null);
         })
 
         socket.on("get_answers", (data) => {
@@ -198,12 +160,15 @@ const Question = props => {
             setAnswer3Value(answersArray[2])
             setAnswer4Value(answersArray[3])
             console.log("answers arrived:", data)
-            setTimeout(revealAnswer, 10000)
+            startCountdown(11);
+            revealAnswer();
+            //setTimeout(revealAnswer, 100)
 
         })
 
         socket.on("get_right_answer", (data) => {
             console.log("right answer arrived:", data)
+            setCorrectAnswer(data)
             socket.emit('request_ranking', {
                 userId: localStorage.userId,
                 remainingTime: timerValue,

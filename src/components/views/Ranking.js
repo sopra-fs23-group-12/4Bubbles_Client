@@ -40,7 +40,7 @@ export default function Ranking(props) {
     const history = useHistory();
     const [roomCode, setRoom] = useState("1");
 
-    console.log(final);
+    //console.log(final);
 
     /*
     const tmpUsers = ranking.map((item, i) => {
@@ -51,7 +51,7 @@ export default function Ranking(props) {
     })*/
 
     const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
-        console.log(item);
+        //console.log(item);
         let id = item;
         console.log({"name": id, "points": ranking[0][id]})
         return {"name": id, "points": ranking[0][id]};
@@ -90,8 +90,8 @@ export default function Ranking(props) {
 
     useEffect(() => {
         socket.on("get_ranking", (data) => {
-            console.log("ranking message received:")
-            console.log(data.message)
+            // console.log("ranking message received:")
+            // console.log(data.message)
             setUsers(data.message);
         })
 
