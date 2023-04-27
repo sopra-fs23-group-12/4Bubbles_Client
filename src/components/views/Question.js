@@ -149,9 +149,9 @@ const Question = props => {
             let newStr = data.substr(1, data.length - 2);
             const answersArray = newStr.split(",")
             setAnswer1Value(answersArray[0])
-            setAnswer2Value(answersArray[1])
-            setAnswer3Value(answersArray[2])
-            setAnswer4Value(answersArray[3])
+            setAnswer2Value(answersArray[1].substr(1))
+            setAnswer3Value(answersArray[2].substr(1))
+            setAnswer4Value(answersArray[3].substr(1))
             console.log("answers arrived:", data)
             startCountdown(11);
             revealAnswer();
