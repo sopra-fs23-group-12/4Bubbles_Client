@@ -31,7 +31,7 @@ const Question = props => {
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
-    const [showTimerXY, setShowTimerXY] = useState(false);
+    const [showTimerXY, setShowTimerXY] = useState(true);
 
     //const [answerx, setAnswer1Valuex] = useState(null);
 

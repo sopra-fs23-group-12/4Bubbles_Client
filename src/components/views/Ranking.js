@@ -117,13 +117,15 @@ export default function Ranking(props) {
 
             {!final ?
 
+/*
                 <div className="align-center">
                     <Button
                         onClick={() => history.push('/question')}
                         className="primary-button__continue"
                     >continue
                     </Button>
-                </div>
+                </div>*/
+                null
                 :
                 <div className="align-center">
                     <Button
