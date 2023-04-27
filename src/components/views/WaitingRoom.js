@@ -1,5 +1,5 @@
 import 'styles/views/WaitingRoom.scss';
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
 import {format} from "react-string-format";
@@ -18,10 +18,10 @@ const WaitingRoom = (props) => {
 
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
-    //const roomCode = data.state.roomCode
+    const roomCode = localStorage.getItem("roomCode");
     
-    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    // const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
+    const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
 
 
 
@@ -43,11 +43,12 @@ const WaitingRoom = (props) => {
     }
 
     useEffect(async () =>{
-        console.log("socket acknowledged as connected:", socket.connected);
+        console.log("socket acknowledged as connected useEffect:", socket.connected);
         // const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
         // console.log("Response for api call /questions: ",response2.data)
-        //infos oming from backend
+        //infos coming from backend
         //returns a list of members since that is the only thing in the state that changes
+
         socket.on("joined_players", (incomingData) => {
             console.log("new_player_joined")
             console.log("new member player list: ", incomingData);
