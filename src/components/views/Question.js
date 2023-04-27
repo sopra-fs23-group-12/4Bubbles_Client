@@ -32,7 +32,8 @@ const Question = props => {
     const data = useLocation();
     console.log("data: ", data);
     console.log("localStorage: ", localStorage);
-    console.log("roomCode: ", localStorage.roomCode);
+   //console.log("SEARCHED VALUEEEEEE:",radioValue)
+    //console.log("roomCode: ", localStorage.roomCode);
     
     const roomCode = localStorage.roomCode
 
@@ -42,7 +43,7 @@ const Question = props => {
 
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
     const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
-    console.log("useMemo roomCode: ", roomCode);
+    //console.log("useMemo roomCode: ", roomCode);
     console.log("socket acknowledged as connected:", socket.connected);
 
     //const question = "Which river has the most capital cities on it?"
@@ -78,12 +79,33 @@ const Question = props => {
 
     const revealAnswer = () => {
         //startCountdown(5);
-        setCorrectAnswer(0);
+        //enter correct answer here
+        setCorrectAnswer(1);
         const timer = setTimeout(() => {
             console.log('answer correct:', radioValue === answer[0]);
             setPopupValue(radioValue === answer[0]);
         }, 2000);
         return () => clearTimeout(timer);
+
+        socket.emit('end_of_question',{
+            message : "",
+            roomCode: roomCode,
+        })
+    }
+
+
+    const sendVote = (item) => {
+        setRadioValue(item)
+        console.log("sendVote of:", item);
+        console.log("radioValue:", radioValue);
+
+        socket.emit('send_vote',{
+            userId: localStorage.userId,
+            remainingTime : timerValue,
+            message : item,
+            roomCode: roomCode,
+            type: "CLIENT"}
+            )
     }
 
     const nextQuestion = () => {
@@ -123,12 +145,21 @@ const Question = props => {
 
     useEffect(async () => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
-        console.log("roomCode at emit: ", roomCode);
+        //console.log("roomCode at emit: ", roomCode);
 
         socket.emit('start_game',{
             message : "",
             roomCode: roomCode,
             type: "CLIENT"})
+
+        // socket.emit('send_vote',{
+        //     userId: localStorage.userId,
+        //     remainingTime : timerValue,
+        //     message : radioValue,
+        //     roomCode: roomCode,
+        //     type: "CLIENT"}
+        //     )
+        
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) =>{
@@ -145,23 +176,29 @@ const Question = props => {
             setAnswer3Value(answersArray[2])
             setAnswer4Value(answersArray[3])
             console.log("answers arrived:", data)
-            console.log("CUTTED answers arrived:", newStr)
+            setTimeout(revealAnswer, 10000)
+
+        })
+
+        socket.on("get_right_answer", (data) =>{
+            console.log("right answer arrived:", data)
         })
 
         socket.on("timer_count", (data) =>{
+            
+            //console.log("timer arrived:", data)
             setTimerValue(data)
-            //console.log(data)
+            //console.log("timerValue:", timerValue)
+            if (timerValue === 1)
+                {(console.log("timer_count active"))}
+                   })
+
+        socket.on("somebody_voted", (data) =>{
+            console.log("somebody voted:", data)   
+            //will later be needed to show bigger bubbles sizes
         })
 
     }, [])
-
-    // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
-    // const roomCode = data.state.roomCode
-    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    // const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
-
-    
-
 
     return (
         <div className="question-wrapper">
@@ -171,19 +208,20 @@ const Question = props => {
             <div className="question-item">
             <div className="timer">
             {timerValue} 
+
             </div>
-           
-                <Bubble 
-                onClick={revealAnswer} className="bubble-button--question">{question}
+
+                <Bubble className="bubble-button--question">{question}
                 </Bubble>
 
             </div>
 
             {answer.map((item, index) => {
+                
                 if (item === null) {
                     return null;}
                 return <div key={item} className={cssClasses[index]}>
-                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => setRadioValue(item)} />
+                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                     <label htmlFor={item}>
                         <Bubble className={(correctAnswer === null || index === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                     </label>
