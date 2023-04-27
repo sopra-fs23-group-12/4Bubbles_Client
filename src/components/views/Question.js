@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 import { format } from 'react-string-format';
 import io from "socket.io-client";
+import Timer from 'components/ui/timer';
 
 import '../../styles/views/Question.scss';
 
@@ -30,6 +31,7 @@ const Question = props => {
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
+    const [showTimerXY, setShowTimerXY] = useState(false);
 
     //const [answerx, setAnswer1Valuex] = useState(null);
 
@@ -239,6 +241,7 @@ const Question = props => {
             <div className="question-item">
                 <div className="timer">
                     {timerValue}
+                    { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null}
 
                 </div>
 
