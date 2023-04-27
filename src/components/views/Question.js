@@ -116,13 +116,6 @@ const Question = props => {
                 message: "",
                 roomCode: roomCode,
             })
-
-            const timer = setTimeout(() => {
-                console.log('answer correct:', radioValue === correctAnswer);
-                setPopupValue(radioValue === correctAnswer);
-            }, 2000);
-            return () => clearTimeout(timer);
-
           }
         }, 1000);
       }
@@ -175,6 +168,33 @@ const Question = props => {
                 roomCode: roomCode,
                 type: "CLIENT"
             });
+
+            var currentRadioValue;
+            setRadioValue(currentState_ => {
+                currentRadioValue = currentState_;
+                return currentState_;  // don't actually change the state
+             })
+            console.log("RADIOVALUE:", currentRadioValue);
+            
+
+            // var currentCorrectAnswer;
+            // setCorrectAnswer(currentAns_ => {
+            //     currentCorrectAnswer = currentAns_;
+            //     return currentAns_;  // don't actually change the state
+            //  })
+            console.log("CORRECT ANSWER:", data);
+
+
+            console.log('answer correct:', data === currentRadioValue);
+            setPopupValue(data === currentRadioValue);
+            // console.log('answer correct:', radioValue === correctAnswer);
+            // setPopupValue(radioValue === correctAnswer);
+
+            const timer = setTimeout(() => {
+
+            }, 2000);
+            return () => clearTimeout(timer);
+
         })
 
         socket.on("timer_count", (data) => {
