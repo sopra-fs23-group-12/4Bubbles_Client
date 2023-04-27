@@ -25,7 +25,8 @@ const WelcomePage = props => {
 
     const logout = () => {
         logoutRequest(history);
-        
+        localStorage.clear();
+        history.push('/login');
     }
 
 

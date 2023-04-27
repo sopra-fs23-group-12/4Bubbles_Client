@@ -42,8 +42,10 @@ const Question = props => {
     // const socket =  io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
 
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+
     const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
     //console.log("useMemo roomCode: ", roomCode);
+
     console.log("socket acknowledged as connected:", socket.connected);
 
     //const question = "Which river has the most capital cities on it?"
@@ -143,7 +145,7 @@ const Question = props => {
 
     //const question = null;
 
-    useEffect(async () => {
+    useEffect( () => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
         //console.log("roomCode at emit: ", roomCode);
 
