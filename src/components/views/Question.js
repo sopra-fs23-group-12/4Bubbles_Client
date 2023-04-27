@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Bubble } from 'components/ui/Bubble';
 import { useLocation } from 'react-router-dom';
-import {getDomainSocket} from "../../helpers/getDomainSocket";
+import { getDomainSocket } from "../../helpers/getDomainSocket";
 import { format } from 'react-string-format';
 import io from "socket.io-client";
+import Timer from 'components/ui/timer';
 
 import '../../styles/views/Question.scss';
 
-
-const Question = props => { 
+import Ranking from './Ranking';
+const Question = props => {
 
     //websockets need to communicate:
     // timing
@@ -27,14 +28,19 @@ const Question = props => {
     const [answer2, setAnswer2Value] = useState(null);
     const [answer3, setAnswer3Value] = useState(null);
     const [answer4, setAnswer4Value] = useState(null);
+    const [showRanking, setShowRanking] = useState(false);
+    const [ranking, setRanking] = useState(null);
+    const [final, setFinal] = useState(false);
+    const [showTimerXY, setShowTimerXY] = useState(false);
+
     //const [answerx, setAnswer1Valuex] = useState(null);
 
     const data = useLocation();
     console.log("data: ", data);
     console.log("localStorage: ", localStorage);
-   //console.log("SEARCHED VALUEEEEEE:",radioValue)
+    //console.log("SEARCHED VALUEEEEEE:",radioValue)
     //console.log("roomCode: ", localStorage.roomCode);
-    
+
     const roomCode = localStorage.roomCode
 
     //url from backend for websocket connection
@@ -58,11 +64,11 @@ const Question = props => {
     // ]
 
     const answer = [
-            answer1,
-            answer2,
-            answer3,
-            answer4
-        ]
+        answer1,
+        answer2,
+        answer3,
+        answer4
+    ]
 
 
     // const answer = [
@@ -80,8 +86,8 @@ const Question = props => {
     ]
 
     const revealAnswer = () => {
-        socket.emit('end_of_question',{
-            message : "",
+        socket.emit('end_of_question', {
+            message: "",
             roomCode: roomCode,
         })
         //startCountdown(5);
@@ -102,13 +108,14 @@ const Question = props => {
         console.log("sendVote of:", item);
         console.log("radioValue:", radioValue);
 
-        socket.emit('send_vote',{
+        socket.emit('send_vote', {
             userId: localStorage.userId,
-            remainingTime : timerValue,
-            message : item,
+            remainingTime: timerValue,
+            message: item,
             roomCode: roomCode,
-            type: "CLIENT"}
-            )
+            type: "CLIENT"
+        }
+        )
     }
 
     const nextQuestion = () => {
@@ -118,7 +125,7 @@ const Question = props => {
         //     message : "",
         //     roomCode: roomCode,
         //     type: "CLIENT"})
-          
+
         // socket.emit('start_timer', {
         //     message : "",
         //     roomCode: roomCode,
@@ -128,33 +135,33 @@ const Question = props => {
         setCorrectAnswer(null);
     }
 
-        // //prototype counter
-        // function startCountdown(seconds) {
-        //     setTimerValue(timerValue = seconds);
-              
-        //     const interval = setInterval(() => {
-        //       //console.log(timerValue);
-        //       setTimerValue(timerValue--);
-                
-        //       if (timerValue < 0 ) {
-        //         clearInterval(interval);
-        //         console.log('End of counter!');
-        //       }
-        //     }, 1000);
-        //   }
+    // //prototype counter
+    // function startCountdown(seconds) {
+    //     setTimerValue(timerValue = seconds);
+
+    //     const interval = setInterval(() => {
+    //       //console.log(timerValue);
+    //       setTimerValue(timerValue--);
+
+    //       if (timerValue < 0 ) {
+    //         clearInterval(interval);
+    //         console.log('End of counter!');
+    //       }
+    //     }, 1000);
+    //   }
 
 
     //const question = null;
 
-    useEffect( () => {
+    useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
         //console.log("roomCode at emit: ", roomCode);
 
 
-//        socket.emit('start_game',{
-  //          message : "",
-    //        roomCode: roomCode,
-      //      type: "CLIENT"})
+        //        socket.emit('start_game',{
+        //          message : "",
+        //        roomCode: roomCode,
+        //      type: "CLIENT"})
 
         // socket.emit('send_vote',{
         //     userId: localStorage.userId,
@@ -163,15 +170,26 @@ const Question = props => {
         //     roomCode: roomCode,
         //     type: "CLIENT"}
         //     )
-        
+
 
         //everytime an event happens triggered by the socket, this function is called
-        socket.on("get_question", (data) =>{
+        socket.on("get_question", (data) => {
             console.log("question arrived:", data)
             setQuestionValue(data)
+            setShowRanking(false);
         })
 
-        socket.on("get_answers", (data) =>{
+        socket.on("get_ranking", (data) => {
+            console.log("ranking arrived:", JSON.parse(data));
+            setShowRanking(true);
+            const rank = JSON.parse(data)['ranking'];
+            const fin = JSON.parse(data)['final_round'][0];
+            console.log(fin);
+            setRanking(rank);
+            setFinal(fin);
+        })
+
+        socket.on("get_answers", (data) => {
             //let newStr = data.slice(-1,-1);
             let newStr = data.substr(1, data.length - 2);
             const answersArray = newStr.split(",")
@@ -184,36 +202,48 @@ const Question = props => {
 
         })
 
-        socket.on("get_right_answer", (data) =>{
+        socket.on("get_right_answer", (data) => {
             console.log("right answer arrived:", data)
+            socket.emit('request_ranking', {
+                userId: localStorage.userId,
+                remainingTime: timerValue,
+                roomCode: roomCode,
+                type: "CLIENT"
+            });
         })
 
-        socket.on("timer_count", (data) =>{
-            
+        socket.on("timer_count", (data) => {
+
             //console.log("timer arrived:", data)
             setTimerValue(data)
             //console.log("timerValue:", timerValue)
-            if (timerValue === 1)
-                {(console.log("timer_count active"))}
-                   })
+            if (timerValue === 1) { (console.log("timer_count active")) }
+        })
 
-        socket.on("somebody_voted", (data) =>{
-            console.log("somebody voted:", data)   
+        socket.on("somebody_voted", (data) => {
+            console.log("somebody voted:", data)
             //will later be needed to show bigger bubbles sizes
         })
 
     }, [])
 
+
     return (
-        <div className="question-wrapper">
+        <>
+        {
+            (showRanking === true && ranking !== null )? 
+            <Ranking ranking={ranking} final={final}/>
+            : 
+            <div className="question-wrapper">
 
 
 
             <div className="question-item">
-            <div className="timer">
-            {timerValue} 
+                <div className="timer">
+                    {timerValue}
+                    { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null}
 
-            </div>
+                </div>
 
                 <Bubble className="bubble-button--question">{question}
                 </Bubble>
@@ -221,9 +251,10 @@ const Question = props => {
             </div>
 
             {answer.map((item, index) => {
-                
+
                 if (item === null) {
-                    return null;}
+                    return null;
+                }
                 return <div key={item} className={cssClasses[index]}>
                     <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                     <label htmlFor={item}>
@@ -243,6 +274,8 @@ const Question = props => {
             }
 
         </div >
+        }</>
+        
     )
 };
 export default Question;

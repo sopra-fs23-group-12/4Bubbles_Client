@@ -8,7 +8,7 @@ import { getDomainSocket } from "../../helpers/getDomainSocket";
 import '../../styles/views/Ranking.scss';
 
 const RankingItem = (props) => {
-    const { name, points, index } = props;
+    const { name, points, index, ranking } = props;
 
     const medalEmojis = [
         "🥇",
@@ -36,10 +36,28 @@ const RankingItem = (props) => {
 
 
 export default function Ranking(props) {
-    const { final } = props;
+    const { final, ranking } = props;
     const history = useHistory();
     const [roomCode, setRoom] = useState("1");
 
+    console.log(final);
+
+    /*
+    const tmpUsers = ranking.map((item, i) => {
+        console.log(item);
+        let id = Object.keys(item)[0];
+        console.log({"name": id, "points": item[id]})
+        return {"name": id, "points": item[id]};
+    })*/
+
+    const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
+        console.log(item);
+        let id = item;
+        console.log({"name": id, "points": ranking[0][id]})
+        return {"name": id, "points": ranking[0][id]};
+    })
+
+    /*
     const tmpUsers = [
         {
             "name": "user123",
@@ -62,7 +80,7 @@ export default function Ranking(props) {
             "points": 34
         },
     ];
-
+*/
     const [users, setUsers] = useState(tmpUsers);
 
 
@@ -96,15 +114,18 @@ export default function Ranking(props) {
                 }) : null}
             </div>
 
+
             {!final ?
 
+/*
                 <div className="align-center">
                     <Button
                         onClick={() => history.push('/question')}
                         className="primary-button__continue"
                     >continue
                     </Button>
-                </div>
+                </div>*/
+                null
                 :
                 <div className="align-center">
                     <Button
