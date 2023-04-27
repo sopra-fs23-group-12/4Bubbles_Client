@@ -80,6 +80,10 @@ const Question = props => {
     ]
 
     const revealAnswer = () => {
+        socket.emit('end_of_question',{
+            message : "",
+            roomCode: roomCode,
+        })
         //startCountdown(5);
         //enter correct answer here
         setCorrectAnswer(1);
@@ -89,10 +93,7 @@ const Question = props => {
         }, 2000);
         return () => clearTimeout(timer);
 
-        socket.emit('end_of_question',{
-            message : "",
-            roomCode: roomCode,
-        })
+
     }
 
 
