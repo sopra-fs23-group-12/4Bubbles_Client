@@ -150,10 +150,11 @@ const Question = props => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
         //console.log("roomCode at emit: ", roomCode);
 
-        socket.emit('start_game',{
-            message : "",
-            roomCode: roomCode,
-            type: "CLIENT"})
+
+//        socket.emit('start_game',{
+  //          message : "",
+    //        roomCode: roomCode,
+      //      type: "CLIENT"})
 
         // socket.emit('send_vote',{
         //     userId: localStorage.userId,
