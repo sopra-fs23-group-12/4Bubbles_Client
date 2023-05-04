@@ -1,14 +1,13 @@
 import 'styles/views/WaitingRoom.scss';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect,  } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
 import {format} from "react-string-format";
-import io from "socket.io-client";
 import {getDomainSocket} from "../../helpers/getDomainSocket";
 
+import { useSocket } from 'components/context/socket';
+
 // establish a websocket connection (joins namespace for only the sender client)
-const url = format(getDomainSocket() );
-const socket = io.connect(url,{transports: ['websocket'], upgrade: false});
 
 const WaitingRoom = (props) => {
     const history = useHistory();
@@ -16,13 +15,13 @@ const WaitingRoom = (props) => {
     const [members, setMembers] = useState(data.state.members)
     console.log("data:", data);
 
+    const {socket, connect} = useSocket();
+
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
     const roomCode = localStorage.getItem("roomCode");
-    
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
-
+    connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
 
 
     const startGame = async () => {
@@ -42,12 +41,13 @@ const WaitingRoom = (props) => {
         history.push(`/question`);
     }
 
-    useEffect(async () =>{
+    useEffect(() =>{
         console.log("socket acknowledged as connected useEffect:", socket.connected);
         // const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
         // console.log("Response for api call /questions: ",response2.data)
         //infos coming from backend
         //returns a list of members since that is the only thing in the state that changes
+        console.log(socket);
 
         socket.on("joined_players", (incomingData) => {
             console.log("new_player_joined")
@@ -66,7 +66,7 @@ const WaitingRoom = (props) => {
             history.push(`/question`);
         })
 
-    })
+    }, [socket])
 
     return (
         <div className="waiting-room-wrapper">

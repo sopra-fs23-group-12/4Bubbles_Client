@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useContext, createContext, useMemo } from "react";
 import io from "socket.io-client";
-import { format } from 'react-string-format';
-import { getDomainSocket } from "../../helpers/getDomainSocket";
 
-const roomCode = 'asdf';
+const SocketContext = createContext(null);
 
-const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-//export const socket = io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
+export const SocketProvider = ({ children }) => {
 
-export const socket = io.connect(url, { transports: ['websocket'], upgrade: false});
-export const SocketContext = React.createContext();
+    const socket = io('http://localhost:9092');
+
+
+    const connect = (url, obj) => {
+        socket.connect(url, obj);
+    }
+
+    const disconnect = () => {
+        socket.disconnect();
+    }
+
+    // Use useMemo to prevent object recreation on every render
+    const contextValue = useMemo(() => ({ socket, connect, disconnect }), [socket]);
+
+    return (
+        // Using the provider so that ANY component in our application can 
+        // use the values that we are sending.
+        <SocketContext.Provider value={contextValue}>
+            {children}
+        </SocketContext.Provider>
+    );
+}
+
+export const useSocket = () => useContext(SocketContext);
