@@ -3,7 +3,6 @@ import { Bubble } from 'components/ui/Bubble';
 import { useLocation } from 'react-router-dom';
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 import { format } from 'react-string-format';
-import io from "socket.io-client";
 import Timer from 'components/ui/timer';
 
 import '../../styles/views/Question.scss';
@@ -216,7 +215,7 @@ const Question = props => {
             //will later be needed to show bigger bubbles sizes
         })
 
-    }, [])
+    }, [socket])
 
 
     return (

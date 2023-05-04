@@ -11,7 +11,6 @@ import BackIcon from 'components/ui/BackIcon';
 import { api, headers, handleError } from 'helpers/api';
 import { format } from "react-string-format";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
-import io from "socket.io-client";
 
 import { useSocket } from 'components/context/socket';
 

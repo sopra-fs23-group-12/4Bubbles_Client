@@ -12,7 +12,6 @@ import { Bubble } from 'components/ui/Bubble';
 import BackIcon from 'components/ui/BackIcon';
 import { format } from "react-string-format";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
-import io from "socket.io-client";
 
 const FormField = props => {
   return (
@@ -75,7 +74,7 @@ const JoinGameRoom = () => {
     }
   }
 
-  useEffect(async () => {
+  useEffect(() => {
 
     //everytime an event happens triggered by the socket, this function is called
     socket.on("room_is_joined", (response) => {
@@ -90,7 +89,7 @@ const JoinGameRoom = () => {
     })
 
 
-  }, [])
+  }, [socket])
 
   const toHomepage = () => {
     history.push("/overview");
