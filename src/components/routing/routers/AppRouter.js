@@ -10,7 +10,6 @@ import GameRoom from "components/views/GameRoom";
 import WaitingRoom from "components/views/WaitingRoom";
 import JoinGameRoom from "components/views/JoinGameRoom";
 import Question from "components/views/Question";
-import Websockets from "../../views/Websockets";
 import Ranking from "components/views/Ranking";
 import ObscurePage from "components/views/ObscurePage";
 
@@ -26,9 +25,6 @@ import ObscurePage from "components/views/ObscurePage";
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Route exact path="/websockets">
-        <Websockets />
-      </Route>
       <Switch>
         <Route path="/welcomepage">
           <GameGuard>
