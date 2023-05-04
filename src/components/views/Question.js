@@ -145,19 +145,21 @@ const Question = props => {
         })
 
         socket.on("get_answers", (data) => {
-            //let newStr = data.slice(-1,-1);
-            let newStr = data.substr(1, data.length - 2);
-            const answersArray = newStr.split(",")
-            setAnswer1Value(answersArray[0])
-            setAnswer2Value(answersArray[1].substr(1))
-            setAnswer3Value(answersArray[2].substr(1))
-            setAnswer4Value(answersArray[3].substr(1))
+            setAnswer1Value(data[0])
+            setAnswer2Value(data[1])
+            setAnswer3Value(data[2])
+            setAnswer4Value(data[3])
             console.log("answers arrived:", data)
-            startCountdown(11);
-            revealAnswer();
-            //setTimeout(revealAnswer, 100)
-
         })
+
+        socket.on("end_of_question", (data) => {
+            console.log("end of question arrived:", data)
+            socket.emit('end_of_question', {
+                message: "",
+                roomCode: roomCode,
+            })
+            
+        });
 
         socket.on("get_right_answer", (data) => {
             console.log("right answer arrived:", data)
