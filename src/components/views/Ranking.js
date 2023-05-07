@@ -50,11 +50,15 @@ export default function Ranking(props) {
         return {"name": id, "points": item[id]};
     })*/
 
+    const jsObjects = JSON.parse(localStorage.getItem('users'));
+
     const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
-        //console.log(item);
         let id = item;
-        console.log({"name": id, "points": ranking[0][id]})
-        return {"name": id, "points": ranking[0][id]};
+        let result = jsObjects.filter(obj => {
+            console.log(obj)
+            return obj.id === parseInt(item)
+          })
+        return {"name": result[0].username, "points": ranking[0][id]};
     })
 
     /*
