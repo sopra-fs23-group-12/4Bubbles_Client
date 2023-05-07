@@ -169,7 +169,7 @@ const Question = props => {
                 type: "CLIENT"
             });
 
-            var currentRadioValue;
+            let currentRadioValue;
             setRadioValue(currentState_ => {
                 currentRadioValue = currentState_;
                 return currentState_;  // don't actually change the state

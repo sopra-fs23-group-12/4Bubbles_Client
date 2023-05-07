@@ -35,7 +35,7 @@ export const handleError = error => {
 };
 
 export function headers() {
-  var token = localStorage.getItem('token');
+  let token = localStorage.getItem('token');
   return {
     headers:{
       Authorization: `Bearer ${token}`

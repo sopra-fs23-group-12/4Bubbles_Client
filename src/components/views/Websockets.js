@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import io from "socket.io-client";
-import {useEffect} from "react";
 import { format } from 'react-string-format';
 import {getDomainSocket} from "../../helpers/getDomainSocket";
 

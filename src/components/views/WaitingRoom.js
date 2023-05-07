@@ -13,7 +13,7 @@ const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
     const [members, setMembers] = useState(data.state.members)
-    console.log("data:", data);
+    // console.log("data:", data);
 
     const {socket, connect} = useSocket();
 
@@ -25,9 +25,9 @@ const WaitingRoom = (props) => {
 
 
     const startGame = async () => {
-        console.log("socket acknowledged as connected pressing start:", socket.connected);
+        // console.log("socket acknowledged as connected pressing start:", socket.connected);
         //const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
-        //console.log("Response for api call /questions: ",response2.data)
+        //// console.log("Response for api call /questions: ",response2.data)
         // add a condition that only the leader can click this
          socket.emit('start_game',{
              message : "",
@@ -42,27 +42,27 @@ const WaitingRoom = (props) => {
     }
 
     useEffect(() =>{
-        console.log("socket acknowledged as connected useEffect:", socket.connected);
+        // console.log("socket acknowledged as connected useEffect:", socket.connected);
         // const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
-        // console.log("Response for api call /questions: ",response2.data)
+        // // console.log("Response for api call /questions: ",response2.data)
         //infos coming from backend
         //returns a list of members since that is the only thing in the state that changes
-        console.log(socket);
+        // console.log(socket);
 
         socket.on("joined_players", (incomingData) => {
-            console.log("new_player_joined")
-            console.log("new member player list: ", incomingData);
+            // console.log("new_player_joined")
+            // console.log("new member player list: ", incomingData);
             setMembers(incomingData);
             data.state.members = incomingData;
         })
 
          socket.on("game_started", (incomingData) =>{
-              console.log("game_started received");
+              // console.log("game_started received");
               history.push(`/question`);
           })
 
         socket.on("get_question", (incomingData) =>{
-            console.log("question arrived", incomingData);
+            // console.log("question arrived", incomingData);
             history.push(`/question`);
         })
 
