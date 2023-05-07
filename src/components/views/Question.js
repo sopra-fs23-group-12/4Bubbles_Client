@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
 import { Bubble } from 'components/ui/Bubble';
-import { useLocation } from 'react-router-dom';
-import { getDomainSocket } from "../../helpers/getDomainSocket";
+import React, { useEffect, useMemo, useState } from 'react';
 import { format } from 'react-string-format';
 import io from "socket.io-client";
-import Timer from 'components/ui/timer';
+import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import '../../styles/views/Question.scss';
 
@@ -18,7 +16,6 @@ const Question = props => {
     // questions (reveal)
     // bubble sizes?
 
-
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
@@ -31,21 +28,18 @@ const Question = props => {
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
-    const [showTimerXY, setShowTimerXY] = useState(false);
+    //const [showTimerXY, setShowTimerXY] = useState(false);
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
 
-    //const [answerx, setAnswer1Valuex] = useState(null);
-
-    const data = useLocation();
     // console.log("data: ", data);
     // console.log("localStorage: ", localStorage);
-    //console.log("SEARCHED VALUEEEEEE:",radioValue)
     //console.log("roomCode: ", localStorage.roomCode);
 
     const roomCode = localStorage.roomCode
 
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    // eslint-disable-next-line
     const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
 
     const answer = [
@@ -77,54 +71,39 @@ const Question = props => {
         )
     }
 
-    const nextQuestion = () => {
-
-        console.log("socket acknowledged as connected with nextQuestion:", socket.connected);
-        // socket.emit('start_game', {
-        //     message : "",
-        //     roomCode: roomCode,
-        //     type: "CLIENT"})
-
-        // socket.emit('start_timer', {
-        //     message : "",
-        //     roomCode: roomCode,
-        //     type: "CLIENT"})
-
-        // setPopupValue(null);
-        // setCorrectAnswer(null);
-        //setRadioValue(null);
-    }
-
     //prototype counter
-    function startCountdown(seconds) {
-        //setTimerValue(seconds);
+    // function startCountdown(seconds) {
+    //     //setTimerValue(seconds);
+    //     const interval = setInterval(() => {
+    //         seconds = seconds -1;
+    //       //console.log(timerValue);
+    //       setTimerValue(seconds);
 
-        const interval = setInterval(() => {
-            seconds = seconds -1;
-          //console.log(timerValue);
-          setTimerValue(seconds);
+    //       if (seconds < 1) {
+    //         clearInterval(interval);
+    //         console.log('End of counter!');
 
-          if (seconds < 1) {
-            clearInterval(interval);
-            console.log('End of counter!');
-
-            socket.emit('end_of_question', {
-                message: "",
-                roomCode: roomCode,
-            })
-          }
-        }, 1000);
-      }
+    //         socket.emit('end_of_question', {
+    //             message: "",
+    //             roomCode: roomCode,
+    //         })
+    //       }
+    //     }, 1000);
+    //   }
 
       function displayEndOfQuestion(seconds) {
         setSplash(true);
         const interval = setInterval(() => {
             seconds = seconds -1;
             if (seconds <= 3) {
-                console.log("end of question arrived:", data)
-                console.log("RADIOVALUE:", radioValue);
-                console.log("CORRECT ANSWER:", correctAnswer);
-                setPopupValue(correctAnswer === radioValue);
+                // please don't delete:
+                // var currentRadioValue;
+                // setRadioValue(currentState_ => {
+                //     currentRadioValue = currentState_;
+                //     return currentState_;  // don't actually change the state
+                //  })
+
+                setPopupValue(true);
     
                 socket.emit('end_of_question', {
                     message: "",
@@ -146,10 +125,7 @@ const Question = props => {
             clearInterval(interval);
           }
         }, 1000);
-
       }
-
-
 
 
     useEffect(() => {
@@ -184,60 +160,11 @@ const Question = props => {
 
         socket.on("end_of_question", (data) => {
             displayEndOfQuestion(4);
-            // setTimeout(() => {
-            //     setSplash(true);
-            //     setTimerValue(data);
-            // }, 1000);
-            
-            // //setSplash(true);
-            // setTimeout(() => {
-            //     // console.log("end of question arrived:", data)
-            //     // console.log("RADIOVALUE:", radioValue);
-            //     // console.log("CORRECT ANSWER:", correctAnswer);
-            //     // setPopupValue(correctAnswer === radioValue);
-    
-            //     // socket.emit('end_of_question', {
-            //     //     message: "",
-            //     //     roomCode: roomCode,
-            //     // })
-
-
-            //     setTimeout(() => {
-            //         console.log("delay for request_ranking");
-            //         socket.emit('request_ranking', {
-            //             userId: localStorage.userId,
-            //             remainingTime: timerValue,
-            //             roomCode: roomCode,
-            //             type: "CLIENT"
-            //         });
-            //     }, 2000);
-
-                
-            // },2000)
-
-            //setSplash(false);
-            //setVisibleAnswers(false);
         });
 
         socket.on("get_right_answer", (data) => {
             console.log("right answer arrived:", data)
             setCorrectAnswer(data)
-            //var currentRadioValue;
-            // setRadioValue(currentState_ => {
-            //     currentRadioValue = currentState_;
-            //     return currentState_;  // don't actually change the state
-            //  })
-            
-
-            // var currentCorrectAnswer;
-            // setCorrectAnswer(currentAns_ => {
-            //     currentCorrectAnswer = currentAns_;
-            //     return currentAns_;  // don't actually change the state
-            //  })
-            
-            //console.log('answer correct:', data === currentRadioValue);
-            
-
         })
 
         socket.on("timer_count", (data) => {
@@ -248,15 +175,13 @@ const Question = props => {
                 setVisibleAnswers(true);
             }
 
-
             var currentvisibleAnswer;
             setVisibleAnswers(currentState_ => {
                 currentvisibleAnswer= currentState_;
                 return currentState_;  // don't actually change the state
              })
 
-
-            console.log("visibleanswer:", currentvisibleAnswer)
+            //console.log("visibleanswer:", currentvisibleAnswer)
 
             if (data === 1 && currentvisibleAnswer === true) {
                 setSplash(true);
@@ -267,7 +192,7 @@ const Question = props => {
             console.log("somebody voted:", data)
             //will later be needed to show bigger bubbles sizes
         })
-
+        // eslint-disable-next-line
     }, [])
 
 
@@ -291,7 +216,6 @@ const Question = props => {
             </div>
 
             {/* 4 answer bubbles */}
- 
             {answer.map((item, index) => {
                 if (item === null || visibleAnswers === false) {
                     return null;
@@ -316,12 +240,12 @@ const Question = props => {
             {(popupValue !== null) ?
                 <div className="pop-up">
                     <div className="pop-up__container">
-                        <span>{popupValue ? 'Your answer was correct! ✌️' : 'Your answer was wrong... 😱'}</span>
-                        <button onClick={nextQuestion} className="primary-button">ok</button></div>
+                        <span>{(correctAnswer === radioValue) ? 'Your answer was correct! ✌️' : 'Your answer was wrong... 😱'}</span>
+                        {/* <button onClick={nextQuestion} className="primary-button">ok</button> */}
+                    </div>
                 </div >
                 : null
             }
-
         </div >
         }</>
         
