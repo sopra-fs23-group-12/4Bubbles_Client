@@ -32,6 +32,8 @@ const Question = props => {
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
     const [showTimerXY, setShowTimerXY] = useState(false);
+    const [visibleAnswers, setVisibleAnswers] = useState(false);
+    const [splash, setSplash] = useState(false);
 
     //const [answerx, setAnswer1Valuex] = useState(null);
 
@@ -59,12 +61,6 @@ const Question = props => {
         "answer-item-bottom-right",
         "answer-item-bottom-left",
     ]
-
-    const revealAnswer = () => {
-
-
-    }
-
 
     const sendVote = (item) => {
         setRadioValue(item)
@@ -120,8 +116,41 @@ const Question = props => {
         }, 1000);
       }
 
+      function displayEndOfQuestion(seconds) {
+        setSplash(true);
+        const interval = setInterval(() => {
+            seconds = seconds -1;
+            if (seconds <= 3) {
+                console.log("end of question arrived:", data)
+                console.log("RADIOVALUE:", radioValue);
+                console.log("CORRECT ANSWER:", correctAnswer);
+                setPopupValue(correctAnswer === radioValue);
+    
+                socket.emit('end_of_question', {
+                    message: "",
+                    roomCode: roomCode,
+                })
+                
+            }
 
-    //const question = null;
+          if (seconds ===  0) {
+            setVisibleAnswers(false);
+            setSplash(false);
+            console.log("delay for request_ranking");
+            socket.emit('request_ranking', {
+                userId: localStorage.userId,
+                remainingTime: timerValue,
+                roomCode: roomCode,
+                type: "CLIENT"
+            });
+            clearInterval(interval);
+          }
+        }, 1000);
+
+      }
+
+
+
 
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
@@ -154,33 +183,40 @@ const Question = props => {
         })
 
         socket.on("end_of_question", (data) => {
-            console.log("end of question arrived:", data)
-            socket.emit('end_of_question', {
-                message: "",
-                roomCode: roomCode,
-            })
-            console.log("RADIOVALUE:", radioValue);
-            console.log("CORRECT ANSWER:", correctAnswer);
-            setPopupValue(correctAnswer === radioValue);
-            setTimeout(() => {
-                console.log("delay for request_ranking");
-                socket.emit('request_ranking', {
-                    userId: localStorage.userId,
-                    remainingTime: timerValue,
-                    roomCode: roomCode,
-                    type: "CLIENT"
-                });
-            }, 2000);
-            // console.log('answer correct:', radioValue === correctAnswer);
-            // setPopupValue(radioValue === correctAnswer);
-
+            displayEndOfQuestion(4);
+            // setTimeout(() => {
+            //     setSplash(true);
+            //     setTimerValue(data);
+            // }, 1000);
             
+            // //setSplash(true);
+            // setTimeout(() => {
+            //     // console.log("end of question arrived:", data)
+            //     // console.log("RADIOVALUE:", radioValue);
+            //     // console.log("CORRECT ANSWER:", correctAnswer);
+            //     // setPopupValue(correctAnswer === radioValue);
+    
+            //     // socket.emit('end_of_question', {
+            //     //     message: "",
+            //     //     roomCode: roomCode,
+            //     // })
 
-            // const timer = setTimeout(() => {
 
-            // }, 2000);
-            //return () => clearTimeout(timer);
-            
+            //     setTimeout(() => {
+            //         console.log("delay for request_ranking");
+            //         socket.emit('request_ranking', {
+            //             userId: localStorage.userId,
+            //             remainingTime: timerValue,
+            //             roomCode: roomCode,
+            //             type: "CLIENT"
+            //         });
+            //     }, 2000);
+
+                
+            // },2000)
+
+            //setSplash(false);
+            //setVisibleAnswers(false);
         });
 
         socket.on("get_right_answer", (data) => {
@@ -192,7 +228,6 @@ const Question = props => {
             //     return currentState_;  // don't actually change the state
             //  })
             
-            
 
             // var currentCorrectAnswer;
             // setCorrectAnswer(currentAns_ => {
@@ -200,8 +235,6 @@ const Question = props => {
             //     return currentAns_;  // don't actually change the state
             //  })
             
-
-
             //console.log('answer correct:', data === currentRadioValue);
             
 
@@ -211,8 +244,23 @@ const Question = props => {
 
             console.log("timer arrived:", data)
             setTimerValue(data)
-            //console.log("timerValue:", timerValue)
-            //if (timerValue === 1) { (console.log("timer_count active")) }
+            if (data === 10) {
+                setVisibleAnswers(true);
+            }
+
+
+            var currentvisibleAnswer;
+            setVisibleAnswers(currentState_ => {
+                currentvisibleAnswer= currentState_;
+                return currentState_;  // don't actually change the state
+             })
+
+
+            console.log("visibleanswer:", currentvisibleAnswer)
+
+            if (data === 1 && currentvisibleAnswer === true) {
+                setSplash(true);
+            }
         })
 
         socket.on("somebody_voted", (data) => {
@@ -231,24 +279,30 @@ const Question = props => {
             : 
             <div className="question-wrapper">
 
-
-
+            {/* question bubble */}
             <div className="question-item">
                 <div className="timer">
                     {timerValue}
                     {/* { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null} */}
-
                 </div>
-
-                <Bubble className="bubble-button--question">{question}
+                <Bubble 
+                className="bubble-button--question">{question}
                 </Bubble>
-
             </div>
 
+            {/* 4 answer bubbles */}
+ 
             {answer.map((item, index) => {
-
-                if (item === null) {
+                if (item === null || visibleAnswers === false) {
                     return null;
+                }
+                if (splash === false) {
+                    return <div key={item} className={cssClasses[index]}>
+                        <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                        <label htmlFor={item}>
+                            <Bubble className="bubble-button--answer">{item}</Bubble>
+                        </label>
+                    </div>
                 }
                 return <div key={item} className={cssClasses[index]}>
                     <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
@@ -258,7 +312,7 @@ const Question = props => {
                 </div>
             })}
 
-
+            {/* pop up window */}
             {(popupValue !== null) ?
                 <div className="pop-up">
                     <div className="pop-up__container">
