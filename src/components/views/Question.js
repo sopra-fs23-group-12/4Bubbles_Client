@@ -94,8 +94,8 @@ const Question = props => {
         //     roomCode: roomCode,
         //     type: "CLIENT"})
 
-        setPopupValue(null);
-        setCorrectAnswer(null);
+        // setPopupValue(null);
+        // setCorrectAnswer(null);
         //setRadioValue(null);
     }
 
@@ -142,6 +142,7 @@ const Question = props => {
             setRanking(rank);
             setFinal(fin);
             setRadioValue(null);
+            setPopupValue(null);
         })
 
         socket.on("get_answers", (data) => {
@@ -158,25 +159,39 @@ const Question = props => {
                 message: "",
                 roomCode: roomCode,
             })
+            console.log("RADIOVALUE:", radioValue);
+            console.log("CORRECT ANSWER:", correctAnswer);
+            setPopupValue(correctAnswer === radioValue);
+            setTimeout(() => {
+                console.log("delay for request_ranking");
+                socket.emit('request_ranking', {
+                    userId: localStorage.userId,
+                    remainingTime: timerValue,
+                    roomCode: roomCode,
+                    type: "CLIENT"
+                });
+            }, 2000);
+            // console.log('answer correct:', radioValue === correctAnswer);
+            // setPopupValue(radioValue === correctAnswer);
+
+            
+
+            // const timer = setTimeout(() => {
+
+            // }, 2000);
+            //return () => clearTimeout(timer);
             
         });
 
         socket.on("get_right_answer", (data) => {
             console.log("right answer arrived:", data)
             setCorrectAnswer(data)
-            socket.emit('request_ranking', {
-                userId: localStorage.userId,
-                remainingTime: timerValue,
-                roomCode: roomCode,
-                type: "CLIENT"
-            });
-
-            var currentRadioValue;
-            setRadioValue(currentState_ => {
-                currentRadioValue = currentState_;
-                return currentState_;  // don't actually change the state
-             })
-            console.log("RADIOVALUE:", currentRadioValue);
+            //var currentRadioValue;
+            // setRadioValue(currentState_ => {
+            //     currentRadioValue = currentState_;
+            //     return currentState_;  // don't actually change the state
+            //  })
+            
             
 
             // var currentCorrectAnswer;
@@ -184,27 +199,20 @@ const Question = props => {
             //     currentCorrectAnswer = currentAns_;
             //     return currentAns_;  // don't actually change the state
             //  })
-            console.log("CORRECT ANSWER:", data);
+            
 
 
-            console.log('answer correct:', data === currentRadioValue);
-            setPopupValue(data === currentRadioValue);
-            // console.log('answer correct:', radioValue === correctAnswer);
-            // setPopupValue(radioValue === correctAnswer);
-
-            const timer = setTimeout(() => {
-
-            }, 2000);
-            return () => clearTimeout(timer);
+            //console.log('answer correct:', data === currentRadioValue);
+            
 
         })
 
         socket.on("timer_count", (data) => {
 
-            //console.log("timer arrived:", data)
+            console.log("timer arrived:", data)
             setTimerValue(data)
             //console.log("timerValue:", timerValue)
-            if (timerValue === 1) { (console.log("timer_count active")) }
+            //if (timerValue === 1) { (console.log("timer_count active")) }
         })
 
         socket.on("somebody_voted", (data) => {
@@ -228,7 +236,7 @@ const Question = props => {
             <div className="question-item">
                 <div className="timer">
                     {timerValue}
-                    { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null}
+                    {/* { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null} */}
 
                 </div>
 
