@@ -91,41 +91,11 @@ const Question = props => {
     //     }, 1000);
     //   }
 
-      function displayEndOfQuestion(seconds) {
-        setSplash(true);
-        const interval = setInterval(() => {
-            seconds = seconds -1;
-            if (seconds <= 3) {
-                // please don't delete:
-                // var currentRadioValue;
-                // setRadioValue(currentState_ => {
-                //     currentRadioValue = currentState_;
-                //     return currentState_;  // don't actually change the state
-                //  })
 
-                setPopupValue(true);
-    
-                socket.emit('end_of_question', {
-                    message: "",
-                    roomCode: roomCode,
-                })
-                
-            }
 
-          if (seconds ===  0) {
-            setVisibleAnswers(false);
-            setSplash(false);
-            console.log("delay for request_ranking");
-            socket.emit('request_ranking', {
-                userId: localStorage.userId,
-                remainingTime: timerValue,
-                roomCode: roomCode,
-                type: "CLIENT"
-            });
-            clearInterval(interval);
-          }
-        }, 1000);
-      }
+    //   function displayEndOfQuestion(seconds) {
+
+    //   }
 
 
     useEffect(() => {
@@ -159,7 +129,40 @@ const Question = props => {
         })
 
         socket.on("end_of_question", (data) => {
-            displayEndOfQuestion(4);
+            setSplash(true);
+            let seconds = 4;
+            const interval = setInterval(() => {
+                seconds = seconds -1;
+                if (seconds <= 3) {
+                    // please don't delete:
+                    // var currentRadioValue;
+                    // setRadioValue(currentState_ => {
+                    //     currentRadioValue = currentState_;
+                    //     return currentState_;  // don't actually change the state
+                    //  })
+    
+                    setPopupValue(true);
+        
+                    socket.emit('end_of_question', {
+                        message: "",
+                        roomCode: roomCode,
+                    })
+                    
+                }
+    
+              if (seconds ===  0) {
+                setVisibleAnswers(false);
+                setSplash(false);
+                console.log("delay for request_ranking");
+                socket.emit('request_ranking', {
+                    userId: localStorage.userId,
+                    remainingTime: timerValue,
+                    roomCode: roomCode,
+                    type: "CLIENT"
+                });
+                clearInterval(interval);
+              }
+            }, 1000);
         });
 
         socket.on("get_right_answer", (data) => {
@@ -192,8 +195,9 @@ const Question = props => {
             console.log("somebody voted:", data)
             //will later be needed to show bigger bubbles sizes
         })
-        // eslint-disable-next-line
-    }, [])
+        
+    // eslint-disable-next-line
+    }, [roomCode]);
 
 
     return (
