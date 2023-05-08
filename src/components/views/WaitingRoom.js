@@ -13,7 +13,6 @@ const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
     const [members, setMembers] = useState(data.state.members)
-    // console.log("data:", data);
 
     localStorage.setItem('users', JSON.stringify(data.state.members));
 
