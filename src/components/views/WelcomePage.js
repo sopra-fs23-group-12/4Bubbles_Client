@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import 'styles/views/WelcomePage.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -6,6 +6,10 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Bubble } from 'components/ui/Bubble';
 import { Button } from 'components/ui/Button';
 import logoutRequest from "../../helpers/axios";
+
+import { useSocket } from 'components/context/socket';
+
+
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -17,6 +21,7 @@ const WelcomePage = props => {
 
     const currentUser = localStorage.getItem('userId');
 
+    const { disconnect } = useSocket();
 
     const history = useHistory();
     const doFriendList = () =>{
@@ -44,6 +49,10 @@ const WelcomePage = props => {
     const doViewMyProfile = (currentUser) =>{
         history.push (`profile/` + currentUser)
     }
+
+    useEffect(() => {
+        disconnect();
+    });
 
     return (
         <BaseContainer>

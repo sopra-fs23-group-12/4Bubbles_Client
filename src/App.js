@@ -1,5 +1,5 @@
 import AppRouter from "components/routing/routers/AppRouter";
-
+import { SocketProvider } from "components/context/socket";
 /**
  * Happy coding!
  * React Template by Lucas Pelloni
@@ -7,9 +7,13 @@ import AppRouter from "components/routing/routers/AppRouter";
  */
 const App = () => {
   return (
-    <div className="app-container background-gradient">
-      <AppRouter />
-    </div>
+    <SocketProvider>
+
+      <div className="app-container background-gradient">
+        <AppRouter />
+      </div>
+    </SocketProvider>
+
   );
 };
 
