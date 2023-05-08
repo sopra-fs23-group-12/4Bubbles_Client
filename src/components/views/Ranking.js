@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
+import io from "socket.io-client";
+import { format } from 'react-string-format';
+import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import '../../styles/views/Ranking.scss';
 
@@ -14,10 +17,10 @@ const RankingItem = (props) => {
     ]
 
     const printPosition = (index) => {
-        if (index < 3) {
-            return medalEmojis[index];
+        if (index < 4) {
+            return medalEmojis[index - 1];
         } else {
-            return index + 1 + ".";
+            return index + ".";
         }
     }
     return (
@@ -35,9 +38,20 @@ const RankingItem = (props) => {
 export default function Ranking(props) {
     const { final, ranking } = props;
     const history = useHistory();
+    const [roomCode, setRoom] = useState("1");
+
+    //console.log(final);
+
+    
+    const tmpUsers = ranking.map((item, i) => {
+        console.log(item);
+        let id = Object.keys(item)[0];
+        console.log({"name": id, "points": item[id]})
+        return {"name": id, "points": item[id]};
+    })
 
     const jsObjects = JSON.parse(localStorage.getItem('users'));
-
+/*
     const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
         let id = item;
         let result = jsObjects.filter(obj => {
@@ -46,9 +60,43 @@ export default function Ranking(props) {
           })
         return {"name": result[0].username, "points": ranking[0][id]};
     })
-
-
+*/
+ 
     const [users, setUsers] = useState(tmpUsers);
+
+/*
+    //add the url of the backend to make the connection to the server (getDomainSocket returns the URL of the server depending on prod or dev environment)
+    const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    //const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
+    const socket = io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode });
+
+    useEffect(() => {
+        socket.on("get_ranking", (data) => {
+            // console.log("ranking message received:")
+            // console.log(data.message)
+            setUsers(data.message);
+        })
+
+
+    }, []);*/
+
+
+    const printRanking = (users) => {
+        let rank = 0;
+
+        return users.map((item, i) => {
+            if(i === 0 || (i > 0 & item.points !== users[i - 1].points)) {
+                rank += 1;
+            }
+
+            return <RankingItem
+                key={item.name}
+                name={item.name}
+                points={item.points}
+                index={rank} />
+                ;
+        })
+    }
 
     return (
         <div className="ranking-page">
@@ -56,19 +104,21 @@ export default function Ranking(props) {
 
             <h1>{final ? "🏁 final ranking 🏁" : "intermediate ranking 🔥"}</h1>
             <div className="ranking-wrapper">
-                {users ? users.map((item, i) => {
-                    return <RankingItem
-                        key={item.name}
-                        name={item.name}
-                        points={item.points}
-                        index={i} />
-                        ;
-                }) : null}
+
+                {users ? printRanking(users) : null}
             </div>
 
 
             {!final ?
 
+/*
+                <div className="align-center">
+                    <Button
+                        onClick={() => history.push('/question')}
+                        className="primary-button__continue"
+                    >continue
+                    </Button>
+                </div>*/
                 null
                 :
                 <div className="align-center">
