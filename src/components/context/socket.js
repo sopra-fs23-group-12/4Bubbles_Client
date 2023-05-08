@@ -1,6 +1,7 @@
 import React, { useContext, createContext, useMemo } from "react";
 import io from "socket.io-client";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
+import { format } from "react-string-format";
 
 const SocketContext = createContext(null);
 
