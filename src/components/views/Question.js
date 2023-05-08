@@ -1,9 +1,10 @@
 import { Bubble } from 'components/ui/Bubble';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'react-string-format';
-import io from "socket.io-client";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 import Timer from 'components/ui/timer';
+
+import { useLocation } from 'react-router-dom';
 
 import '../../styles/views/Question.scss';
 
@@ -49,7 +50,7 @@ const Question = props => {
 
     const roomCode = localStorage.roomCode
 
-    const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
 
     //connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
 
