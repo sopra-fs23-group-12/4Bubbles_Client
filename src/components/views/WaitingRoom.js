@@ -16,6 +16,7 @@ const WaitingRoom = (props) => {
 
     localStorage.setItem('users', JSON.stringify(data.state.members));
 
+
     const { socket, connect } = useSocket();
 
 
@@ -53,7 +54,6 @@ const WaitingRoom = (props) => {
 
         socket.on("joined_players", (incomingData) => {
             // console.log("new_player_joined")
-            console.log("new member player list: ", incomingData);
             setMembers(incomingData);
             data.state.members = incomingData;
             localStorage.setItem('users', JSON.stringify(incomingData));
