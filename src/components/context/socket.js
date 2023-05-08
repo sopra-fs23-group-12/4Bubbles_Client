@@ -1,11 +1,12 @@
 import React, { useContext, createContext, useMemo } from "react";
 import io from "socket.io-client";
+import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 const SocketContext = createContext(null);
 
 export const SocketProvider = ({ children }) => {
-
-    const socket = io('http://localhost:9092');
+  const url = format(getDomainSocket());
+    const socket = io(url);
 
 
     const connect = (url, obj) => {
