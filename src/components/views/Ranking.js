@@ -8,7 +8,7 @@ import { getDomainSocket } from "../../helpers/getDomainSocket";
 import '../../styles/views/Ranking.scss';
 
 const RankingItem = (props) => {
-    const { name, points, index, ranking } = props;
+    const { name, points, index } = props;
 
     const medalEmojis = [
         "🥇",
@@ -17,10 +17,10 @@ const RankingItem = (props) => {
     ]
 
     const printPosition = (index) => {
-        if (index < 3) {
-            return medalEmojis[index];
+        if (index < 4) {
+            return medalEmojis[index - 1];
         } else {
-            return index + 1 + ".";
+            return index + ".";
         }
     }
     return (
@@ -50,37 +50,18 @@ export default function Ranking(props) {
         return {"name": id, "points": item[id]};
     })*/
 
+    const jsObjects = JSON.parse(localStorage.getItem('users'));
+
     const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
-        //console.log(item);
         let id = item;
-        console.log({"name": id, "points": ranking[0][id]})
-        return {"name": id, "points": ranking[0][id]};
+        let result = jsObjects.filter(obj => {
+            console.log(obj)
+            return obj.id === parseInt(item)
+          })
+        return {"name": result[0].username, "points": ranking[0][id]};
     })
 
-    /*
-    const tmpUsers = [
-        {
-            "name": "user123",
-            "points": 97
-        },
-        {
-            "name": "edith6",
-            "points": 96
-        },
-        {
-            "name": "leonie20",
-            "points": 83
-        },
-        {
-            "name": "bubblebo",
-            "points": 55
-        },
-        {
-            "name": "judith5",
-            "points": 34
-        },
-    ];
-*/
+ 
     const [users, setUsers] = useState(tmpUsers);
 
 /*
@@ -99,20 +80,32 @@ export default function Ranking(props) {
 
     }, []);*/
 
+
+    const printRanking = (users) => {
+        let rank = 0;
+
+        return users.map((item, i) => {
+            if(i === 0 || (i > 0 & item.points !== users[i - 1].points)) {
+                rank += 1;
+            }
+
+            return <RankingItem
+                key={item.name}
+                name={item.name}
+                points={item.points}
+                index={rank} />
+                ;
+        })
+    }
+
     return (
         <div className="ranking-page">
             {!final ? <div className="exit-button" onClick={() => history.push('/welcomepage')}>exit</div> : null}
 
             <h1>{final ? "🏁 final ranking 🏁" : "intermediate ranking 🔥"}</h1>
             <div className="ranking-wrapper">
-                {users ? users.map((item, i) => {
-                    return <RankingItem
-                        key={item.name}
-                        name={item.name}
-                        points={item.points}
-                        index={i} />
-                        ;
-                }) : null}
+
+                {users ? printRanking(users) : null}
             </div>
 
 
