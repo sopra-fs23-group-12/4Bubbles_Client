@@ -3,8 +3,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { format } from 'react-string-format';
 import io from "socket.io-client";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
+import Timer from 'components/ui/timer';
 
 import '../../styles/views/Question.scss';
+
+import { useSocket } from 'components/context/socket';
+
 
 import Ranking from './Ranking';
 const Question = props => {
@@ -32,6 +36,13 @@ const Question = props => {
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
 
+
+    const { socket, connect } = useSocket();
+
+
+    //const [answerx, setAnswer1Valuex] = useState(null);
+
+    const data = useLocation();
     // console.log("data: ", data);
     // console.log("localStorage: ", localStorage);
     //console.log("roomCode: ", localStorage.roomCode);
@@ -39,8 +50,8 @@ const Question = props => {
     const roomCode = localStorage.roomCode
 
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-    // eslint-disable-next-line
-    const socket = useMemo(() => io.connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode }), []);
+
+    //connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
 
     const answer = [
         answer1,
@@ -198,6 +209,7 @@ const Question = props => {
         
     // eslint-disable-next-line
     }, [roomCode]);
+
 
 
     return (
