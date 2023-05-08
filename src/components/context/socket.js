@@ -13,6 +13,7 @@ export const SocketProvider = ({ children }) => {
     }
 
     const disconnect = () => {
+        console.log("disconnect from socket")
         socket.disconnect();
     }
 

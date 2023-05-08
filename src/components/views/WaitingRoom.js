@@ -1,9 +1,9 @@
 import 'styles/views/WaitingRoom.scss';
-import React, { useState, useEffect,  } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Bubble } from 'components/ui/Bubble';
-import {format} from "react-string-format";
-import {getDomainSocket} from "../../helpers/getDomainSocket";
+import { format } from "react-string-format";
+import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
 
@@ -15,7 +15,7 @@ const WaitingRoom = (props) => {
     const [members, setMembers] = useState(data.state.members)
     // console.log("data:", data);
 
-    const {socket, connect} = useSocket();
+    const { socket, connect } = useSocket();
 
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
@@ -29,11 +29,12 @@ const WaitingRoom = (props) => {
         //const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
         //// console.log("Response for api call /questions: ",response2.data)
         // add a condition that only the leader can click this
-         socket.emit('start_game',{
-             message : "",
-             roomCode: roomCode,
-             type: "CLIENT"})
-        
+        socket.emit('start_game', {
+            message: "",
+            roomCode: roomCode,
+            type: "CLIENT"
+        })
+
         // socket.emit('get_Question',{
         //     message : "",
         //     roomCode: roomCode,
@@ -41,8 +42,8 @@ const WaitingRoom = (props) => {
         history.push(`/question`);
     }
 
-    useEffect(() =>{
-        // console.log("socket acknowledged as connected useEffect:", socket.connected);
+    useEffect(() => {
+        console.log("socket acknowledged as connected useEffect:", socket.connected);
         // const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
         // // console.log("Response for api call /questions: ",response2.data)
         //infos coming from backend
@@ -56,13 +57,13 @@ const WaitingRoom = (props) => {
             data.state.members = incomingData;
         })
 
-         socket.on("game_started", (incomingData) =>{
-              // console.log("game_started received");
-              history.push(`/question`);
-          })
+        socket.on("game_started", (incomingData) => {
+            console.log("game_started received");
+            history.push(`/question`);
+        })
 
-        socket.on("get_question", (incomingData) =>{
-            // console.log("question arrived", incomingData);
+        socket.on("get_question", (incomingData) => {
+            console.log("question arrived", incomingData);
             history.push(`/question`);
         })
 
@@ -77,32 +78,33 @@ const WaitingRoom = (props) => {
                     {members.map((member) => {
                         return (
                             <div key={member.username} className="player">{member.username}</div>
-                        )})}
+                        )
+                    })}
                 </div>
             </div>
 
             <div className="bubble-item">
-                <div className = "bubble-container">
+                <div className="bubble-container">
                     <Bubble onClick={startGame} className="bubble-button--waitingroom">Wait for players: Press to start!</Bubble>
                 </div>
             </div>
 
             <div className="room-code">
                 room code:
-                <br/>
+                <br />
                 {data.state.roomCode}
             </div>
 
             <div className="game-info">
                 number of questions: {data.state.numOfQuestions}
-                <br/>
+                <br />
                 question topic: {data.state.questionTopic}
-                <br/>
+                <br />
                 game mode: {data.state.gameMode}
             </div>
 
             <div className="exit-button">
-                <a href = "/welcomepage"> exit </a>
+                <a href="/welcomepage"> exit </a>
             </div>
         </div>
     );
