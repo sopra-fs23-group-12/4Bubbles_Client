@@ -138,8 +138,9 @@ const GameRoom = props => {
             const roomCode = response.data.roomCode.toString()
 
             localStorage.setItem("roomCode", roomCode);
+            localStorage.setItem("gameMode", reducerState.gameMode);
 
-
+            console.log("local storage gameMode set to: ", reducerState.gameMode);
 
             console.log("local storage roomCode set to: ", response.data.roomCode.toString());
 
