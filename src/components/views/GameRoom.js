@@ -96,20 +96,24 @@ const GameRoom = props => {
 
     }, [])
 
-    async function getTopics() {
-        const response = await api.get("/categories", headers())
-        console.log("Response for api call /categories: ", response.data)
-        let questionTopicArray = []
-        response.data.forEach(element => {
-            const topic = {
-                name: element.topicName,
-                value: element.topicName,
-                id: element.id
-            }
-            questionTopicArray.push(topic);
-        });
-        console.log("Complete list of topics: ", questionTopicArray)
-        setQuestionTopic(questionTopicArray);
+    function getTopics() {
+
+
+        api.get("/categories", headers()).then((response) => {
+            let questionTopicArray = []
+            response.data.forEach(element => {
+                const topic = {
+                    name: element.topicName,
+                    value: element.topicName,
+                    id: element.id
+                }
+                questionTopicArray.push(topic);
+            });
+            setQuestionTopic(questionTopicArray);
+        }).catch((err) => {
+            console.log("GameRoom.js: Something went wrong: ", err)
+        })
+
     }
 
 
