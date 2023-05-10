@@ -47,7 +47,7 @@ export default function Ranking(props) {
         return {"name": result[0].username, "points": ranking[0][id]};
     })
 
- 
+     // eslint-disable-next-line
     const [users, setUsers] = useState(tmpUsers);
 
 
@@ -55,8 +55,8 @@ export default function Ranking(props) {
         let rank = 0;
 
         return users.map((item, i) => {
-            
-            if(i === 0 || (i > 0 & item.points !== users[i - 1].points)) { // eslint-disable-line
+            // eslint-disable-next-line
+            if(i === 0 || (i > 0 & item.points !== users[i - 1].points)) {
                 rank += 1;
             }
 

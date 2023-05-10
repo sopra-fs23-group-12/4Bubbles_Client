@@ -190,7 +190,7 @@ const Question = props => {
                 setVisibleAnswers(true);
             }
 
-            var currentvisibleAnswer;
+            let currentvisibleAnswer;
             setVisibleAnswers(currentState_ => {
                 currentvisibleAnswer= currentState_;
                 return currentState_;  // don't actually change the state
