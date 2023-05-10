@@ -142,7 +142,7 @@ const Question = props => {
 
         socket.on("end_of_question", (data) => {
             setSplash(true);
-            let seconds = 4;
+            let seconds = 5;
             const interval = setInterval(() => {
                 seconds = seconds -1;
                 if (seconds <= 3) {

@@ -23,9 +23,6 @@ specific components that belong to the main one in the same file.
  */
 
 
-
-
-
 function reducer(state, action) {
     switch (action.type) {
         case 'UPDATE':
@@ -39,9 +36,18 @@ function reducer(state, action) {
     }
 }
 
-
-
 const gameMode = [
+    {
+        name: 'standard',
+        value: 'standard',
+    },
+    {
+        name: '3,2,1...',
+        value: '3,2,1...',
+    },
+]
+
+const difficulty = [
     {
         name: 'easy',
         value: 'easy',
@@ -55,7 +61,6 @@ const gameMode = [
         value: 'hard',
     },
 ]
-
 const questionTopic = [];
 
 
@@ -120,7 +125,8 @@ const GameRoom = props => {
             const requestBody = JSON.stringify({
                 questionTopic: reducerState.topic,
                 questionTopicId: questionTopic.find(topic => topic.name === reducerState.topic).id,
-                gameMode: reducerState.gamemode,
+                gameMode: reducerState.gameMode,
+                difficulty: reducerState.difficulty,
                 numOfQuestions: reducerState.numOfQuestions,
                 leaderId: localStorage.getItem("userId")
             })
@@ -179,16 +185,29 @@ const GameRoom = props => {
                                 key: 'topic',
                             })} />
                 </SettingsContainer>
-                <SettingsContainer title="Choose a difficulty:">
+                <SettingsContainer title="Choose a game mode:">
                     <RadioButtons
-                        name="gamemode"
+                        name="gameMode"
                         items={gameMode}
-                        value={reducerState.gamemode}
+                        value={reducerState.gameMode}
                         onChange={(e) =>
                             dispatch({
                                 type: 'UPDATE',
                                 value: e.target.value,
-                                key: 'gamemode',
+                                key: 'gameMode',
+                            })} 
+                        />
+                </SettingsContainer>
+                <SettingsContainer title="Choose a difficulty:">
+                    <RadioButtons
+                        name="difficulty"
+                        items={difficulty}
+                        value={reducerState.difficulty}
+                        onChange={(e) =>
+                            dispatch({
+                                type: 'UPDATE',
+                                value: e.target.value,
+                                key: 'difficulty',
                             })} />
                 </SettingsContainer>
                 <SettingsContainer title="Select the number of questions:">

@@ -102,7 +102,7 @@ const WaitingRoom = (props) => {
                 <br />
                 question topic: {data.state.questionTopic}
                 <br />
-                game mode: {data.state.gameMode}
+                game mode: {data.state.difficulty}
             </div>
 
             <div className="exit-button">
