@@ -51,7 +51,7 @@ const Question = props => {
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
-    console.log("gameMode: ", gameMode);
+    //console.log("gameMode: ", gameMode);
 
     // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
 
@@ -137,8 +137,7 @@ const Question = props => {
                     socket.emit('end_of_question', {
                         message: "",
                         roomCode: roomCode,
-                    })
-                    
+                    }) 
                 }
     
               if (seconds ===  0) {
@@ -189,8 +188,6 @@ const Question = props => {
         
     // eslint-disable-next-line
     }, [roomCode]);
-
-
 
     return (
         <>
