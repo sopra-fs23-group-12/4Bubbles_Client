@@ -1,5 +1,5 @@
-import { useEffect, useReducer, useState } from 'react';
-import { api, handleError, headers } from 'helpers/api';
+import { useEffect, useState } from 'react';
+import { handleError } from 'helpers/api';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";

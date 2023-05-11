@@ -26,12 +26,8 @@ const WelcomePage = props => {
 
     const history = useHistory();
 
-    // const doFriendList = () =>{
-    //     history.push('/friendlist')
-    // }
-
-    const logout = () => {
-        logoutRequest(history);
+    const logout = async () => {
+        await logoutRequest(history);
         localStorage.clear();
         history.push('/login');
     }
@@ -74,9 +70,6 @@ const WelcomePage = props => {
                         <Bubble onClick={() => doViewMyProfile(currentUser)}>view my profile</Bubble>
                     </div>
 
-                    {/* <div className="welcomepage button-container-lower-right">
-                        <Bubble onClick={() => doFriendList()}>access my<br /> friends list</Bubble>
-                    </div> */}
                     <br/>
             </div>
             <div >
