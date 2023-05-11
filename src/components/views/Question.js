@@ -122,7 +122,6 @@ const Question = props => {
 
         socket.on("get_ranking", (data) => {
             console.log("ranking arrived:", JSON.parse(data));
-            setShowRanking(true);
             const rank = JSON.parse(data)['ranking'];
             const fin = JSON.parse(data)['final_round'][0];
             console.log(fin);
@@ -130,6 +129,8 @@ const Question = props => {
             setFinal(fin);
             setRadioValue(null);
             setPopupValue(null);
+            setShowRanking(true);
+
         })
 
         socket.on("get_answers", (data) => {
