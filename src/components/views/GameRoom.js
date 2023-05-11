@@ -198,6 +198,9 @@ const GameRoom = props => {
                                 key: 'gameMode',
                             })} 
                         />
+                        standard: You can only choose your answer once.
+                        < br/>
+                        3,2,1...: You can change your answer until the timer runs out.
                 </SettingsContainer>
                 <SettingsContainer title="Choose a difficulty:">
                     <RadioButtons
