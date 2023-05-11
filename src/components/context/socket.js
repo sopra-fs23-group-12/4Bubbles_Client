@@ -7,7 +7,9 @@ const SocketContext = createContext(null);
 
 export const SocketProvider = ({ children }) => {
   const url = format(getDomainSocket());
-    const socket = io(url);
+    const socket = io(url, {
+        withCredentials: false
+    });
 
 
     const connect = (url, obj) => {

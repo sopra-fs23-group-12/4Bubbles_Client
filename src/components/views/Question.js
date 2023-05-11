@@ -100,7 +100,6 @@ const Question = props => {
 
         socket.on("get_ranking", (data) => {
             console.log("ranking arrived:", JSON.parse(data));
-            setShowRanking(true);
             const rank = JSON.parse(data)['ranking'];
             const fin = JSON.parse(data)['final_round'][0];
             console.log(fin);
@@ -109,6 +108,7 @@ const Question = props => {
             setRadioValue(null);
             setPopupValue(null);
             setAlreadyVoted(false);
+            setShowRanking(true);
         })
 
         socket.on("get_answers", (data) => {
@@ -168,7 +168,7 @@ const Question = props => {
                 setVisibleAnswers(true);
             }
 
-            var currentvisibleAnswer;
+            let currentvisibleAnswer;
             setVisibleAnswers(currentState_ => {
                 currentvisibleAnswer= currentState_;
                 return currentState_;  // don't actually change the state

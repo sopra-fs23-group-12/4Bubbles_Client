@@ -45,22 +45,16 @@ const WaitingRoom = (props) => {
     }
 
     useEffect(() => {
-        // console.log("socket acknowledged as connected useEffect:", socket.connected);
-        // const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
-        // // console.log("Response for api call /questions: ",response2.data)
         //infos coming from backend
         //returns a list of members since that is the only thing in the state that changes
-        // console.log(socket);
 
         socket.on("joined_players", (incomingData) => {
-            // console.log("new_player_joined")
             setMembers(incomingData);
             data.state.members = incomingData;
             localStorage.setItem('users', JSON.stringify(incomingData));
         })
 
         socket.on("game_started", (incomingData) => {
-
             console.log("game_started received:" + incomingData);
             var data = incomingData.toString();
             localStorage.setItem('gameMode', data); //"\"standard\""
@@ -70,7 +64,6 @@ const WaitingRoom = (props) => {
         })
 
         socket.on("get_question", (incomingData) => {
-            // console.log("question arrived", incomingData);
             history.push(`/question`);
         })
 
