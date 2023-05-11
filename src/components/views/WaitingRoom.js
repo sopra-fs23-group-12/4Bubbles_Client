@@ -98,11 +98,14 @@ const WaitingRoom = (props) => {
             </div>
 
             <div className="game-info">
-                number of questions: {data.state.numOfQuestions}
-                <br />
+
                 question topic: {data.state.questionTopic}
                 <br />
-                game mode: {data.state.difficulty}
+                game mode: {data.state.gameMode}
+                <br />
+                difficulty: {data.state.difficulty}
+                <br />
+                number of questions: {data.state.numOfQuestions}
             </div>
 
             <div className="exit-button">

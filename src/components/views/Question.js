@@ -36,6 +36,7 @@ const Question = props => {
     //const [showTimerXY, setShowTimerXY] = useState(false);
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
+    const [alreadyVoted, setAlreadyVoted] = useState(false);
 
 
     const { socket, connect } = useSocket();
@@ -49,6 +50,8 @@ const Question = props => {
     //console.log("roomCode: ", localStorage.roomCode);
 
     const roomCode = localStorage.roomCode
+    const gameMode = localStorage.gameMode
+    console.log("gameMode: ", gameMode);
 
     // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
 
@@ -69,6 +72,7 @@ const Question = props => {
     ]
 
     const sendVote = (item) => {
+        if (alreadyVoted === false || gameMode != "standard") {
         setRadioValue(item)
         // console.log("sendVote of:", item);
         // console.log("radioValue:", radioValue);
@@ -79,36 +83,10 @@ const Question = props => {
             message: item,
             roomCode: roomCode,
             type: "CLIENT"
+            })
         }
-        )
+        setAlreadyVoted(true);
     }
-
-    //prototype counter
-    // function startCountdown(seconds) {
-    //     //setTimerValue(seconds);
-    //     const interval = setInterval(() => {
-    //         seconds = seconds -1;
-    //       //console.log(timerValue);
-    //       setTimerValue(seconds);
-
-    //       if (seconds < 1) {
-    //         clearInterval(interval);
-    //         console.log('End of counter!');
-
-    //         socket.emit('end_of_question', {
-    //             message: "",
-    //             roomCode: roomCode,
-    //         })
-    //       }
-    //     }, 1000);
-    //   }
-
-
-
-    //   function displayEndOfQuestion(seconds) {
-
-    //   }
-
 
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
@@ -130,6 +108,7 @@ const Question = props => {
             setFinal(fin);
             setRadioValue(null);
             setPopupValue(null);
+            setAlreadyVoted(false);
         })
 
         socket.on("get_answers", (data) => {
@@ -234,24 +213,25 @@ const Question = props => {
 
             {/* 4 answer bubbles */}
             {answer.map((item, index) => {
-                if (item === null || visibleAnswers === false) {
-                    return null;
-                }
-                if (splash === false) {
+                    if (item === null || visibleAnswers === false) {
+                        return null;
+                    }
+                    if (splash === false) {
+                        return <div key={item} className={cssClasses[index]}>
+                            <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                            <label htmlFor={item}>
+                                <Bubble className="bubble-button--answer">{item}</Bubble>
+                            </label>
+                        </div>
+                    }
                     return <div key={item} className={cssClasses[index]}>
                         <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                         <label htmlFor={item}>
-                            <Bubble className="bubble-button--answer">{item}</Bubble>
+                            <Bubble className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                         </label>
                     </div>
                 }
-                return <div key={item} className={cssClasses[index]}>
-                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                    <label htmlFor={item}>
-                        <Bubble className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
-                    </label>
-                </div>
-            })}
+            )}
 
             {/* pop up window */}
             {(popupValue !== null) ?
