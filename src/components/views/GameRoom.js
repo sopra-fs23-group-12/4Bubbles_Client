@@ -136,7 +136,7 @@ const GameRoom = props => {
             const roomCode = response.data.roomCode.toString()
 
             localStorage.setItem("roomCode", roomCode);
-
+            localStorage.setItem("isLeader", true);
 
 
             console.log("local storage roomCode set to: ", response.data.roomCode.toString());

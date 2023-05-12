@@ -80,7 +80,10 @@ const WaitingRoom = (props) => {
 
             <div className="bubble-item">
                 <div className="bubble-container">
-                    <Bubble onClick={startGame} className="bubble-button--waitingroom">Wait for players: Press to start!</Bubble>
+                    {localStorage.getItem("isLeader") ?
+                        <Bubble onClick={startGame} className="bubble-button--waitingroom">Wait for players: Press to start!</Bubble>
+                        : <Bubble className="bubble-button--waitingroom bubble-button--no-pointer" >Wait for players!</Bubble>
+                    }
                 </div>
             </div>
 
