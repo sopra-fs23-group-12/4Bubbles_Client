@@ -62,6 +62,13 @@ const WaitingRoom = (props) => {
             history.push(`/question`);
         })
 
+        return () => {
+            socket.emit('user_left_gameroom', {
+                message: localStorage.getItem('userId'),
+                roomCode: roomCode,
+                type: "CLIENT"
+            })
+        };
     }, [socket])
 
     return (
@@ -101,8 +108,8 @@ const WaitingRoom = (props) => {
                 game mode: {data.state.gameMode}
             </div>
 
-            <div className="exit-button">
-                <a href="/welcomepage"> exit </a>
+            <div className="exit-button" onClick={() => history.push('/welcomepage')}>
+                exit
             </div>
         </div>
     );
