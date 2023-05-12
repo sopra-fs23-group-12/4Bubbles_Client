@@ -84,6 +84,7 @@ const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
     const navigate = useHistory();
     const [questionTopic, setQuestionTopic] = useState([]);
+    const [err, setErr] = useState(undefined);
 
     const { socket, connect } = useSocket();
 
@@ -118,6 +119,14 @@ const GameRoom = props => {
 
 
     const doSubmit = async () => {
+
+
+        if(reducerState.topic === undefined || reducerState.gamemode === undefined || reducerState.numOfQuestions === undefined) {
+            setErr('Please define all settings above.')
+            return;
+        }
+        setErr(undefined)
+
         try {
 
             //the creation of the GameRoom is done by Rest API, joining the room, if not the leader, and joining the socketio namespace (~socket room) is done via socketio for all users
@@ -207,6 +216,12 @@ const GameRoom = props => {
                                 key: 'numOfQuestions',
                             })} />
                 </SettingsContainer>
+                <div className="error-message">
+                    {err !== undefined ? err : null}
+
+
+
+                </div>
 
 
                 <Bubble onClick={() => doSubmit()}>Start<br />Game</Bubble>
