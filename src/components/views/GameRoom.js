@@ -59,8 +59,6 @@ const difficulty = [
         value: 'hard',
     },
 ]
-const questionTopic = [];
-
 
 const numOfQuestions = [
     {
@@ -119,7 +117,7 @@ const GameRoom = props => {
     const doSubmit = async () => {
 
 
-        if(reducerState.topic === undefined || reducerState.gamemode === undefined || reducerState.numOfQuestions === undefined) {
+        if(reducerState.topic === undefined ||reducerState.difficulty === undefined || reducerState.gameMode === undefined || reducerState.numOfQuestions === undefined) {
             setErr('Please define all settings above.')
             return;
         }
