@@ -68,11 +68,12 @@ const WaitingRoom = (props) => {
         })
 
         return () => {
+            /*
             socket.emit('user_left_gameroom', {
                 message: localStorage.getItem('userId'),
                 roomCode: roomCode,
                 type: "CLIENT"
-            })
+            })*/
         };
     }, [socket])
 
