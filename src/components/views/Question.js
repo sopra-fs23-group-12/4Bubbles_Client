@@ -144,12 +144,15 @@ const Question = props => {
                 setVisibleAnswers(false);
                 setSplash(false);
                 console.log("delay for request_ranking");
-                socket.emit('request_ranking', {
-                    userId: localStorage.userId,
-                    remainingTime: timerValue,
-                    roomCode: roomCode,
-                    type: "CLIENT"
-                });
+                if(localStorage.getItem('isLeader')) {
+                    socket.emit('request_ranking', {
+                        userId: localStorage.userId,
+                        remainingTime: timerValue,
+                        roomCode: roomCode,
+                        type: "CLIENT"
+                    });
+                }
+ 
                 clearInterval(interval);
               }
             }, 1000);

@@ -67,6 +67,13 @@ const WaitingRoom = (props) => {
             history.push(`/question`);
         })
 
+        return () => {
+            socket.emit('user_left_gameroom', {
+                message: localStorage.getItem('userId'),
+                roomCode: roomCode,
+                type: "CLIENT"
+            })
+        };
     }, [socket])
 
     return (
@@ -85,7 +92,10 @@ const WaitingRoom = (props) => {
 
             <div className="bubble-item">
                 <div className="bubble-container">
-                    <Bubble onClick={startGame} className="bubble-button--waitingroom">Wait for players: Press to start!</Bubble>
+                    {localStorage.getItem("isLeader") ?
+                        <Bubble onClick={startGame} className="bubble-button--waitingroom">Wait for players: Press to start!</Bubble>
+                        : <Bubble className="bubble-button--waitingroom bubble-button--no-pointer" >Wait for players!</Bubble>
+                    }
                 </div>
             </div>
 
@@ -106,8 +116,8 @@ const WaitingRoom = (props) => {
                 number of questions: {data.state.numOfQuestions}
             </div>
 
-            <div className="exit-button">
-                <a href="/welcomepage"> exit </a>
+            <div className="exit-button" onClick={() => history.push('/welcomepage')}>
+                exit
             </div>
         </div>
     );
