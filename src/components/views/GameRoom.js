@@ -14,14 +14,12 @@ import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
 
-
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
-
 
 function reducer(state, action) {
     switch (action.type) {
@@ -61,9 +59,6 @@ const difficulty = [
         value: 'hard',
     },
 ]
-const questionTopic = [];
-
-
 
 const numOfQuestions = [
     {
@@ -84,11 +79,11 @@ const numOfQuestions = [
     },
 ]
 
-
 const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
     const navigate = useHistory();
     const [questionTopic, setQuestionTopic] = useState([]);
+    const [err, setErr] = useState(undefined);
 
     const { socket, connect } = useSocket();
 
@@ -102,7 +97,6 @@ const GameRoom = props => {
     }, [])
 
     function getTopics() {
-
 
         api.get("/categories", headers()).then((response) => {
             let questionTopicArray = []
@@ -118,11 +112,17 @@ const GameRoom = props => {
         }).catch((err) => {
             console.log("GameRoom.js: Something went wrong: ", err)
         })
-
     }
 
-
     const doSubmit = async () => {
+
+
+        if(reducerState.topic === undefined ||reducerState.difficulty === undefined || reducerState.gameMode === undefined || reducerState.numOfQuestions === undefined) {
+            setErr('Please define all settings above.')
+            return;
+        }
+        setErr(undefined)
+
         try {
 
             //the creation of the GameRoom is done by Rest API, joining the room, if not the leader, and joining the socketio namespace (~socket room) is done via socketio for all users
@@ -142,17 +142,14 @@ const GameRoom = props => {
             const roomCode = response.data.roomCode.toString()
 
             localStorage.setItem("roomCode", roomCode);
+            localStorage.setItem("isLeader", true);
             localStorage.setItem("gameMode", reducerState.gameMode);
-
             console.log("local storage gameMode set to: ", reducerState.gameMode);
-
             console.log("local storage roomCode set to: ", response.data.roomCode.toString());
-
 
             //server call via socketio to join the namespace (would join the GameRoom as well, but this is the Leader anyways, who's already joined the GameRoom when they created it
             const userId = localStorage.getItem("userId");
             const bearerToken = localStorage.getItem("token");
-
 
             socket.emit('join_room', {
                 userId: userId,
@@ -160,7 +157,6 @@ const GameRoom = props => {
                 roomCode: roomCode,
                 type: "CLIENT"
             })
-
 
             //sets the answer for creating the room as state which is transferred to the waiting room such that it can be displayed there
             navigate.push({
@@ -173,7 +169,7 @@ const GameRoom = props => {
         }
     }
 
-
+    
     return (
         <BaseContainer>
             <div className="gameroom-container">
@@ -230,6 +226,12 @@ const GameRoom = props => {
                                 key: 'numOfQuestions',
                             })} />
                 </SettingsContainer>
+                <div className="error-message">
+                    {err !== undefined ? err : null}
+
+
+
+                </div>
 
 
                 <Bubble onClick={() => doSubmit()}>Start<br />Game</Bubble>

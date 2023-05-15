@@ -3,15 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'react-string-format';
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 import Timer from 'components/ui/timer';
-
 import { useLocation } from 'react-router-dom';
-
 import '../../styles/views/Question.scss';
-
 import { useSocket } from 'components/context/socket';
-
-
 import Ranking from './Ranking';
+
 const Question = props => {
 
     //websockets need to communicate:
@@ -37,12 +33,7 @@ const Question = props => {
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
-
-
     const { socket, connect } = useSocket();
-
-
-    //const [answerx, setAnswer1Valuex] = useState(null);
 
     const data = useLocation();
     // console.log("data: ", data);
@@ -102,9 +93,7 @@ const Question = props => {
             console.log("ranking arrived:", JSON.parse(data));
             const rank = JSON.parse(data)['ranking'];
             const fin = JSON.parse(data)['final_round'][0];
-
     
-
             console.log(rank);
             setRanking(rank);
             setFinal(fin);
@@ -142,19 +131,21 @@ const Question = props => {
                         roomCode: roomCode,
                     })
                 }
-
-                if (seconds === 0) {
-                    setVisibleAnswers(false);
-                    setSplash(false);
-                    console.log("delay for request_ranking");
+    
+              if (seconds ===  0) {
+                setVisibleAnswers(false);
+                setSplash(false);
+                console.log("delay for request_ranking");
+                if(localStorage.getItem('isLeader')) {
                     socket.emit('request_ranking', {
                         userId: localStorage.userId,
                         remainingTime: timerValue,
                         roomCode: roomCode,
                         type: "CLIENT"
                     });
-                    clearInterval(interval);
                 }
+                clearInterval(interval);
+              }
             }, 1000);
         });
 
