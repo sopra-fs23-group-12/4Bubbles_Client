@@ -55,6 +55,11 @@ const WaitingRoom = (props) => {
         })
 
         socket.on("game_started", (incomingData) => {
+            console.log("game_started received:" + incomingData);
+            var data = incomingData.toString();
+            localStorage.setItem('gameMode', data); //"\"standard\""
+            //console.log("gameMode here: ", localStorage.gameMode);
+
             history.push(`/question`);
         })
 
@@ -101,11 +106,14 @@ const WaitingRoom = (props) => {
             </div>
 
             <div className="game-info">
-                number of questions: {data.state.numOfQuestions}
-                <br />
+
                 question topic: {data.state.questionTopic}
                 <br />
                 game mode: {data.state.gameMode}
+                <br />
+                difficulty: {data.state.difficulty}
+                <br />
+                number of questions: {data.state.numOfQuestions}
             </div>
 
             <div className="exit-button" onClick={() => history.push('/welcomepage')}>
