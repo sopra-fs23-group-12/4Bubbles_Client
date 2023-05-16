@@ -38,16 +38,27 @@ export default function Ranking(props) {
 
     const jsObjects = JSON.parse(localStorage.getItem('users'));
 
-    const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
-        let id = item;
+    let sortable = [];
+    for (let user in ranking[0]) {
+        sortable.push([user, ranking[0][user]]);
+    }
+
+    sortable.sort(function (a, b) {
+        return b[1] - a[1];
+    });
+
+    console.log(sortable);
+
+    const tmpUsers = sortable.map((item, i) => {
+        console.log(item);
+        let id = item[0];
         let result = jsObjects.filter(obj => {
-            console.log(obj)
-            return obj.id === parseInt(item)
-          })
-        return {"name": result[0].username, "points": ranking[0][id]};
+            return obj.id === parseInt(item[0])
+        })
+        return { "name": result[0].username, "points": item[1] };
     })
 
-     // eslint-disable-next-line
+    // eslint-disable-next-line
     const [users, setUsers] = useState(tmpUsers);
 
 
@@ -56,7 +67,7 @@ export default function Ranking(props) {
 
         return users.map((item, i) => {
             // eslint-disable-next-line
-            if(i === 0 || (i > 0 & item.points !== users[i - 1].points)) {
+            if (i === 0 || (i > 0 & item.points !== users[i - 1].points)) {
                 rank += 1;
             }
 
