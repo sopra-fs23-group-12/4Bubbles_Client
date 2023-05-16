@@ -1,8 +1,5 @@
 import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
-import { format } from 'react-string-format';
-import { getDomainSocket } from "../../helpers/getDomainSocket";
-import Timer from 'components/ui/timer';
 import { useLocation } from 'react-router-dom';
 import '../../styles/views/Question.scss';
 import { useSocket } from 'components/context/socket';
@@ -17,15 +14,20 @@ const Question = props => {
     // questions (reveal)
     // bubble sizes?
 
-    const [correctAnswer, setCorrectAnswer] = useState(null);
+
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
     const [timerValue, setTimerValue] = useState(null);
     const [question, setQuestionValue] = useState(null);
+    const [correctAnswer, setCorrectAnswer] = useState(null);
     const [answer1, setAnswer1Value] = useState(null);
     const [answer2, setAnswer2Value] = useState(null);
     const [answer3, setAnswer3Value] = useState(null);
     const [answer4, setAnswer4Value] = useState(null);
+    const [bubbleSize1, setBubbleSize1] = useState(null);
+    const [bubbleSize2, setBubbleSize2] = useState(null);
+    const [bubbleSize3, setBubbleSize3] = useState(null);
+    const [bubbleSize4, setBubbleSize4] = useState(null);
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
@@ -33,7 +35,7 @@ const Question = props => {
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
-    const { socket, connect } = useSocket();
+    const { socket } = useSocket();
 
     const data = useLocation();
     // console.log("data: ", data);
@@ -63,6 +65,13 @@ const Question = props => {
     ]
 
     const sendVote = (item) => {
+        //TODO
+        var myButton = document.getElementById("submit-button");
+        console.log("myButton:", myButton);
+        myButton.style.height = '400px';
+        myButton.style.width= '400px';
+        //myButton.scale(2)
+
         if (alreadyVoted === false || gameMode != "standard") {
             setRadioValue(item)
             // console.log("sendVote of:", item);
@@ -177,11 +186,22 @@ const Question = props => {
         //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
             console.log("somebody voted:", data)
+            console.log("ansewr"+ answer);
+            //answer[1].scale(2);
             for (let value in data){
                 console.log( "value: " + value + " , amountOfVotes: " + data[value]) ;
-                // if (key === answer) {
-                //     console.log(" === " + answer);
-                // }
+                if (value === answer1) {
+                    console.log("answer1 === value: " + answer1);
+                }
+                if (value === answer2) {
+                    console.log("answer2 === value: " + answer2);
+                }
+                if (value === answer3) {    
+                    console.log("answer3 === value: " + answer3);
+                }
+                if (value === answer4) {
+                    console.log("answer4 === value: " + answer4);
+                }
             }
         })
 
@@ -216,14 +236,14 @@ const Question = props => {
                                 return <div key={item} className={cssClasses[index]}>
                                     <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                     <label htmlFor={item}>
-                                        <Bubble className="bubble-button--answer">{item}</Bubble>
+                                        <Bubble id="submit-button" className="bubble-button--answer">{item}</Bubble>
                                     </label>
                                 </div>
                             }
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                 <label htmlFor={item}>
-                                    <Bubble id = "submit-button" className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble id="submit-button" className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
                         }

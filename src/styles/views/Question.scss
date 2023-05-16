@@ -51,7 +51,7 @@
     }
 
     .question-item {
-        //background: transparentize(white, 0.85); 
+        background: transparentize(white, 0.85); 
         grid-column-start: 3;
         grid-column-end: 5;
         grid-row-start: 1;
@@ -80,6 +80,7 @@
     }
 
     .answer-item-top-left {
+        background: transparentize(white, 0.85); 
         grid-column-start: 1;
         grid-column-end: 3;
         display: flex;
@@ -87,6 +88,7 @@
         align-items: center;
 
         .bubble-button {
+            background: transparentize(white, 0.85); 
             animation-name: example;
             animation-duration: 4s;
             animation-iteration-count: infinite;
@@ -103,6 +105,7 @@
         align-items: center;
 
         .bubble-button {
+            background: transparentize(white, 0.85); 
             animation-name: example;
             animation-duration: 4s;
             animation-iteration-count: infinite;
@@ -178,3 +181,7 @@
     }
 }
 
+
+.scaled{
+    transform: scale(2);
+}
