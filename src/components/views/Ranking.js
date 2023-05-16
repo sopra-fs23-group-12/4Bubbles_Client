@@ -40,8 +40,20 @@ export default function Ranking(props) {
 
     const jsObjects = JSON.parse(localStorage.getItem('users'));
 
-    const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
-        let id = item;
+    let sortable = [];
+    for (let user in ranking[0]) {
+        sortable.push([user, ranking[0][user]]);
+    }
+
+    sortable.sort(function (a, b) {
+        return b[1] - a[1];
+    });
+
+    console.log(sortable);
+
+    const tmpUsers = sortable.map((item, i) => {
+        console.log(item);
+        let id = item[0];
         let result = jsObjects.filter(obj => {
             console.log(obj)
             return obj.id === parseInt(item)

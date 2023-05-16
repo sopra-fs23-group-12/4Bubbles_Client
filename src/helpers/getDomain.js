@@ -7,7 +7,8 @@ import { isProduction } from 'helpers/isProduction'
  * @returns {string}
  */
 export const getDomain = () => {
-  const prodUrl = 'https://sopra-fs23-group-12-server.ew.r.appspot.com/' 
+  // const prodUrl = 'https://sopra-fs23-group-12-server.ew.r.appspot.com/' 
+  const prodUrl = 'https://sopra.dkueffer.ch/'
   const devUrl = 'http://localhost:8080'
 
   return isProduction() ? prodUrl : devUrl

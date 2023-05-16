@@ -75,6 +75,10 @@
     }
   }
 
+  &--no-pointer {
+    cursor: default;
+  }
+
 
   &__splash {
     display: none;

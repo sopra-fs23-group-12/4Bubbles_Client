@@ -3,15 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'react-string-format';
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 import Timer from 'components/ui/timer';
-
 import { useLocation } from 'react-router-dom';
-
 import '../../styles/views/Question.scss';
-
 import { useSocket } from 'components/context/socket';
-
-
 import Ranking from './Ranking';
+
 const Question = props => {
 
     //websockets need to communicate:
@@ -37,12 +33,7 @@ const Question = props => {
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
-
-
     const { socket, connect } = useSocket();
-
-
-    //const [answerx, setAnswer1Valuex] = useState(null);
 
     const data = useLocation();
     // console.log("data: ", data);
@@ -73,16 +64,16 @@ const Question = props => {
 
     const sendVote = (item) => {
         if (alreadyVoted === false || gameMode != "standard") {
-        setRadioValue(item)
-        // console.log("sendVote of:", item);
-        // console.log("radioValue:", radioValue);
+            setRadioValue(item)
+            // console.log("sendVote of:", item);
+            // console.log("radioValue:", radioValue);
 
-        socket.emit('send_vote', {
-            userId: localStorage.userId,
-            remainingTime: timerValue,
-            message: item,
-            roomCode: roomCode,
-            type: "CLIENT"
+            socket.emit('send_vote', {
+                userId: localStorage.userId,
+                remainingTime: timerValue,
+                message: item,
+                roomCode: roomCode,
+                type: "CLIENT"
             })
         }
         setAlreadyVoted(true);
@@ -102,7 +93,8 @@ const Question = props => {
             console.log("ranking arrived:", JSON.parse(data));
             const rank = JSON.parse(data)['ranking'];
             const fin = JSON.parse(data)['final_round'][0];
-            console.log(fin);
+    
+            console.log(rank);
             setRanking(rank);
             setFinal(fin);
             setRadioValue(null);
@@ -123,7 +115,7 @@ const Question = props => {
             setSplash(true);
             let seconds = 5;
             const interval = setInterval(() => {
-                seconds = seconds -1;
+                seconds = seconds - 1;
                 if (seconds <= 3) {
                     // please don't delete:
                     // var currentRadioValue;
@@ -131,25 +123,27 @@ const Question = props => {
                     //     currentRadioValue = currentState_;
                     //     return currentState_;  // don't actually change the state
                     //  })
-    
+
                     setPopupValue(true);
-        
+
                     socket.emit('end_of_question', {
                         message: "",
                         roomCode: roomCode,
-                    }) 
+                    })
                 }
     
               if (seconds ===  0) {
                 setVisibleAnswers(false);
                 setSplash(false);
                 console.log("delay for request_ranking");
-                socket.emit('request_ranking', {
-                    userId: localStorage.userId,
-                    remainingTime: timerValue,
-                    roomCode: roomCode,
-                    type: "CLIENT"
-                });
+                if(localStorage.getItem('isLeader')) {
+                    socket.emit('request_ranking', {
+                        userId: localStorage.userId,
+                        remainingTime: timerValue,
+                        roomCode: roomCode,
+                        type: "CLIENT"
+                    });
+                }
                 clearInterval(interval);
               }
             }, 1000);
@@ -170,9 +164,9 @@ const Question = props => {
 
             let currentvisibleAnswer;
             setVisibleAnswers(currentState_ => {
-                currentvisibleAnswer= currentState_;
+                currentvisibleAnswer = currentState_;
                 return currentState_;  // don't actually change the state
-             })
+            })
 
             //console.log("visibleanswer:", currentvisibleAnswer)
 
@@ -185,64 +179,64 @@ const Question = props => {
             console.log("somebody voted:", data)
             //will later be needed to show bigger bubbles sizes
         })
-        
-    // eslint-disable-next-line
+
+        // eslint-disable-next-line
     }, [roomCode]);
 
     return (
         <>
-        {
-            (showRanking === true && ranking !== null )? 
-            <Ranking ranking={ranking} final={final}/>
-            : 
-            <div className="question-wrapper">
+            {
+                (showRanking === true && ranking !== null) ?
+                    <Ranking ranking={ranking} final={final} />
+                    :
+                    <div className="question-wrapper">
 
-            {/* question bubble */}
-            <div className="question-item">
-                <div className="timer">
-                    {timerValue}
-                    {/* { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null} */}
-                </div>
-                <Bubble 
-                className="bubble-button--question">{question}
-                </Bubble>
-            </div>
-
-            {/* 4 answer bubbles */}
-            {answer.map((item, index) => {
-                    if (item === null || visibleAnswers === false) {
-                        return null;
-                    }
-                    if (splash === false) {
-                        return <div key={item} className={cssClasses[index]}>
-                            <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                            <label htmlFor={item}>
-                                <Bubble className="bubble-button--answer">{item}</Bubble>
-                            </label>
+                        {/* question bubble */}
+                        <div className="question-item">
+                            <div className="timer">
+                                {timerValue}
+                                {/* { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null} */}
+                            </div>
+                            <Bubble
+                                className="bubble-button--question">{question}
+                            </Bubble>
                         </div>
-                    }
-                    return <div key={item} className={cssClasses[index]}>
-                        <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                        <label htmlFor={item}>
-                            <Bubble className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
-                        </label>
-                    </div>
-                }
-            )}
 
-            {/* pop up window */}
-            {(popupValue !== null) ?
-                <div className="pop-up">
-                    <div className="pop-up__container">
-                        <span>{(correctAnswer === radioValue) ? 'Your answer was correct! ✌️' : 'Your answer was wrong... 😱'}</span>
-                        {/* <button onClick={nextQuestion} className="primary-button">ok</button> */}
-                    </div>
-                </div >
-                : null
-            }
-        </div >
-        }</>
-        
+                        {/* 4 answer bubbles */}
+                        {answer.map((item, index) => {
+                            if (item === null || visibleAnswers === false) {
+                                return null;
+                            }
+                            if (splash === false) {
+                                return <div key={item} className={cssClasses[index]}>
+                                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                    <label htmlFor={item}>
+                                        <Bubble className="bubble-button--answer">{item}</Bubble>
+                                    </label>
+                                </div>
+                            }
+                            return <div key={item} className={cssClasses[index]}>
+                                <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                <label htmlFor={item}>
+                                    <Bubble className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                </label>
+                            </div>
+                        }
+                        )}
+
+                        {/* pop up window */}
+                        {(popupValue !== null) ?
+                            <div className="pop-up">
+                                <div className="pop-up__container">
+                                    <span>{(correctAnswer === radioValue) ? 'Your answer was correct! ✌️' : 'Your answer was wrong... 😱'}</span>
+                                    {/* <button onClick={nextQuestion} className="primary-button">ok</button> */}
+                                </div>
+                            </div >
+                            : null
+                        }
+                    </div >
+            }</>
+
     )
 };
 export default Question;
