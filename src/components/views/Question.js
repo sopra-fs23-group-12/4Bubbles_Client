@@ -174,10 +174,15 @@ const Question = props => {
                 setSplash(true);
             }
         })
-
+        //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
             console.log("somebody voted:", data)
-            //will later be needed to show bigger bubbles sizes
+            for (let value in data){
+                console.log( "value: " + value + " , amountOfVotes: " + data[value]) ;
+                // if (key === answer) {
+                //     console.log(" === " + answer);
+                // }
+            }
         })
 
         // eslint-disable-next-line
@@ -218,7 +223,7 @@ const Question = props => {
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                 <label htmlFor={item}>
-                                    <Bubble className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble id = "submit-button" className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
                         }
