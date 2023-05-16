@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
+import { headers } from 'helpers/api';
+import { api } from 'helpers/api';
 
 import '../../styles/views/Ranking.scss';
 
@@ -53,13 +55,38 @@ export default function Ranking(props) {
         console.log(item);
         let id = item[0];
         let result = jsObjects.filter(obj => {
-            return obj.id === parseInt(item[0])
+            console.log(obj)
+            return obj.id === parseInt(item)
         })
-        return { "name": result[0].username, "points": item[1] };
+        return { "name": result[0].username, "points": ranking[0][id] };
     })
 
     // eslint-disable-next-line
     const [users, setUsers] = useState(tmpUsers);
+
+
+    const setStatistics = async () => {
+        if (final) {
+            const data = {
+                "id": localStorage.getItem("userId"),
+                "points": ranking[0][localStorage.getItem("userId")],
+                headers
+            }
+            try {
+                const response = await api.put('/users/Statistics/', data, headers());
+                console.log("set statistics");
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+    }
+
+    useEffect(() => {
+        setStatistics();
+    }, [])
 
 
     const printRanking = (users) => {
