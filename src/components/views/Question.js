@@ -68,8 +68,9 @@ const Question = props => {
         //TODO
         var myButton = document.getElementById("submit-button");
         console.log("myButton:", myButton);
-        myButton.style.height = '400px';
-        myButton.style.width= '400px';
+        myButton.style.transform = 'scale(2)';
+        //myButton.style.height = '400px';
+        //yButton.style.width= '400px';
         //myButton.scale(2)
 
         if (alreadyVoted === false || gameMode != "standard") {
@@ -232,6 +233,7 @@ const Question = props => {
                             if (item === null || visibleAnswers === false) {
                                 return null;
                             }
+
                             if (splash === false) {
                                 return <div key={item} className={cssClasses[index]}>
                                     <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
