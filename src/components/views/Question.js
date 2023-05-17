@@ -1,7 +1,7 @@
 import { useSocket } from 'components/context/socket';
 import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+//import { useLocation } from 'react-router-dom';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
 
@@ -14,7 +14,6 @@ const Question = props => {
     // questions (reveal)
     // bubble sizes?
 
-
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
     const [timerValue, setTimerValue] = useState(null);
@@ -25,7 +24,6 @@ const Question = props => {
     const [answer2, setAnswer2Value] = useState(null);
     const [answer3, setAnswer3Value] = useState(null);
     const [answer4, setAnswer4Value] = useState(null);
-    const [answerDict, setAnswerDict] = useState(null);
     const [votingArray, setVotingArray] = useState(null);
     const [bubbleSize1, setBubbleSize1] = useState(0);
     const [bubbleSize2, setBubbleSize2] = useState(0);
@@ -35,22 +33,22 @@ const Question = props => {
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
 
-    //const [showTimerXY, setShowTimerXY] = useState(false);
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
 
-    const data = useLocation();
-    // console.log("data: ", data);
-    // console.log("localStorage: ", localStorage);
+    //const data = useLocation();
+    //console.log("data: ", data);
+    //console.log("localStorage: ", localStorage);
     //console.log("roomCode: ", localStorage.roomCode);
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
-    //console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)
-    //console.log("gameMode: ", gameMode);
+    const numberOfPlayers = (Number(localStorage.numberOfPlayers))
 
+    //console.log("numberOfPlayers: ", numberOfPlayers)
+    //console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)
     //console.log("answer: " + answer)
     // console.log("answer1: " + answer1 + " answer2: " + answer2 + " answer3: " + answer3 + " answer4: " + answer4)
     // console.log("votingArray: " + votingArray)
@@ -76,19 +74,12 @@ const Question = props => {
         "answer-item answer-item-bottom-left",
     ]
 
-    const cssClassesBubble = [
-        "answer-item answer-item-top-left-bubble-button",
-        "answer-item answer-item-top-right-bubble-button",
-        "answer-item answer-item-bottom-right-bubble-button",
-        "answer-item answer-item-bottom-left-bubble-button",
-    ]
-
     const updateBubbleSize = () =>{
         setBubbleSize1(0);
         setBubbleSize2(0);
         setBubbleSize3(0);
         setBubbleSize4(0);
-        
+
         if (votingArray !== null) {
             for (let i = 0; i < votingArray.length - 1; i = i + 2) {
                 console.log("votingArray: " + votingArray)
@@ -112,8 +103,7 @@ const Question = props => {
         }
     }
 
-
-    const sendVote = (item, index, size) => {
+    const sendVote = (item) => {
         //TODO
         //works:
         // var myButton = document.getElementById("answer-item answer-item-top-left");
@@ -121,24 +111,7 @@ const Question = props => {
         // console.log("myButton:", myButton);
         // myButton.style.transform = 'scale(2)';
 
-
-        // let myButton = document.getElementById(cssClasses[index]);
-        // console.log("myButton:", myButton);
-        // myButton.style.transform = 'scale(2)';
-
-        //myButton.style.height = '400px';
-        //yButton.style.width= '400px';
-        //myButton.scale(2)
-        // var myButton2 = document.getElementById(item);
-        // console.log("myButton2:", myButton2);
-        //myButton.style.transform = 'scale(2)';
-
-        // var myButton3 = document.getElementsByClassName("answer-item answer-item-bottom-right-bubble-button");
-        // console.log("myButton3:", myButton3);
-        // myButton3.style.transform = 'scale(2)';
-
-
-        if (alreadyVoted === false || gameMode != "standard") {
+        if (alreadyVoted === false || gameMode !== "standard") {
             setRadioValue(item)
             // console.log("sendVote of:", item);
             // console.log("radioValue:", radioValue);
@@ -254,23 +227,8 @@ const Question = props => {
 
         //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
-            setAnswerDict(null);
             console.log("somebody voted:", data)
-            // console.log("answer: "+ answer);
-            // console.log("answer[0]: "+ answer[0]);
-            // console.log("answer1: "+ answer1);
-            setAnswerDict(data);
 
-            // var myButton = document.getElementById("answer-item-top-right");
-            // console.log("myButton:", myButton);
-            // myButton.style.transform = 'scale(2)';
-
-            // var bubble2 = document.getElementById("answer-item-bottom-right");
-            // console.log("bubble2:", bubble2);
-            // bubble2.style.transform = 'scale(2)';
-
-            //answer[1].scale(2);
-            //var dict = {};
             var stringvalue = null;
             var intkey = null;
             const array = [];
@@ -288,12 +246,7 @@ const Question = props => {
                 array[i+1] = intkey;
                 i = i+2;
             };
-            // console.log("dict: " + dict);
-            // console.log("dict inside: " + stringvalue + intkey[stringvalue])
-            console.log("array: " + array) //HERE VALUES ARE CORRECT
             setVotingArray(array);
-            console.log("votingArray: " + votingArray) //NULL
-            
         })
 
         // eslint-disable-next-line
@@ -310,7 +263,6 @@ const Question = props => {
                         {/* question bubble */}
                         <div className="question-item"> 
                             <div className="timer">
-                                {/* <input value={timerValue} onChange={handleInputChange} ></input> */}
                                 {timerValue}
                             </div>
                             <Bubble
@@ -318,7 +270,7 @@ const Question = props => {
                             </Bubble>
                         </div>
 
-                        {/* 4 answer bubblesstyle={"img{height: 330px; width: 330px;"}style={{ width: "900px", height: "900px" }}  */}
+                        {/* 4 answer bubbles */}
                         {answer.map((item, index, size) => {
 
                             if (item === null || visibleAnswers === false) {
@@ -327,10 +279,10 @@ const Question = props => {
 
                             if (splash === false) {
                                 return <div key={item} className={cssClasses[index]}>
-                                    <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item, index, size + 1)} />
+                                    <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                     <label htmlFor={item}>
                                     <div>
-                                        < Bubble style={{ width: (bubbleSize[index]*50+ 100)+"px", height: (bubbleSize[index]*50+ 100)+"px"}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
+                                        < Bubble style={{ width: ((bubbleSize[index]*80/numberOfPlayers + 80)+"px")}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
                                     </div>
                                     </label>
                                 </div>
@@ -338,7 +290,7 @@ const Question = props => {
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                 <label htmlFor={item}>
-                                    <Bubble style={{ width: (bubbleSize[index]*50+ 100)+"px", height: (bubbleSize[index]*50+ 100)+"px"}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble style={{ width: ((160)+"px")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
                         }
