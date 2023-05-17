@@ -20,7 +20,11 @@ tbd
 tbd
 
 ## Authors and acknowledgement
-tbd
+- [Marlen Kühn](https://github.com/MarlenKuehn)
+- [Maaike Ellen van Vliet](https://github.com/Bluee1Bird)
+- [Louis Devillers](https://github.com/a1ps)
+- [Fabio Bertschi](https://github.com/fabibert)
+- [Dario Küffer](https://github.com/dariokueffer)
 
 ## License
 tbd
