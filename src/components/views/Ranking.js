@@ -49,13 +49,13 @@ export default function Ranking(props) {
         return b[1] - a[1];
     });
 
-    console.log(sortable);
+    //console.log(sortable);
 
     const tmpUsers = sortable.map((item, i) => {
-        console.log(item);
+        //console.log(item);
         let id = item[0];
         let result = jsObjects.filter(obj => {
-            console.log(obj)
+            //console.log(obj)
             return obj.id === parseInt(item)
         })
         return { "name": result[0].username, "points": ranking[0][id] };
@@ -74,7 +74,7 @@ export default function Ranking(props) {
             }
             try {
                 const response = await api.put('/users/Statistics/', data, headers());
-                console.log("set statistics");
+                //console.log("set statistics");
 
             } catch (error) {
                 console.log(error);

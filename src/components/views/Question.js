@@ -1,8 +1,8 @@
+import { useSocket } from 'components/context/socket';
 import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../../styles/views/Question.scss';
-import { useSocket } from 'components/context/socket';
 import Ranking from './Ranking';
 
 const Question = props => {
@@ -24,13 +24,16 @@ const Question = props => {
     const [answer2, setAnswer2Value] = useState(null);
     const [answer3, setAnswer3Value] = useState(null);
     const [answer4, setAnswer4Value] = useState(null);
+    const [answerDict, setAnswerDict] = useState(null);
+    const [votingArray, setVotingArray] = useState(null);
     const [bubbleSize1, setBubbleSize1] = useState(0);
-    const [bubbleSize2, setBubbleSize2] = useState(1);
-    const [bubbleSize3, setBubbleSize3] = useState(2);
-    const [bubbleSize4, setBubbleSize4] = useState(3);
+    const [bubbleSize2, setBubbleSize2] = useState(0);
+    const [bubbleSize3, setBubbleSize3] = useState(0);
+    const [bubbleSize4, setBubbleSize4] = useState(0);
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
+
     //const [showTimerXY, setShowTimerXY] = useState(false);
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
@@ -50,6 +53,32 @@ const Question = props => {
 
     //connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
 
+    //console.log("answer: " + answer)
+    const updateBubbleSize = () => {
+    if (votingArray !== null) {
+        for (let i = 0; i < votingArray.length - 1; i = i + 2) {
+            if (votingArray[i] === answer1) {
+                setBubbleSize1(votingArray[i + 1])  
+            }
+            else if (votingArray[i] === answer2) {
+                setBubbleSize2(votingArray[i + 1])
+                
+            }
+            else if (votingArray[i] === answer3) {
+                setBubbleSize3(votingArray[i + 1])
+            }
+            else if (votingArray[i] === answer4) {
+                setBubbleSize4(votingArray[i + 1])
+            }
+            console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
+            }
+        }
+    }
+
+        // console.log("answer1: " + answer1)
+        // console.log("VotingArray[0]: " + votingArray[0])
+        // console.log(answer1 === votingArray[0])}
+    //console.log("answerDict: " + answerDict)
 
     const answer = [
         answer1,
@@ -123,6 +152,7 @@ const Question = props => {
 
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
+        
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
@@ -168,6 +198,7 @@ const Question = props => {
 
                     setPopupValue(true);
 
+                    //TODO: LÖSCHEN!
                     socket.emit('end_of_question', {
                         message: "",
                         roomCode: roomCode,
@@ -197,6 +228,7 @@ const Question = props => {
         })
 
         socket.on("timer_count", (data) => {
+            updateBubbleSize();
 
             //console.log("timer arrived:", data)
             setTimerValue(data)
@@ -218,10 +250,12 @@ const Question = props => {
         })
         //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
+            setAnswerDict(null);
             console.log("somebody voted:", data)
             console.log("answer: "+ answer);
             console.log("answer[0]: "+ answer[0]);
             console.log("answer1: "+ answer1);
+            setAnswerDict(data);
 
             // var myButton = document.getElementById("answer-item-top-right");
             // console.log("myButton:", myButton);
@@ -232,21 +266,44 @@ const Question = props => {
             // bubble2.style.transform = 'scale(2)';
 
             //answer[1].scale(2);
+            //var dict = {};
+            var stringvalue = null;
+            var intkey = null;
+            const array = [];
+            var i = 0;
+
             for (let value in data){
-                console.log( "value: " + value + " , amountOfVotes: " + data[value]) ;
-                if (value === answer1) {
-                    console.log("answer1 === value: " + answer1);
-                }
-                if (value === answer2) {
-                    console.log("answer2 === value: " + answer2);
-                }
-                if (value === answer3) {    
-                    console.log("answer3 === value: " + answer3);
-                }
-                if (value === answer4) {
-                    console.log("answer4 === value: " + answer4);
-                }
-            }
+                console.log( "value: " + value.toString() + " , amountOfVotes: " + data[value]) ;
+                stringvalue = value.toString();
+                intkey = parseInt(data[value])
+                console.log("strigvalue " + stringvalue + typeof stringvalue)
+                console.log("intkey " +intkey + typeof intkey)
+                // dict[stringvalue] = intkey;
+                // dict["hund"] = 2;
+                array[i] = stringvalue;
+                array[i+1] = intkey;
+                i = i+2;
+            };
+            // console.log("dict: " + dict);
+            // console.log("dict inside: " + stringvalue + intkey[stringvalue])
+            console.log("array: " + array)
+            setVotingArray(array);
+            console.log("votingArray: " + votingArray)
+            //setAnswerDict(dict);
+
+                // if (value === answer1) {
+                //     console.log("answer1 === value: " + answer1);
+                // }
+                // if (value === answer2) {
+                //     console.log("answer2 === value: " + answer2);
+                // }
+                // if (value === answer3) {    
+                //     console.log("answer3 === value: " + answer3);
+                // }
+                // if (value === answer4) {
+                //     console.log("answer4 === value: " + answer4);
+                // }
+            
         })
 
         // eslint-disable-next-line
@@ -283,7 +340,7 @@ const Question = props => {
                                     <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item, index, size + 1)} />
                                     <label htmlFor={item}>
                                     <div>
-                                        < Bubble style={{ width: (bubbleSize[index]*50+ 100)+"px", height: (index*50+ 100)+"px"}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
+                                        < Bubble style={{ width: (bubbleSize[index]*50+ 100)+"px", height: (bubbleSize[index]*50+ 100)+"px"}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
                                     </div>
                                     </label>
                                 </div>
@@ -309,7 +366,6 @@ const Question = props => {
                         }
                     </div >
             }</>
-
     )
 };
 export default Question;
