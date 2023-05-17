@@ -51,43 +51,10 @@ const Question = props => {
     //console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)
     //console.log("gameMode: ", gameMode);
 
-    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-
-    //connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
-
     //console.log("answer: " + answer)
     // console.log("answer1: " + answer1 + " answer2: " + answer2 + " answer3: " + answer3 + " answer4: " + answer4)
     // console.log("votingArray: " + votingArray)
     
-    //function updateBubbleSize(votingArray){
-        //console.log("updateBubbleSize" + votingArray)
-        
-    // if (votingArray !== null) {
-    //     for (let i = 0; i < votingArray.length - 1; i = i + 2) {
-    //         console.log("votingArray[i+1]: " + votingArray[i+1])
-    //         if (votingArray[i] === answer1) {
-    //             setBubbleSize1(votingArray[i + 1])  
-    //         }
-    //         else if (votingArray[i] === answer2) {
-    //             setBubbleSize2(votingArray[i + 1])
-                
-    //         }
-    //         else if (votingArray[i] === answer3) {
-    //             setBubbleSize3(votingArray[i + 1])
-    //         }
-    //         else if (votingArray[i] === answer4) {
-    //             setBubbleSize4(votingArray[i + 1])
-    //         }
-    //         console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
-    //         }
-    //     }
-    //}
-
-        // console.log("answer1: " + answer1)
-        // console.log("VotingArray[0]: " + votingArray[0])
-        // console.log(answer1 === votingArray[0])}
-    //console.log("answerDict: " + answerDict)
-
     const answer = [
         answer1,
         answer2,
@@ -183,11 +150,10 @@ const Question = props => {
         }
         setAlreadyVoted(true);
     }
+
     useEffect(() => {
         updateBubbleSize();
       });
-
-
 
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);     
@@ -229,12 +195,6 @@ const Question = props => {
             const interval = setInterval(() => {
                 seconds = seconds - 1;
                 if (seconds <= 3) {
-                    // please don't delete:
-                    // var currentRadioValue;
-                    // setRadioValue(currentState_ => {
-                    //     currentRadioValue = currentState_;
-                    //     return currentState_;  // don't actually change the state
-                    //  })
 
                     setPopupValue(true);
 
@@ -268,8 +228,6 @@ const Question = props => {
 
         socket.on("timer_count", (data) => {
             updateBubbleSize();
-
-            //console.log("timer arrived:", data)
             setTimerValue(data)
             if (data === 10) {
                 setVisibleAnswers(true);
@@ -281,13 +239,12 @@ const Question = props => {
                 return currentState_;  // don't actually change the state
             })
 
-            //console.log("visibleanswer:", currentvisibleAnswer)
-
             if (data === 1 && currentvisibleAnswer === true) {
                 setSplash(true);
             }
             
         })
+
         //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
             setAnswerDict(null);
@@ -329,49 +286,6 @@ const Question = props => {
             console.log("array: " + array) //HERE VALUES ARE CORRECT
             setVotingArray(array);
             console.log("votingArray: " + votingArray) //NULL
-
-            // let currAnswers;
-            // setAnswersValue(currentState_ => {
-            //     currAnswers = currentState_;
-            //     return currentState_;});
-
-            // if (array !== null) {
-            //     for (let i = 0; i < array.length - 1; i = i + 2) {
-            //         console.log("votingArray[i+1]: " + array[i+1])
-            //         console.log("answer1: " + answer1)
-            //         console.log("answer: " + answer)
-            //         console.log("array[i]: " + array[i])
-            //         console.log("currAnswers: " + currAnswers)
-            //         console.log("currAnswers[0]: " + currAnswers[0])
-            //         if (array[i] === currAnswers[0]) {
-            //             setBubbleSize1(array[i + 1])  
-            //         }
-            //         else if (array[i] === currAnswers[1]) {
-            //             setBubbleSize2(array[i + 1])   
-            //         }
-            //         else if (array[i] === currAnswers[2]) {
-            //             setBubbleSize3(array[i + 1])
-            //         }
-            //         else if (array[i] === currAnswers[3]) {
-            //             setBubbleSize4(array[i + 1])
-            //         }
-            //         console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
-            //         }
-            //     }
-            //setAnswerDict(dict);
-
-                // if (value === answer1) {
-                //     console.log("answer1 === value: " + answer1);
-                // }
-                // if (value === answer2) {
-                //     console.log("answer2 === value: " + answer2);
-                // }
-                // if (value === answer3) {    
-                //     console.log("answer3 === value: " + answer3);
-                // }
-                // if (value === answer4) {
-                //     console.log("answer4 === value: " + answer4);
-                // }
             
         })
 
@@ -417,7 +331,7 @@ const Question = props => {
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                 <label htmlFor={item}>
-                                    <Bubble id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble style={{ width: (bubbleSize[index]*50+ 100)+"px", height: (bubbleSize[index]*50+ 100)+"px"}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
                         }
