@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
-import { headers } from 'helpers/api';
-import { api } from 'helpers/api';
+import { headers, api } from 'helpers/api';
 
 import '../../styles/views/Ranking.scss';
 
