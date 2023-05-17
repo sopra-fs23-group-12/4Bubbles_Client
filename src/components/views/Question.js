@@ -84,14 +84,17 @@ const Question = props => {
     ]
 
     const updateBubbleSize = () =>{
+        setBubbleSize1(0);
+        setBubbleSize2(0);
+        setBubbleSize3(0);
+        setBubbleSize4(0);
+        
         if (votingArray !== null) {
             for (let i = 0; i < votingArray.length - 1; i = i + 2) {
-                console.log("votingArray[i+1]: " + votingArray[i+1])
-                console.log("answer1: " + answer1)
+                console.log("votingArray: " + votingArray)
+                console.log("answer1: " + answer1 + " answer2: " + answer2 + " answer3: " + answer3 + " answer4: " + answer4)
                 console.log("answer: " + answer)
-                console.log("array[i]: " + votingArray[i])
-                console.log("currAnswers: " + answers)
-                console.log("currAnswers[0]: " + answer1)
+                console.log("answers: " + answers)
                 if (votingArray[i] === answer1) {
                     setBubbleSize1(votingArray[i + 1])  
                 }
@@ -104,7 +107,7 @@ const Question = props => {
                 else if (votingArray[i] === answer4) {
                     setBubbleSize4(votingArray[i + 1])
                 }
-                //console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
+                console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
                 }
         }
     }
@@ -178,6 +181,10 @@ const Question = props => {
             setAlreadyVoted(false);
             setShowRanking(true);
             setVotingArray(null);
+            setBubbleSize1(0);
+            setBubbleSize2(0);
+            setBubbleSize3(0);
+            setBubbleSize4(0);
         })
 
         socket.on("get_answers", (data) => {
@@ -248,7 +255,7 @@ const Question = props => {
         //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
             setAnswerDict(null);
-            // console.log("somebody voted:", data)
+            console.log("somebody voted:", data)
             // console.log("answer: "+ answer);
             // console.log("answer[0]: "+ answer[0]);
             // console.log("answer1: "+ answer1);
