@@ -1,4 +1,28 @@
-# SoPra FS23 - Client Template with build pack
+# 4Bubbles Client - SoPra FS23
+
+## Introduction
+tbd
+
+## Technologies
+tbd
+
+## High-level Componenents
+tbd
+
+## Launch & Deployment
+tbd
+
+## Illustrations
+tbd
+
+## Roadmap
+tbd
+
+## Authors and acknowledgement
+tbd
+
+## License
+tbd
 
 ## Getting started
 
