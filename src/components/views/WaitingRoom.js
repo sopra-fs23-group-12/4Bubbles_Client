@@ -6,6 +6,7 @@ import { format } from "react-string-format";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
+import PopUpAlert from 'components/ui/PopUp';
 
 // establish a websocket connection (joins namespace for only the sender client)
 
@@ -56,9 +57,8 @@ const WaitingRoom = (props) => {
 
         socket.on("game_started", (incomingData) => {
             console.log("game_started received:" + incomingData);
-            var data = incomingData.toString();
-            localStorage.setItem('gameMode', data); //"\"standard\""
-            //console.log("gameMode here: ", localStorage.gameMode);
+            let data = incomingData.toString();
+            localStorage.setItem('gameMode', data);
 
             history.push(`/question`);
         })
@@ -120,6 +120,7 @@ const WaitingRoom = (props) => {
             <div className="exit-button" onClick={() => history.push('/welcomepage')}>
                 exit
             </div>
+            <PopUpAlert/>
         </div>
     );
 };
