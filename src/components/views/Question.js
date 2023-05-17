@@ -59,7 +59,7 @@ const Question = props => {
     // console.log("answer1: " + answer1 + " answer2: " + answer2 + " answer3: " + answer3 + " answer4: " + answer4)
     // console.log("votingArray: " + votingArray)
     
-    function updateBubbleSize(votingArray){
+    //function updateBubbleSize(votingArray){
         //console.log("updateBubbleSize" + votingArray)
         
     // if (votingArray !== null) {
@@ -81,7 +81,7 @@ const Question = props => {
     //         console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
     //         }
     //     }
-    }
+    //}
 
         // console.log("answer1: " + answer1)
         // console.log("VotingArray[0]: " + votingArray[0])
@@ -115,6 +115,32 @@ const Question = props => {
         "answer-item answer-item-bottom-right-bubble-button",
         "answer-item answer-item-bottom-left-bubble-button",
     ]
+
+    const updateBubbleSize = () =>{
+        if (votingArray !== null) {
+            for (let i = 0; i < votingArray.length - 1; i = i + 2) {
+                console.log("votingArray[i+1]: " + votingArray[i+1])
+                console.log("answer1: " + answer1)
+                console.log("answer: " + answer)
+                console.log("array[i]: " + votingArray[i])
+                console.log("currAnswers: " + answers)
+                console.log("currAnswers[0]: " + answer1)
+                if (votingArray[i] === answer1) {
+                    setBubbleSize1(votingArray[i + 1])  
+                }
+                else if (votingArray[i] === answer2) {
+                    setBubbleSize2(votingArray[i + 1])   
+                }
+                else if (votingArray[i] === answer3) {
+                    setBubbleSize3(votingArray[i + 1])
+                }
+                else if (votingArray[i] === answer4) {
+                    setBubbleSize4(votingArray[i + 1])
+                }
+                //console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
+                }
+        }
+    }
 
 
     const sendVote = (item, index, size) => {
@@ -157,35 +183,14 @@ const Question = props => {
         }
         setAlreadyVoted(true);
     }
+    useEffect(() => {
+        updateBubbleSize();
+      });
+
+
 
     useEffect(() => {
-        console.log("socket acknowledged as connected in useEffect:", socket.connected);
-        function updateBubbleSize(){
-            if (votingArray !== null) {
-                for (let i = 0; i < votingArray.length - 1; i = i + 2) {
-                    console.log("votingArray[i+1]: " + votingArray[i+1])
-                    console.log("answer1: " + answer1)
-                    console.log("answer: " + answer)
-                    console.log("array[i]: " + votingArray[i])
-                    console.log("currAnswers: " + answers)
-                    console.log("currAnswers[0]: " + answer1)
-                    if (votingArray[i] === answer1) {
-                        setBubbleSize1(votingArray[i + 1])  
-                    }
-                    else if (votingArray[i] === answer2) {
-                        setBubbleSize2(votingArray[i + 1])   
-                    }
-                    else if (votingArray[i] === answer3) {
-                        setBubbleSize3(votingArray[i + 1])
-                    }
-                    else if (votingArray[i] === answer4) {
-                        setBubbleSize4(votingArray[i + 1])
-                    }
-                    console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
-                    }
-            }
-        }
-        
+        console.log("socket acknowledged as connected in useEffect:", socket.connected);     
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
@@ -206,6 +211,7 @@ const Question = props => {
             setPopupValue(null);
             setAlreadyVoted(false);
             setShowRanking(true);
+            setVotingArray(null);
         })
 
         socket.on("get_answers", (data) => {
@@ -261,6 +267,7 @@ const Question = props => {
         })
 
         socket.on("timer_count", (data) => {
+            updateBubbleSize();
 
             //console.log("timer arrived:", data)
             setTimerValue(data)
@@ -279,6 +286,7 @@ const Question = props => {
             if (data === 1 && currentvisibleAnswer === true) {
                 setSplash(true);
             }
+            
         })
         //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
@@ -321,7 +329,6 @@ const Question = props => {
             console.log("array: " + array) //HERE VALUES ARE CORRECT
             setVotingArray(array);
             console.log("votingArray: " + votingArray) //NULL
-            updateBubbleSize();
 
             // let currAnswers;
             // setAnswersValue(currentState_ => {
@@ -382,8 +389,8 @@ const Question = props => {
                         {/* question bubble */}
                         <div className="question-item"> 
                             <div className="timer">
+                                {/* <input value={timerValue} onChange={handleInputChange} ></input> */}
                                 {timerValue}
-                                {/* { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null} */}
                             </div>
                             <Bubble
                                 className="bubble-button--question">{question}
