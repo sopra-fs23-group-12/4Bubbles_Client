@@ -81,7 +81,9 @@ export default function Ranking(props) {
     }
 
     useEffect(() => {
-        setStatistics();
+        setStatistics().catch(error => {
+            console.error("Unhandled promise rejection:", error);
+          });
     }, [])
 
 

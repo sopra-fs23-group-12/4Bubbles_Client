@@ -4,7 +4,6 @@ import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
 import ShowProfile from "components/views/Profile";
-import EditProfile from "components/views/EditProfile";
 import WelcomePage from "../../views/WelcomePage";
 import GameRoom from "components/views/GameRoom";
 import WaitingRoom from "components/views/WaitingRoom";
@@ -47,11 +46,6 @@ const AppRouter = () => {
         <Route path="/joingame">
           <GameGuard>
             <JoinGameRoom />
-          </GameGuard>
-        </Route>
-        <Route path="/profile/:id/edit">
-          <GameGuard>
-            <EditProfile edit={true} />
           </GameGuard>
         </Route>
         <Route path="/profile/:id">

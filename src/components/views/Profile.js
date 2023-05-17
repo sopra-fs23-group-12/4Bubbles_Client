@@ -6,7 +6,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Profile.scss";
-import User from 'models/User';
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -30,8 +29,6 @@ const ShowProfile = (props) => {
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [user, setUser] = useState(null);
-  //const currentUser = localStorage.getItem('userId');
-
 
 
   let { id } = useParams();
@@ -48,47 +45,25 @@ const ShowProfile = (props) => {
 
         // Get the returned user and update a new object.
 
-        const user = new User(response.data);
-
-        console.log(user.id);
-        // delays continuous execution of an async operation for 1 second.
-        // This is just a fake async call, so that the spinner can be displayed
-        // feel free to remove it :)
-        //await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // Get the returned users and update the state.
         setUser(response.data);
-
-
-        // This is just some data for you to see what is available.
-        // Feel free to remove it.
-        console.log('request to:', response.request.responseURL);
-        console.log('status code:', response.status);
-        console.log('status text:', response.statusText);
-        console.log('requested data:', response.data);
-
-        // See here to get more data.
-        console.log(response);
 
       } catch (error) {
         console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
         console.error("Details:", error);
-        alert("Something went wrong while fetching the users! See the console for details.");
         window.localStorage.removeItem("token");
       }
     }
 
-    fetchData();
+    fetchData().catch(error => {
+      console.error("Unhandled promise rejection:", error);
+    });
+
   }, [id]);
 
   let content = <Spinner />;
 
 
   if (user) {
-
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-    let creationDate = new Date(user.creationDate)
 
     content = (
       <div className="profile-page-wrapper">
