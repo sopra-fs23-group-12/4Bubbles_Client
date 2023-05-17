@@ -67,14 +67,19 @@ export default function Ranking(props) {
 
     const setStatistics = async () => {
         if (final) {
-            localStorage.removeItem('isLeader');
             const data = {
                 "id": localStorage.getItem("userId"),
                 "points": ranking[0][localStorage.getItem("userId")],
                 headers
             }
 
-            api.put('/users/Statistics/', data, headers());
+            try {
+                const response = await api.put('/users/Statistics/', data, headers());
+                console.log("set statistics");
+
+            } catch (error) {
+                console.log(error);
+            }
         }
 
 
