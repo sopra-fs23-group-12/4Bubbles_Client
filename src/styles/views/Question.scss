@@ -83,7 +83,6 @@
     background: transparentize(grey, 0.85); 
 
     &.answer-item-top-left {
-        background: transparentize(white, 0.85); 
         grid-column-start: 1;
         grid-column-end: 3;
         display: flex;
@@ -107,7 +106,6 @@
         justify-content: center;
         align-items: center;
 
-        background: transparentize(white, 0.85); 
         animation-name: example;
         animation-duration: 4s;
         animation-iteration-count: infinite;

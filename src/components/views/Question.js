@@ -24,10 +24,10 @@ const Question = props => {
     const [answer2, setAnswer2Value] = useState(null);
     const [answer3, setAnswer3Value] = useState(null);
     const [answer4, setAnswer4Value] = useState(null);
-    const [bubbleSize1, setBubbleSize1] = useState(1);
+    const [bubbleSize1, setBubbleSize1] = useState(0);
     const [bubbleSize2, setBubbleSize2] = useState(1);
-    const [bubbleSize3, setBubbleSize3] = useState(1);
-    const [bubbleSize4, setBubbleSize4] = useState(1);
+    const [bubbleSize3, setBubbleSize3] = useState(2);
+    const [bubbleSize4, setBubbleSize4] = useState(3);
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
@@ -283,7 +283,7 @@ const Question = props => {
                                     <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item, index, size + 1)} />
                                     <label htmlFor={item}>
                                     <div>
-                                        < Bubble style={{ width: (index*50+ 100)+"px", height: (index*50+ 100)+"px"}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
+                                        < Bubble style={{ width: (bubbleSize[index]*50+ 100)+"px", height: (index*50+ 100)+"px"}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
                                     </div>
                                     </label>
                                 </div>
