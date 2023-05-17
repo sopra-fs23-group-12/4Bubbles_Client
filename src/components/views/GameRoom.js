@@ -88,9 +88,10 @@ const GameRoom = props => {
     const { socket, connect } = useSocket();
 
     // establish a websocket connection (joins namespace for only the sender client sessionId (this ID is automatically generated in the server)
-    const url = format(getDomainSocket());
+    
+    /* const url = format(getDomainSocket());
     connect(url, { transports: ['websocket'], upgrade: false })
-
+*/
     useEffect(() => {
         getTopics();
 
