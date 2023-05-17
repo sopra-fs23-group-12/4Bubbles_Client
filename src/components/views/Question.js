@@ -104,7 +104,6 @@ const Question = props => {
     }
 
     const sendVote = (item) => {
-        //TODO
         //works:
         // var myButton = document.getElementById("answer-item answer-item-top-left");
         // console.log("index:", index);
@@ -240,8 +239,6 @@ const Question = props => {
                 intkey = parseInt(data[value])
                 console.log("strigvalue " + stringvalue + typeof stringvalue)
                 console.log("intkey " +intkey + typeof intkey)
-                // dict[stringvalue] = intkey;
-                // dict["hund"] = 2;
                 array[i] = stringvalue;
                 array[i+1] = intkey;
                 i = i+2;
@@ -307,10 +304,7 @@ const Question = props => {
                             : null
                         }
                     </div >
-
-                
-            }</>
-            
+            }</>   
     )
 };
 export default Question;
