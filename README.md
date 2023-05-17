@@ -66,31 +66,63 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 
 ## Illustrations 
-
-Login/Signup Page; here you can log in or create a new account.
-![img.png](/readmepics/login.png)
-
-Welcomepage; here you can choose what you would like to do next.
-![img_1.png](/readmepics/welcomepage.png)
-
-User Stats; every user can gain insight on their statistics.
-![img_7.png](/readmepics/userprofile.png)
-
-GameRoom; specify the settings for a new game.
-![img_2.png](/readmepics/gameroom.png)
-
-join a game; enter the room code displayed in the waiting room of the game you want to join.
-![img_3.png](/readmepics/joingame.png)
-
-Waiting Room; wait for players to join. From here on out the game is meant to be played in landscape mode.
-![img_4.png](/readmepics/waitingroom.png)
-
-Questions; cast your votes.
-![img_5.png](/readmepics/question.png)
-
-Ranking; after every question an intermediate ranking is displayed and when all questions have
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/login.png" alt="login" width="200"></a>
+  <br>
+  Login/Signup Page; here you can log in or create a new account.
+  <br>
+</h5>
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/welcomepage.png" alt="welcomepage" width="200"></a>
+  <br>
+  Welcomepage; here you can choose what you would like to do next.
+  <br>
+</h5>
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/userprofile.png" alt="userprofile" width="200"></a>
+  <br>
+  User Stats; every user can gain insight on their statistics.
+  <br>
+</h5>
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/gameroom.png" alt="gameroom" width="200"></a>
+  <br>
+  GameRoom; specify the settings for a new game.
+  <br>
+</h5>
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/joingame.png" alt="joingame" width="200"></a>
+  <br>
+  join a game; enter the room code displayed in the waiting room of the game you want to join.
+  <br>
+</h5>
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/waitingroom.png" alt="waitingroom" width="200"></a>
+  <br>
+  Waiting Room; wait for players to join. From here on out the game is meant to be played in landscape mode.
+  <br>
+</h5>
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/question.png" alt="question" width="200"></a>
+  <br>
+  Questions; cast your votes.
+  <br>
+</h5>
+<h5 align="center">
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/ranking.png" alt="ranking" width="200"></a>
+  <br>
+  Ranking; after every question an intermediate ranking is displayed and when all questions have
 been answered, the final ranking is shown.
-![img_6.png](/readmepics/ranking.png)
+  <br>
+</h5>
 
 ## Roadmap
 
