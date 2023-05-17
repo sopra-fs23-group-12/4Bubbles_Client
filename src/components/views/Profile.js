@@ -44,7 +44,7 @@ const ShowProfile = (props) => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get('/users/' + id, headers());
+        const response = await api.get('/users/Statistics/' + id, headers());
 
         // Get the returned user and update a new object.
 
@@ -57,7 +57,7 @@ const ShowProfile = (props) => {
         //await new Promise(resolve => setTimeout(resolve, 1000));
 
         // Get the returned users and update the state.
-        setUser(response.data[0]);
+        setUser(response.data);
 
 
         // This is just some data for you to see what is available.
@@ -89,10 +89,6 @@ const ShowProfile = (props) => {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     let creationDate = new Date(user.creationDate)
-    // let birthdate = null;
-    // if (user.birthday != null) {
-    //   birthdate = new Date(user.birthday)
-    // }
 
     content = (
       <div className="profile-page-wrapper">
@@ -102,35 +98,14 @@ const ShowProfile = (props) => {
         </div>
 
         <div className = "info" >
-        overall ranking: 
-        <div className = "infoBox"> ranking </div>
-        </div>
-
-        <div className = "info" >
         points scored: 
-        <div className = "infoBox"> points </div>
+        <div className = "infoBox"> { user ? user.totalPoints : "-"} </div>
         </div>
 
         <div className = "info" >
         games played: 
-        <div className = "infoBox"> games </div>
+        <div className = "infoBox"> { user ? user.totalGamesPlayed : "-"} </div>
         </div>
-
-        <div>
-          Creation Date: 
-          <br/>{creationDate.toLocaleDateString('de-DE', options)}</div>
-        {/* <div>Birthday: {birthdate ? birthdate.toLocaleDateString('de-DE', options) : "-"}</div> */}
-        <div>Status: {user.status}</div>
-
-        {/* {id === currentUser ?
-          <div className="login button-container">
-            <Button
-              onClick={() => history.push(`/profile/` + id + `/edit`)}
-              width="100%"
-            >
-              Edit profile
-            </Button>
-          </div> : null} */}
 
         <div className="button">
           <Button

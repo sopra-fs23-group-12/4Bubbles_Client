@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
+import { headers } from 'helpers/api';
+import { api } from 'helpers/api';
 
 import '../../styles/views/Ranking.scss';
 
@@ -38,17 +40,53 @@ export default function Ranking(props) {
 
     const jsObjects = JSON.parse(localStorage.getItem('users'));
 
-    const tmpUsers = Object.keys(ranking[0]).map((item, i) => {
-        let id = item;
+    let sortable = [];
+    for (let user in ranking[0]) {
+        sortable.push([user, ranking[0][user]]);
+    }
+
+    sortable.sort(function (a, b) {
+        return b[1] - a[1];
+    });
+
+    console.log(sortable);
+
+    const tmpUsers = sortable.map((item, i) => {
+        console.log(item);
+        let id = item[0];
         let result = jsObjects.filter(obj => {
             console.log(obj)
             return obj.id === parseInt(item)
-          })
-        return {"name": result[0].username, "points": ranking[0][id]};
+        })
+        return { "name": result[0].username, "points": ranking[0][id] };
     })
 
-     // eslint-disable-next-line
+    // eslint-disable-next-line
     const [users, setUsers] = useState(tmpUsers);
+
+
+    const setStatistics = async () => {
+        if (final) {
+            const data = {
+                "id": localStorage.getItem("userId"),
+                "points": ranking[0][localStorage.getItem("userId")],
+                headers
+            }
+            try {
+                const response = await api.put('/users/Statistics/', data, headers());
+                console.log("set statistics");
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+    }
+
+    useEffect(() => {
+        setStatistics();
+    }, [])
 
 
     const printRanking = (users) => {
@@ -56,7 +94,7 @@ export default function Ranking(props) {
 
         return users.map((item, i) => {
             // eslint-disable-next-line
-            if(i === 0 || (i > 0 & item.points !== users[i - 1].points)) {
+            if (i === 0 || (i > 0 & item.points !== users[i - 1].points)) {
                 rank += 1;
             }
 
