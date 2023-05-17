@@ -1,4 +1,4 @@
-# UZH SoPra Course FS23
+## UZH SoPra Course FS23
 
 # 4Bubble Trivia
 
@@ -31,15 +31,12 @@ Our Client consists of four major components;
 
 * [Sign up](/src/components/views/Register.js) and [login](/src/components/views/Login.js) allow the user to create a new account or play with an existing one.
 * The [welcome page](/src/components/views/WelcomePage.js), where users can choose which action they would like 
-to do next (starting a game, joining a game or displaying their profile)
-* The [waiting room](/src/components/views/WaitingRoom.js), where everyone waits until all player have joined
-* The [question](/src/components/views/Question.js) and [rankin](/src/components/views/Ranking.js) pages, which are integral to the game itself. 
+to do next (starting a game, joining a game or displaying their profile).
+* The [waiting room](/src/components/views/WaitingRoom.js), where everyone waits until all player have joined.
+* The [question](/src/components/views/Question.js) and [ranking](/src/components/views/Ranking.js) pages, which are integral to the game itself. 
 Here the questions are  displayed, the votes are cast and the intermediate and final rankings are displayed.
 
 
-## Contributing
-
-Please read [contributions.md](https://github.com/sopra-fs23-group-12/4Bubbles_Server/blob/main/contributions.md) for details of our task history.
 
 ## Prerequisites and Installation
 For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
@@ -67,60 +64,60 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Illustrations 
 <h5 align="center">
+  Login/Signup Page; here you can log in or create a new account.
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/login.png" alt="login" width="200"></a>
   <br>
-  Login/Signup Page; here you can log in or create a new account.
   <br>
 </h5>
 <h5 align="center">
+  Welcomepage; here you can choose what you would like to do next.
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/welcomepage.png" alt="welcomepage" width="200"></a>
   <br>
-  Welcomepage; here you can choose what you would like to do next.
   <br>
 </h5>
 <h5 align="center">
+  User Stats; every user can gain insight on their statistics.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/userprofile.png" alt="userprofile" width="200"></a>
   <br>
-  User Stats; every user can gain insight on their statistics.
-  <br>
 </h5>
 <h5 align="center">
+  GameRoom; specify the settings for a new game.
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/gameroom.png" alt="gameroom" width="200"></a>
   <br>
-  GameRoom; specify the settings for a new game.
   <br>
 </h5>
 <h5 align="center">
+  join a game; enter the room code displayed in the waiting room of the game you want to join.
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/joingame.png" alt="joingame" width="200"></a>
   <br>
-  join a game; enter the room code displayed in the waiting room of the game you want to join.
   <br>
 </h5>
 <h5 align="center">
+  Waiting Room; wait for players to join. From here on out the game is meant to be played in landscape mode.
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/waitingroom.png" alt="waitingroom" width="200"></a>
   <br>
-  Waiting Room; wait for players to join. From here on out the game is meant to be played in landscape mode.
   <br>
 </h5>
 <h5 align="center">
+  Questions; cast your votes.
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/question.png" alt="question" width="200"></a>
   <br>
-  Questions; cast your votes.
   <br>
 </h5>
 <h5 align="center">
+  Ranking; after every question an intermediate ranking is displayed and when all questions have
+been answered, the final ranking is shown.
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/ranking.png" alt="ranking" width="200"></a>
   <br>
-  Ranking; after every question an intermediate ranking is displayed and when all questions have
-been answered, the final ranking is shown.
   <br>
 </h5>
 
@@ -129,16 +126,16 @@ been answered, the final ranking is shown.
 Developers interested in extending this application are welcome to implement additional features.\
 Here are some Ideas that can be used as inspiration:
 
-- additional game modes: We paid special attention to modularity while designing our code. It could therefore be modified to add
+- Additional game modes: We paid special attention to modularity while designing our code. It could therefore be modified to add
   some more game modes than the two that are already implemented.
-- awards for special achievements: User statistics are already tracked and stored. Implementing a global leaderboard and
+- Awards for special achievements: User statistics are already tracked and stored. Implementing a global leaderboard and
   special awards for all players that achieve a milestone (i.e. winning 20 games) would be a nice extension.
 
 
 
 ## Authors
 
-in alphabetical order:
+In alphabetical order:
 * **Dario Küffer** - [GitHub](https://github.com/dariokueffer)
 * **Fabio Bertschi** - [GitHub](https://github.com/fabibert)
 * **Maaike van Vliet** - [GitHub](https://github.com/Bluee1Bird)
@@ -150,13 +147,20 @@ Special thanks to the authors of the template:
 * **Roy Rutishauser** - [GitHub](https://github.com/royru)
 * **Dennis Huber** - [GitHub](https://github.com/devnnys)
 
-## License
+## Contributing
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Please read [contributions.md](https://github.com/sopra-fs23-group-12/4Bubbles_Server/blob/main/contributions.md) for details of our task history.
 
 ## Acknowledgments
 
-* This project was build on the basis of the [SoPra Template](https://github.com/HASEL-UZH/sopra-fs23-template-client) FS23 provided by the University of Zurich for the
-  Software Engineering Lab (Softwarepraktikum) course supervised by Professor Thomas Fritz
+* This project was build on the basis of the [SoPra Template FS23](https://github.com/HASEL-UZH/sopra-fs23-template-client) provided by the University of Zurich for the
+  Software Engineering Lab (Softwarepraktikum) course supervised by [Professor Thomas Fritz](https://www.ifi.uzh.ch/en/hasel/people/fritz.html).
 * Special Thanks also to our Teaching Assistant [Valentin Hollenstein](https://github.com/v4lentin1879)
+* We are also very grateful to the creators and contributors of the external API [Open Trivia Database](https://opentdb.com/) which we used as source for 
+our questions
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
