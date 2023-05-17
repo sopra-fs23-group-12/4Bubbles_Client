@@ -63,63 +63,71 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 
 ## Illustrations 
-<h5 align="center">
+<h6 align="center">
   Login/Signup Page; here you can log in or create a new account.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/login.png" alt="login" width="200"></a>
   <br>
   <br>
-</h5>
-<h5 align="center">
+</h6>
+<h6 align="center">
   Welcomepage; here you can choose what you would like to do next.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/welcomepage.png" alt="welcomepage" width="200"></a>
   <br>
   <br>
-</h5>
-<h5 align="center">
+</h6>
+<h6 align="center">
   User Stats; every user can gain insight on their statistics.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/userprofile.png" alt="userprofile" width="200"></a>
   <br>
-</h5>
-<h5 align="center">
+  <br>
+</h6>
+<h6 align="center">
   GameRoom; specify the settings for a new game.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/gameroom.png" alt="gameroom" width="200"></a>
   <br>
   <br>
-</h5>
-<h5 align="center">
+</h6>
+<h6 align="center">
   join a game; enter the room code displayed in the waiting room of the game you want to join.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/joingame.png" alt="joingame" width="200"></a>
   <br>
   <br>
-</h5>
-<h5 align="center">
+</h6>
+<h6 align="center">
   Waiting Room; wait for players to join. From here on out the game is meant to be played in landscape mode.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/waitingroom.png" alt="waitingroom" width="200"></a>
   <br>
   <br>
-</h5>
-<h5 align="center">
+</h6>
+<h6 align="center">
   Questions; cast your votes.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/question.png" alt="question" width="200"></a>
   <br>
   <br>
-</h5>
-<h5 align="center">
+</h6>
+<h6 align="center">
   Ranking; after every question an intermediate ranking is displayed and when all questions have
 been answered, the final ranking is shown.
+  <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/ranking.png" alt="ranking" width="200"></a>
   <br>
   <br>
-</h5>
+</h6>
 
 ## Roadmap
 
