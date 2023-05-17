@@ -1,66 +1,42 @@
-# 4Bubbles Client - SoPra FS23
+## UZH SoPra Course FS23
 
-## Introduction
+# 4Bubble Trivia
 
-Trivia games exist in plenty; however, they often get boring after a few rounds. With our game, 4Bubbles, we want to make trivia games fun again. One of the core elements of the application are the dynamic answer bubbles, that change in size as the votes come in. Through the bubbles answering hard trivia questions becomes a fun and interactive process; the player can take their own guess or follow others by choosing the current biggest bubble. This feature allows us to implement multiple game modes, that provide functionalities to mess with your friends to make them choose the wrong answer.
+Make Trivia fun again!  \
+This is a trivia game with a focus on multiplayer aspects.
+You can test your trivia knowledge by battling your friends in your preferred
+topic. Choose your difficulty, the number of questions and your game mode.
+You have 10 seconds to answer the questions in the bubble and collect points. The faster
+you answer, the more points you will get. This will prove more difficult than you might
+expect, especially in hard mode. But not to worry - since the bubble sizes change to indicate
+the number of people that have already cast their vote on one of the answers, you can go
+the safe road and follow your friend's choice ... or can you? Depending on your game mode,
+bubble sizes could just be randomly generated without you knowing, or players could change
+their answer in the last seconds to try and confuse you.
+Whether you chose the correct answer will be revealed when the time is up; if your
+bubble doesn't burst, you've made the correct choice!
+
+[Play here](https://sopra-fs23-group-12-client.ew.r.appspot.com). Enjoy!
+
+You can find the corresponding server repository [here](https://github.com/sopra-fs23-group-12/4Bubbles_Server).
 
 ## Technologies
-tbd
 
-## High-level Componenents
-tbd
+This project is a Node.js application running ReactJS with JavaScript.\
+Server-Client communications are handled with REST API and Socket.io with the [Netty-Socketio](https://github.com/mrniko/netty-socketio) library for the java server.
 
-## Launch & Deployment
-tbd
+## High-level Components
 
-## Illustrations
-tbd
+Our Client consists of four major components;
 
-## Roadmap
-tbd
+* [Sign up](/src/components/views/Register.js) and [login](/src/components/views/Login.js) allow the user to create a new account or play with an existing one.
+* The [welcome page](/src/components/views/WelcomePage.js), where users can choose which action they would like 
+to do next (starting a game, joining a game or displaying their profile).
+* The [waiting room](/src/components/views/WaitingRoom.js), where everyone waits until all player have joined.
+* The [question](/src/components/views/Question.js) and [ranking](/src/components/views/Ranking.js) pages, which are integral to the game itself. 
+Here the questions are  displayed, the votes are cast and the intermediate and final rankings are displayed.
 
-## Authors and acknowledgement
-- [Marlen Kühn](https://github.com/MarlenKuehn)
-- [Maaike Ellen van Vliet](https://github.com/Bluee1Bird)
-- [Louis Devillers](https://github.com/a1ps)
-- [Fabio Bertschi](https://github.com/fabibert)
-- [Dario Küffer](https://github.com/dariokueffer)
 
-## License
-MIT License
-
-Copyright (c) 4Bubbles - SoPra FS23
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-## Getting started
-
-Read and go through these Tutorials. It will make your life easier:)
-
-- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
-- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
-- Get an Understanding of [CSS](https://www.w3schools.com/Css/), [SCSS](https://sass-lang.com/documentation/syntax), and [HTML](https://www.w3schools.com/html/html_intro.asp)!
-
-Next, there are two other technologies that you should look at:
-
-* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) offers declarative routing for React. It is a collection of navigational components that fit nicely with the application. 
-* [react-hooks](https://reactrouter.com/web/api/Hooks) let you access the router's state and perform navigation from inside your components.
 
 ## Prerequisites and Installation
 For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
@@ -73,13 +49,11 @@ Run this command before you start your application for the first time. Next, you
 
 Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Notice that the page will reload if you make any edits. You will also see any lint errors in the console (use Google Chrome).
 
 ### Testing
-Testing is optional, and you can run the tests with `npm run test`.
+You can run the tests with `npm run test`.
 This launches the test runner in an interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
 
 ### Build
 Finally, `npm run build` builds the app for production to the `build` folder.<br>
@@ -87,9 +61,114 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Learn More
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Illustrations 
+<h6 align="center">
+  Login/Signup Page; here you can log in or create a new account.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/login.png" alt="login" width="200"></a>
+  <br>
+  <br>
+</h6>
+<h6 align="center">
+  Welcomepage; here you can choose what you would like to do next.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/welcomepage.png" alt="welcomepage" width="200"></a>
+  <br>
+  <br>
+</h6>
+<h6 align="center">
+  User Stats; every user can gain insight on their statistics.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/userprofile.png" alt="userprofile" width="200"></a>
+  <br>
+  <br>
+</h6>
+<h6 align="center">
+  GameRoom; specify the settings for a new game.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/gameroom.png" alt="gameroom" width="200"></a>
+  <br>
+  <br>
+</h6>
+<h6 align="center">
+  join a game; enter the room code displayed in the waiting room of the game you want to join.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/joingame.png" alt="joingame" width="200"></a>
+  <br>
+  <br>
+</h6>
+<h6 align="center">
+  Waiting Room; wait for players to join. From here on out the game is meant to be played in landscape mode.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/waitingroom.png" alt="waitingroom" width="200"></a>
+  <br>
+  <br>
+</h6>
+<h6 align="center">
+  Questions; cast your votes.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/question.png" alt="question" width="200"></a>
+  <br>
+  <br>
+</h6>
+<h6 align="center">
+  Ranking; after every question an intermediate ranking is displayed and when all questions have
+been answered, the final ranking is shown.
+  <br>
+  <br>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/ranking.png" alt="ranking" width="200"></a>
+  <br>
+  <br>
+</h6>
+
+## Roadmap
+
+Developers interested in extending this application are welcome to implement additional features.\
+Here are some Ideas that can be used as inspiration:
+
+- Additional game modes: We paid special attention to modularity while designing our code. It could therefore be modified to add
+  some more game modes than the two that are already implemented.
+- Awards for special achievements: User statistics are already tracked and stored. Implementing a global leaderboard and
+  special awards for all players that achieve a milestone (i.e. winning 20 games) would be a nice extension.
 
 
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
+
+## Authors
+
+In alphabetical order:
+* **Dario Küffer** - [GitHub](https://github.com/dariokueffer)
+* **Fabio Bertschi** - [GitHub](https://github.com/fabibert)
+* **Maaike van Vliet** - [GitHub](https://github.com/Bluee1Bird)
+* **Marlen Kühn**  - [GitHub](https://github.com/MarlenKuehn)
+* **Louis Devillers** - [GitHub](https://github.com/a1ps)
+
+
+Special thanks to the authors of the template:
+* **Roy Rutishauser** - [GitHub](https://github.com/royru)
+* **Dennis Huber** - [GitHub](https://github.com/devnnys)
+
+## Contributing
+
+Please read [contributions.md](https://github.com/sopra-fs23-group-12/4Bubbles_Server/blob/main/contributions.md) for details of our task history.
+
+## Acknowledgments
+
+* This project was build on the basis of the [SoPra Template FS23](https://github.com/HASEL-UZH/sopra-fs23-template-client) provided by the University of Zurich for the
+  Software Engineering Lab (Softwarepraktikum) course supervised by [Professor Thomas Fritz](https://www.ifi.uzh.ch/en/hasel/people/fritz.html).
+* Special Thanks also to our Teaching Assistant [Valentin Hollenstein](https://github.com/v4lentin1879)
+* We are also very grateful to the creators and contributors of the external API [Open Trivia Database](https://opentdb.com/) which we used as source for 
+our questions
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
