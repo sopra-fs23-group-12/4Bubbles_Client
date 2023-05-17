@@ -1,7 +1,8 @@
 # 4Bubbles Client - SoPra FS23
 
 ## Introduction
-tbd
+
+Trivia games exist in plenty; however, they often get boring after a few rounds. With our game, 4Bubbles, we want to make trivia games fun again. One of the core elements of the application are the dynamic answer bubbles, that change in size as the votes come in. Through the bubbles answering hard trivia questions becomes a fun and interactive process; the player can take their own guess or follow others by choosing the current biggest bubble. This feature allows us to implement multiple game modes, that provide functionalities to mess with your friends to make them choose the wrong answer.
 
 ## Technologies
 tbd
