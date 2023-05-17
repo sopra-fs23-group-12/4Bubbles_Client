@@ -79,7 +79,10 @@
         }
     }
 
-    .answer-item-top-left {
+.answer-item {
+    background: transparentize(grey, 0.85); 
+
+    &.answer-item-top-left {
         background: transparentize(white, 0.85); 
         grid-column-start: 1;
         grid-column-end: 3;
@@ -87,34 +90,34 @@
         justify-content: center;
         align-items: center;
 
-        .bubble-button {
-            background: transparentize(white, 0.85); 
-            animation-name: example;
-            animation-duration: 4s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-            animation-delay: 2s;
-        }
+        animation-name: example;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-delay: 2s;
+
+        img{width: 100%; height: 100%;}
+    
     }
 
-    .answer-item-top-right {
+    &.answer-item-top-right {
         grid-column-start: 5;
         grid-column-end: 7;
         display: flex;
         justify-content: center;
         align-items: center;
 
-        .bubble-button {
-            background: transparentize(white, 0.85); 
-            animation-name: example;
-            animation-duration: 4s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-            animation-delay: 1.5s;
-        }
+        background: transparentize(white, 0.85); 
+        animation-name: example;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-delay: 1.5s;
+    
+        img{width: 100%; height: 100%;}
     }
 
-    .answer-item-bottom-right {
+    &.answer-item-bottom-right {
         grid-column-start: 5;
         grid-column-end: 7;
         grid-row-start: 2;
@@ -123,17 +126,18 @@
         justify-content: center;
         align-items: center;
 
-        .bubble-button {
-            animation-name: example;
-            animation-duration: 4s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-            animation-delay: 0.5s;
-        }
+        animation-name: example;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-delay: 0.5s;
+
+        img{width: 100%; height: 100%;}
+        
     }
 
 
-    .answer-item-bottom-left {
+    &.answer-item-bottom-left {
         grid-column-start: 1;
         grid-column-end: 3;
         grid-row-start: 2;
@@ -142,13 +146,15 @@
         justify-content: center;
         align-items: center;
 
-        .bubble-button {
-            animation-name: example;
-            animation-duration: 4s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-        }
+        animation-name: example;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+
+        img{width: 100%; height: 100%;}
+        
     }
+}
 }
 
 .pop-up {

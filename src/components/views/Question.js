@@ -24,10 +24,10 @@ const Question = props => {
     const [answer2, setAnswer2Value] = useState(null);
     const [answer3, setAnswer3Value] = useState(null);
     const [answer4, setAnswer4Value] = useState(null);
-    const [bubbleSize1, setBubbleSize1] = useState(null);
-    const [bubbleSize2, setBubbleSize2] = useState(null);
-    const [bubbleSize3, setBubbleSize3] = useState(null);
-    const [bubbleSize4, setBubbleSize4] = useState(null);
+    const [bubbleSize1, setBubbleSize1] = useState(1);
+    const [bubbleSize2, setBubbleSize2] = useState(1);
+    const [bubbleSize3, setBubbleSize3] = useState(1);
+    const [bubbleSize4, setBubbleSize4] = useState(1);
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
@@ -50,6 +50,7 @@ const Question = props => {
 
     //connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
 
+
     const answer = [
         answer1,
         answer2,
@@ -57,21 +58,52 @@ const Question = props => {
         answer4
     ]
 
-    const cssClasses = [
-        "answer-item-top-left",
-        "answer-item-top-right",
-        "answer-item-bottom-right",
-        "answer-item-bottom-left",
+    const bubbleSize = [
+        bubbleSize1,
+        bubbleSize2,
+        bubbleSize3,
+        bubbleSize4
     ]
 
-    const sendVote = (item) => {
+    const cssClasses = [
+        "answer-item answer-item-top-left",
+        "answer-item answer-item-top-right",
+        "answer-item answer-item-bottom-right",
+        "answer-item answer-item-bottom-left",
+    ]
+
+    const cssClassesBubble = [
+        "answer-item answer-item-top-left-bubble-button",
+        "answer-item answer-item-top-right-bubble-button",
+        "answer-item answer-item-bottom-right-bubble-button",
+        "answer-item answer-item-bottom-left-bubble-button",
+    ]
+
+
+    const sendVote = (item, index, size) => {
         //TODO
-        var myButton = document.getElementById("submit-button");
-        console.log("myButton:", myButton);
-        myButton.style.transform = 'scale(2)';
+        //works:
+        // var myButton = document.getElementById("answer-item answer-item-top-left");
+        // console.log("index:", index);
+        // console.log("myButton:", myButton);
+        // myButton.style.transform = 'scale(2)';
+
+
+        // let myButton = document.getElementById(cssClasses[index]);
+        // console.log("myButton:", myButton);
+        // myButton.style.transform = 'scale(2)';
+
         //myButton.style.height = '400px';
         //yButton.style.width= '400px';
         //myButton.scale(2)
+        // var myButton2 = document.getElementById(item);
+        // console.log("myButton2:", myButton2);
+        //myButton.style.transform = 'scale(2)';
+
+        // var myButton3 = document.getElementsByClassName("answer-item answer-item-bottom-right-bubble-button");
+        // console.log("myButton3:", myButton3);
+        // myButton3.style.transform = 'scale(2)';
+
 
         if (alreadyVoted === false || gameMode != "standard") {
             setRadioValue(item)
@@ -166,7 +198,7 @@ const Question = props => {
 
         socket.on("timer_count", (data) => {
 
-            console.log("timer arrived:", data)
+            //console.log("timer arrived:", data)
             setTimerValue(data)
             if (data === 10) {
                 setVisibleAnswers(true);
@@ -187,7 +219,18 @@ const Question = props => {
         //to adjust the bigger bubble sizes
         socket.on("somebody_voted", (data) => {
             console.log("somebody voted:", data)
-            console.log("ansewr"+ answer);
+            console.log("answer: "+ answer);
+            console.log("answer[0]: "+ answer[0]);
+            console.log("answer1: "+ answer1);
+
+            // var myButton = document.getElementById("answer-item-top-right");
+            // console.log("myButton:", myButton);
+            // myButton.style.transform = 'scale(2)';
+
+            // var bubble2 = document.getElementById("answer-item-bottom-right");
+            // console.log("bubble2:", bubble2);
+            // bubble2.style.transform = 'scale(2)';
+
             //answer[1].scale(2);
             for (let value in data){
                 console.log( "value: " + value + " , amountOfVotes: " + data[value]) ;
@@ -218,7 +261,7 @@ const Question = props => {
                     <div className="question-wrapper">
 
                         {/* question bubble */}
-                        <div className="question-item">
+                        <div className="question-item"> 
                             <div className="timer">
                                 {timerValue}
                                 {/* { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null} */}
@@ -228,24 +271,27 @@ const Question = props => {
                             </Bubble>
                         </div>
 
-                        {/* 4 answer bubbles */}
-                        {answer.map((item, index) => {
+                        {/* 4 answer bubblesstyle={"img{height: 330px; width: 330px;"}style={{ width: "900px", height: "900px" }}  */}
+                        {answer.map((item, index, size) => {
+
                             if (item === null || visibleAnswers === false) {
                                 return null;
                             }
 
                             if (splash === false) {
                                 return <div key={item} className={cssClasses[index]}>
-                                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                    <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item, index, size + 1)} />
                                     <label htmlFor={item}>
-                                        <Bubble id="submit-button" className="bubble-button--answer">{item}</Bubble>
+                                    <div>
+                                        < Bubble style={{ width: (index*50+ 100)+"px", height: (index*50+ 100)+"px"}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
+                                    </div>
                                     </label>
                                 </div>
                             }
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                 <label htmlFor={item}>
-                                    <Bubble id="submit-button" className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
                         }
