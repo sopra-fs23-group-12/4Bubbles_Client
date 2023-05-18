@@ -1,8 +1,5 @@
 import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
-import { format } from 'react-string-format';
-import { getDomainSocket } from "../../helpers/getDomainSocket";
-import Timer from 'components/ui/timer';
 import { useLocation } from 'react-router-dom';
 import '../../styles/views/Question.scss';
 import { useSocket } from 'components/context/socket';
@@ -29,24 +26,17 @@ const Question = props => {
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
-    //const [showTimerXY, setShowTimerXY] = useState(false);
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
-    const { socket, connect } = useSocket();
+    const { socket } = useSocket();
 
     const data = useLocation();
-    // console.log("data: ", data);
-    // console.log("localStorage: ", localStorage);
-    //console.log("roomCode: ", localStorage.roomCode);
+
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
-    //console.log("gameMode: ", gameMode);
 
-    // const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
-
-    //connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
 
     const answer = [
         answer1,
@@ -65,8 +55,6 @@ const Question = props => {
     const sendVote = (item) => {
         if (alreadyVoted === false || gameMode != "standard") {
             setRadioValue(item)
-            // console.log("sendVote of:", item);
-            // console.log("radioValue:", radioValue);
 
             socket.emit('send_vote', {
                 userId: localStorage.userId,
@@ -195,7 +183,6 @@ const Question = props => {
                         <div className="question-item">
                             <div className="timer">
                                 {timerValue}
-                                {/* { showTimerXY ? <Timer initialTime={10} onEnd={() => console.log('hoo')}/> : null} */}
                             </div>
                             <Bubble
                                 className="bubble-button--question">{question}
