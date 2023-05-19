@@ -7,13 +7,6 @@ import Ranking from './Ranking';
 
 const Question = props => {
 
-    //websockets need to communicate:
-    // timing
-    // votes
-    // questions (initial)
-    // questions (reveal)
-    // bubble sizes?
-
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
@@ -33,10 +26,8 @@ const Question = props => {
 
     const data = useLocation();
 
-
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
-
 
     const answer = [
         answer1,
@@ -105,19 +96,7 @@ const Question = props => {
             const interval = setInterval(() => {
                 seconds = seconds - 1;
                 if (seconds <= 3) {
-                    // please don't delete:
-                    // var currentRadioValue;
-                    // setRadioValue(currentState_ => {
-                    //     currentRadioValue = currentState_;
-                    //     return currentState_;  // don't actually change the state
-                    //  })
-
                     setPopupValue(true);
-
-                    socket.emit('end_of_question', {
-                        message: "",
-                        roomCode: roomCode,
-                    })
                 }
     
               if (seconds ===  0) {
@@ -223,7 +202,6 @@ const Question = props => {
                         }
                     </div >
             }</>
-
     )
 };
 export default Question;
