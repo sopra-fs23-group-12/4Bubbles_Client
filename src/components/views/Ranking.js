@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
-import { headers } from 'helpers/api';
-import { api } from 'helpers/api';
+import { headers, api } from 'helpers/api';
 
 import '../../styles/views/Ranking.scss';
 
@@ -67,25 +66,22 @@ export default function Ranking(props) {
 
     const setStatistics = async () => {
         if (final) {
+            localStorage.removeItem('isLeader');
             const data = {
                 "id": localStorage.getItem("userId"),
                 "points": ranking[0][localStorage.getItem("userId")],
                 headers
             }
-            try {
-                const response = await api.put('/users/Statistics/', data, headers());
-                //console.log("set statistics");
-
-            } catch (error) {
-                console.log(error);
-            }
+            api.put('/users/Statistics/', data, headers());
         }
 
 
     }
 
     useEffect(() => {
-        setStatistics();
+        setStatistics().catch(error => {
+            console.error("Unhandled promise rejection:", error);
+          });
     }, [])
 
 

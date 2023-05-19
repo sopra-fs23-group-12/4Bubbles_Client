@@ -1,7 +1,6 @@
 import { useSocket } from 'components/context/socket';
 import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
-//import { useLocation } from 'react-router-dom';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
 
@@ -32,13 +31,11 @@ const Question = props => {
     const [showRanking, setShowRanking] = useState(false);
     const [ranking, setRanking] = useState(null);
     const [final, setFinal] = useState(false);
-
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
 
-    //const data = useLocation();
     //console.log("data: ", data);
     //console.log("localStorage: ", localStorage);
     //console.log("roomCode: ", localStorage.roomCode);
@@ -112,8 +109,6 @@ const Question = props => {
 
         if (alreadyVoted === false || gameMode !== "standard") {
             setRadioValue(item)
-            // console.log("sendVote of:", item);
-            // console.log("radioValue:", radioValue);
 
             socket.emit('send_vote', {
                 userId: localStorage.userId,
