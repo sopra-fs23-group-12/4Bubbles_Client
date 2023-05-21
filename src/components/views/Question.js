@@ -1,6 +1,5 @@
 import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import '../../styles/views/Question.scss';
 import { useSocket } from 'components/context/socket';
 import Ranking from './Ranking';
@@ -30,9 +29,6 @@ const Question = props => {
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
-
-    const data = useLocation();
-
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
