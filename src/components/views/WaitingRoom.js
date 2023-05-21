@@ -6,6 +6,7 @@ import { format } from "react-string-format";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
+import PopUpAlert from 'components/ui/PopUp';
 
 // establish a websocket connection (joins namespace for only the sender client)
 
@@ -15,10 +16,9 @@ const WaitingRoom = (props) => {
     const [members, setMembers] = useState(data.state.members)
 
     localStorage.setItem('users', JSON.stringify(data.state.members));
-
+    localStorage.setItem('numberOfPlayers', data.state.members.length);
 
     const { socket, connect } = useSocket();
-
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
     const roomCode = localStorage.getItem("roomCode");
@@ -28,19 +28,12 @@ const WaitingRoom = (props) => {
 
     const startGame = async () => {
         // console.log("socket acknowledged as connected pressing start:", socket.connected);
-        //const response2 = await api.get('/questions/?roomCode={roomCode}', headers())
-        //// console.log("Response for api call /questions: ",response2.data)
         // add a condition that only the leader can click this
         socket.emit('start_game', {
             message: "",
             roomCode: roomCode,
             type: "CLIENT"
         })
-
-        // socket.emit('get_Question',{
-        //     message : "",
-        //     roomCode: roomCode,
-        //     type: "CLIENT"})
         history.push(`/question`);
     }
 
@@ -119,6 +112,7 @@ const WaitingRoom = (props) => {
             <div className="exit-button" onClick={() => history.push('/welcomepage')}>
                 exit
             </div>
+            <PopUpAlert/>
         </div>
     );
 };
