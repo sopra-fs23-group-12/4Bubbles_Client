@@ -223,10 +223,10 @@ const Question = props => {
         socket.on("somebody_voted", (data) => {
             console.log("somebody voted:", data)
 
-            var stringvalue = null;
-            var intkey = null;
+            let stringvalue = null;
+            let intkey = null;
             const array = [];
-            var i = 0;
+            let i = 0;
 
             for (let value in data){
                 console.log( "value: " + value.toString() + " , amountOfVotes: " + data[value]) ;
