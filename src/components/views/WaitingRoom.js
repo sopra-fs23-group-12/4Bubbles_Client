@@ -6,6 +6,7 @@ import { format } from "react-string-format";
 import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
+import PopUpAlert from 'components/ui/PopUp';
 
 // establish a websocket connection (joins namespace for only the sender client)
 
@@ -111,6 +112,7 @@ const WaitingRoom = (props) => {
             <div className="exit-button" onClick={() => history.push('/welcomepage')}>
                 exit
             </div>
+            <PopUpAlert/>
         </div>
     );
 };
