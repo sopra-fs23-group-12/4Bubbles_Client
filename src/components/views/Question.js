@@ -3,6 +3,7 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
+import { useHistory } from 'react-router-dom';
 
 const Question = props => {
 
@@ -39,6 +40,9 @@ const Question = props => {
     //console.log("data: ", data);
     //console.log("localStorage: ", localStorage);
     //console.log("roomCode: ", localStorage.roomCode);
+
+    const navigate = useHistory();
+
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
@@ -126,7 +130,10 @@ const Question = props => {
       });
 
     useEffect(() => {
-        console.log("socket acknowledged as connected in useEffect:", socket.connected);     
+        console.log("socket acknowledged as connected in useEffect:", socket.connected);
+        if(!socket.connected) {
+            navigate.push('/welcomepage')
+        }
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
