@@ -35,10 +35,6 @@ FormField.propTypes = {
   onChange: PropTypes.func
 };
 
-
-
-
-
 const JoinGameRoom = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
