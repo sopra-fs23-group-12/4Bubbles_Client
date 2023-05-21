@@ -3,6 +3,7 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
+import { useLocation } from 'react-router-dom';
 
 const Question = props => {
 
@@ -12,7 +13,6 @@ const Question = props => {
     const [radioValue, setRadioValue] = useState(null);
     const [timerValue, setTimerValue] = useState(null);
     const [question, setQuestionValue] = useState(null);
-    const [correctAnswer, setCorrectAnswer] = useState(null);
     const [answers, setAnswersValue] = useState(null);
     const [answer1, setAnswer1Value] = useState(null);
     const [answer2, setAnswer2Value] = useState(null);
