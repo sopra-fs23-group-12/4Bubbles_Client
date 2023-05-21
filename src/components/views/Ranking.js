@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
-import { headers } from 'helpers/api';
-import { api } from 'helpers/api';
+import { headers, api } from 'helpers/api';
 
 import '../../styles/views/Ranking.scss';
 
@@ -49,13 +48,13 @@ export default function Ranking(props) {
         return b[1] - a[1];
     });
 
-    console.log(sortable);
+    //console.log(sortable);
 
     const tmpUsers = sortable.map((item, i) => {
-        console.log(item);
+        //console.log(item);
         let id = item[0];
         let result = jsObjects.filter(obj => {
-            console.log(obj)
+            //console.log(obj)
             return obj.id === parseInt(item)
         })
         return { "name": result[0].username, "points": ranking[0][id] };
@@ -73,20 +72,16 @@ export default function Ranking(props) {
                 headers
             }
 
-            try {
-                const response = await api.put('/users/Statistics/', data, headers());
-                console.log("set statistics");
-
-            } catch (error) {
-                console.log(error);
-            }
+            api.put('/users/Statistics/', data, headers());
         }
 
 
     }
 
     useEffect(() => {
-        setStatistics();
+        setStatistics().catch(error => {
+            console.error("Unhandled promise rejection:", error);
+          });
     }, [])
 
 
