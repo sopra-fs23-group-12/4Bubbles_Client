@@ -6,12 +6,6 @@ import Ranking from './Ranking';
 
 const Question = props => {
 
-    //websockets need to communicate:
-    // timing
-    // votes
-    // questions (initial)
-    // questions (reveal)
-    // bubble sizes?
 
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
@@ -35,6 +29,10 @@ const Question = props => {
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
+    const userId = localStorage.getItem("userId");
+    const bearerToken = localStorage.getItem("token");
+
+
 
     //console.log("data: ", data);
     //console.log("localStorage: ", localStorage);
@@ -126,9 +124,35 @@ const Question = props => {
       });
 
     useEffect(() => {
+
+
+        //upon reload it should check if answers have already been received for that question
+        console.log("!!!!! answer data: ", localStorage.getItem("answerData"));
+        if (localStorage.getItem("answerData") != null){
+            const answertest = localStorage.getItem("answer1")
+            setAnswersValue(localStorage.getItem("answerData"));
+            setAnswer1Value(answertest);
+            console.log("answertest:", answertest);
+            setAnswer2Value(localStorage.getItem("answer1"));
+            setAnswer3Value(localStorage.getItem("answer2"));
+            setAnswer4Value(localStorage.getItem("answer3"));
+
+            console.log(localStorage.getItem("answer1"));
+            console.log(answer1);
+            console.log(answer2);
+
+        }
+
+        socket.emit('join_room', {
+            userId: userId,
+            bearerToken: bearerToken,
+            roomCode: roomCode,
+            type: "CLIENT"
+        })
+
         console.log("socket acknowledged as connected in useEffect:", socket.connected);     
 
-        //everytime an event happens triggered by the socket, this function is called
+
         socket.on("get_question", (data) => {
             console.log("question arrived:", data)
             setQuestionValue(data)
@@ -155,12 +179,19 @@ const Question = props => {
         })
 
         socket.on("get_answers", (data) => {
+
+            localStorage.setItem("answer1", data[0]);
+            localStorage.setItem("answer2", data[1]);
+            localStorage.setItem("answer3", data[2]);
+            localStorage.setItem("answer4", data[3]);
+            localStorage.setItem("answerData", data);
+
             setAnswer1Value(data[0])
             setAnswer2Value(data[1])
             setAnswer3Value(data[2])
             setAnswer4Value(data[3])
             setAnswersValue(data)
-            console.log("answers arrived:", data)
+            //console.log("answers arrived:", data)
         })
 
         socket.on("end_of_question", (data) => {
@@ -193,6 +224,7 @@ const Question = props => {
                 clearInterval(interval);
               }
             }, 1000);
+            localStorage.removeItem("answerData")
         });
 
         socket.on("get_right_answer", (data) => {
