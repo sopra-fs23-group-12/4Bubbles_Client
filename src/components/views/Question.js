@@ -3,21 +3,16 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
+import { useLocation } from 'react-router-dom';
 
 const Question = props => {
 
-    //websockets need to communicate:
-    // timing
-    // votes
-    // questions (initial)
-    // questions (reveal)
-    // bubble sizes?
+    const [correctAnswer, setCorrectAnswer] = useState(null);
 
     const [popupValue, setPopupValue] = useState(null);
     const [radioValue, setRadioValue] = useState(null);
     const [timerValue, setTimerValue] = useState(null);
     const [question, setQuestionValue] = useState(null);
-    const [correctAnswer, setCorrectAnswer] = useState(null);
     const [answers, setAnswersValue] = useState(null);
     const [answer1, setAnswer1Value] = useState(null);
     const [answer2, setAnswer2Value] = useState(null);
@@ -36,20 +31,14 @@ const Question = props => {
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
 
-    //console.log("data: ", data);
-    //console.log("localStorage: ", localStorage);
-    //console.log("roomCode: ", localStorage.roomCode);
+    const data = useLocation();
+
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
     const numberOfPlayers = (Number(localStorage.numberOfPlayers))
 
-    //console.log("numberOfPlayers: ", numberOfPlayers)
-    //console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)
-    //console.log("answer: " + answer)
-    // console.log("answer1: " + answer1 + " answer2: " + answer2 + " answer3: " + answer3 + " answer4: " + answer4)
-    // console.log("votingArray: " + votingArray)
-    
+
     const answer = [
         answer1,
         answer2,
@@ -169,14 +158,8 @@ const Question = props => {
             const interval = setInterval(() => {
                 seconds = seconds - 1;
                 if (seconds <= 3) {
-
                     setPopupValue(true);
 
-                    //TODO: LÖSCHEN!
-                    socket.emit('end_of_question', {
-                        message: "",
-                        roomCode: roomCode,
-                    })
                 }
     
               if (seconds ===  0) {
@@ -299,7 +282,8 @@ const Question = props => {
                             : null
                         }
                     </div >
-            }</>   
+            }</>
+
     )
 };
 export default Question;
