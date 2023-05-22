@@ -3,7 +3,6 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
-import { useLocation } from 'react-router-dom';
 
 const Question = props => {
 
