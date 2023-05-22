@@ -103,9 +103,34 @@ export default function Ranking(props) {
         })
     }
 
+    const resetLocalStorage = () =>{
+        localStorage.removeItem("answerData");
+        localStorage.removeItem("answer0");
+        localStorage.removeItem("answer1");
+        localStorage.removeItem("answer2");
+        localStorage.removeItem("answer3");
+        localStorage.removeItem("question");
+        localStorage.setItem("AnswerVisible", "false");
+        localStorage.setItem("showRanking", "false")
+
+    }
+
+    const playAgain = () =>{
+        console.log("playagain button clicked")
+        resetLocalStorage();
+        history.push('/gameroom');
+    }
+
+    const exit = () =>{
+        console.log("exit button clicked")
+        resetLocalStorage();
+        history.push('/welcomepage');
+    }
+
+
     return (
         <div className="ranking-page">
-            {!final ? <div className="exit-button" onClick={() => history.push('/welcomepage')}>exit</div> : null}
+            {!final ? <div className="exit-button" onClick={ () => exit() } >exit</div> : null}
 
             <h1>{final ? "🏁 final ranking 🏁" : "intermediate ranking 🔥"}</h1>
             <div className="ranking-wrapper">
@@ -120,12 +145,12 @@ export default function Ranking(props) {
                 :
                 <div className="align-center">
                     <Button
-                        onClick={() => history.push('/gameroom')}
+                        onClick={() => playAgain()}
                         className="primary-button__continue"
                     >play again
                     </Button>
                     <Button
-                        onClick={() => history.push('/welcomepage')}
+                        onClick={() => exit() }
                         className="primary-button__continue"
                     >exit
                     </Button>

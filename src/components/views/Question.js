@@ -41,7 +41,6 @@ const Question = props => {
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
     const numberOfPlayers = (Number(localStorage.numberOfPlayers))
-    //console.log("!!!!! answer data: ", localStorage.getItem("answerData"));
 
     const answer = [
         localStorage.getItem("answer1"),
@@ -64,13 +63,11 @@ const Question = props => {
         "answer-item answer-item-bottom-left",
     ]
 
-    // const updateAnswerBubbles = () => {
-    //     setAnswer1Value(localStorage.getItem("answer1"))
-    //     setAnswer2Value(localStorage.getItem("answer2"))
-    //     setAnswer3Value(localStorage.getItem("answer3"))
-    //     setAnswer4Value(localStorage.getItem("answer4"))
-    // }
 
+    const updateRanking = () =>{
+        setShowRanking(localStorage.getItem("showRanking") === "true");
+        console.log("show ranking:", showRanking);
+    }
     const updateBubbleSize = () =>{
         setBubbleSize1(0);
         setBubbleSize2(0);
@@ -100,6 +97,9 @@ const Question = props => {
         }
     }
 
+    const updateQuestionBubble = () =>{
+        setQuestionValue(localStorage.getItem("question"));
+    }
     const updateAnswerBubbles = () => {
         setAnswer1Value(localStorage.getItem("answer1"))
         setAnswer2Value(localStorage.getItem("answer2"))
@@ -112,7 +112,6 @@ const Question = props => {
             setVisibleAnswers(false);
         }
 
-        //setVisibleAnswers(true);
     }
 
     const sendVote = (item) => {
@@ -139,27 +138,12 @@ const Question = props => {
     useEffect(() => {
         updateBubbleSize();
         updateAnswerBubbles();
+        updateQuestionBubble();
+        updateRanking();
       });
 
     useEffect(() => {
 
-
-        //upon reload it should check if answers have already been received for that question
-        console.log("!!!!! answer data: ", localStorage.getItem("answerData"));
-        if (localStorage.getItem("answerData") != null){
-            const answertest = localStorage.getItem("answer1")
-            setAnswersValue(localStorage.getItem("answerData"));
-            setAnswer1Value(answertest);
-            console.log("answertest:", answertest);
-            setAnswer2Value(localStorage.getItem("answer1"));
-            setAnswer3Value(localStorage.getItem("answer2"));
-            setAnswer4Value(localStorage.getItem("answer3"));
-
-            console.log(localStorage.getItem("answer1"));
-            console.log(answer1);
-            console.log(answer2);
-
-        }
 
         socket.emit('join_room', {
             userId: userId,
@@ -173,7 +157,9 @@ const Question = props => {
 
         socket.on("get_question", (data) => {
             console.log("question arrived:", data)
-            setQuestionValue(data)
+            localStorage.setItem("question", data);
+            setQuestionValue(data);
+            localStorage.setItem("showRanking", "false")
             setShowRanking(false);
         })
 
@@ -188,13 +174,14 @@ const Question = props => {
             setRadioValue(null);
             setPopupValue(null);
             setAlreadyVoted(false);
+            localStorage.setItem("showRanking", "true");
             setShowRanking(true);
             setVotingArray(null);
             setBubbleSize1(0);
             setBubbleSize2(0);
             setBubbleSize3(0);
             setBubbleSize4(0);
-            localStorage.setItem("AnswerVisible", false)
+            localStorage.setItem("AnswerVisible", "false")
         })
 
         socket.on("get_answers", (data) => {
@@ -225,7 +212,7 @@ const Question = props => {
     
               if (seconds ===  0) {
                 setVisibleAnswers(false);
-                localStorage.setItem("AnswerVisible", false)
+                localStorage.setItem("AnswerVisible", "false")
                 setSplash(false);
                 if(localStorage.getItem('isLeader')) {
                     socket.emit('request_ranking', {
@@ -238,7 +225,12 @@ const Question = props => {
                 clearInterval(interval);
               }
             }, 1000);
-            localStorage.removeItem("answerData")
+            localStorage.removeItem("answerData");
+            localStorage.removeItem("answer0");
+            localStorage.removeItem("answer1");
+            localStorage.removeItem("answer2");
+            localStorage.removeItem("answer3");
+            localStorage.removeItem("question");
             
         });
 
@@ -254,7 +246,7 @@ const Question = props => {
 
             setTimerValue(data)
             if (data === 10) {
-                localStorage.setItem("AnswerVisible", true);
+                localStorage.setItem("AnswerVisible", "true");
             }
 
             // let currentvisibleAnswer;
