@@ -254,7 +254,7 @@ const Question = props => {
                                 </div>
                             }
                             return <div key={item} className={cssClasses[index]}>
-                                <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} />
                                 <label htmlFor={item}>
                                     <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
