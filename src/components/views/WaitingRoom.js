@@ -59,15 +59,25 @@ const WaitingRoom = (props) => {
             history.push(`/question`);
         })
 
+
+        window.addEventListener('popstate', leaveWaitingRoom);
+        window.addEventListener('beforeunload', leaveWaitingRoom);
+
         return () => {
-            /*
-            socket.emit('user_left_gameroom', {
-                message: localStorage.getItem('userId'),
-                roomCode: roomCode,
-                type: "CLIENT"
-            })*/
+            window.removeEventListener('popstate', leaveWaitingRoom);
+            window.removeEventListener('beforeunload', leaveWaitingRoom);
+
         };
     }, [socket])
+
+    const leaveWaitingRoom = () => {
+        socket.emit('user_left_gameroom', {
+            message: localStorage.getItem('userId'),
+            roomCode: roomCode,
+            type: "CLIENT"
+        });
+        history.push('/welcomepage')
+    }
 
     return (
         <div className="waiting-room-wrapper">
@@ -108,10 +118,10 @@ const WaitingRoom = (props) => {
                 question topic: {data.state.questionTopic}
             </div>
 
-            <div className="exit-button" onClick={() => history.push('/welcomepage')}>
+            <div className="exit-button" onClick={leaveWaitingRoom}>
                 exit
             </div>
-            <PopUpAlert/>
+            <PopUpAlert />
         </div>
     );
 };
