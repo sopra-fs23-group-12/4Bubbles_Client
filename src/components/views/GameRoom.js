@@ -196,7 +196,7 @@ const GameRoom = props => {
                         />
                         standard: You can only choose your answer once.
                         < br/>
-                        1,2 oder 3...: You can change your answer until the timer runs out.
+                        1,2 oder 3: You can change your answer until the timer runs out.
                 </SettingsContainer>
                 <SettingsContainer title="Choose a difficulty:">
                     <RadioButtons
