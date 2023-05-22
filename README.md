@@ -83,7 +83,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   User Stats; every user can gain insight on their statistics.
   <br>
   <br>
-  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/userprofile.png" alt="userprofile" width="200"></a>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/userprofile.jpg" alt="userprofile" width="200"></a>
   <br>
   <br>
 </h6>
@@ -124,7 +124,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 been answered, the final ranking is shown.
   <br>
   <br>
-  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/ranking.png" alt="ranking" width="200"></a>
+  <a href="https://github.com/soprafs22-group17"><img src="/readmepics/ranking.jpg" alt="ranking" width="200"></a>
   <br>
   <br>
 </h6>
