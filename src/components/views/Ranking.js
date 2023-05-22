@@ -48,21 +48,16 @@ export default function Ranking(props) {
         return b[1] - a[1];
     });
 
-    //console.log(sortable);
-
     const tmpUsers = sortable.map((item, i) => {
-        //console.log(item);
         let id = item[0];
         let result = jsObjects.filter(obj => {
-            //console.log(obj)
             return obj.id === parseInt(item)
         })
         return { "name": result[0].username, "points": ranking[0][id] };
     })
 
     // eslint-disable-next-line
-    const [users, setUsers] = useState(tmpUsers);
-
+    const [users] = useState(tmpUsers);
 
     const setStatistics = async () => {
         if (final) {
