@@ -41,7 +41,9 @@ const Question = props => {
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
     const numberOfPlayers = (Number(localStorage.numberOfPlayers))
+    //console.log("!!!!! answer data: ", localStorage.getItem("answerData"));
 
+    console.log("localStorage: ", localStorage);
     //console.log("numberOfPlayers: ", numberOfPlayers)
     //console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)
     //console.log("answer: " + answer)
@@ -49,10 +51,10 @@ const Question = props => {
     // console.log("votingArray: " + votingArray)
     
     const answer = [
-        answer1,
-        answer2,
-        answer3,
-        answer4
+        localStorage.getItem("answer1"),
+        localStorage.getItem("answer2"),
+        localStorage.getItem("answer3"),
+        localStorage.getItem("answer4")
     ]
 
     const bubbleSize = [
@@ -68,6 +70,13 @@ const Question = props => {
         "answer-item answer-item-bottom-right",
         "answer-item answer-item-bottom-left",
     ]
+
+    // const updateAnswerBubbles = () => {
+    //     setAnswer1Value(localStorage.getItem("answer1"))
+    //     setAnswer2Value(localStorage.getItem("answer2"))
+    //     setAnswer3Value(localStorage.getItem("answer3"))
+    //     setAnswer4Value(localStorage.getItem("answer4"))
+    // }
 
     const updateBubbleSize = () =>{
         setBubbleSize1(0);
@@ -98,6 +107,21 @@ const Question = props => {
         }
     }
 
+    const updateAnswerBubbles = () => {
+        setAnswer1Value(localStorage.getItem("answer1"))
+        setAnswer2Value(localStorage.getItem("answer2"))
+        setAnswer3Value(localStorage.getItem("answer3"))
+        setAnswer4Value(localStorage.getItem("answer4"))
+
+        if (localStorage.getItem("AnswerVisible") === "true") {
+            setVisibleAnswers(true);
+        }else {
+            setVisibleAnswers(false);
+        }
+
+        //setVisibleAnswers(true);
+    }
+
     const sendVote = (item) => {
         //works:
         // var myButton = document.getElementById("answer-item answer-item-top-left");
@@ -121,6 +145,7 @@ const Question = props => {
 
     useEffect(() => {
         updateBubbleSize();
+        updateAnswerBubbles();
       });
 
     useEffect(() => {
@@ -176,6 +201,7 @@ const Question = props => {
             setBubbleSize2(0);
             setBubbleSize3(0);
             setBubbleSize4(0);
+            localStorage.setItem("AnswerVisible", false)
         })
 
         socket.on("get_answers", (data) => {
@@ -185,6 +211,7 @@ const Question = props => {
             localStorage.setItem("answer3", data[2]);
             localStorage.setItem("answer4", data[3]);
             localStorage.setItem("answerData", data);
+            
 
             setAnswer1Value(data[0])
             setAnswer2Value(data[1])
@@ -202,16 +229,11 @@ const Question = props => {
                 if (seconds <= 3) {
 
                     setPopupValue(true);
-
-                    //TODO: LÖSCHEN!
-                    socket.emit('end_of_question', {
-                        message: "",
-                        roomCode: roomCode,
-                    })
                 }
     
               if (seconds ===  0) {
                 setVisibleAnswers(false);
+                localStorage.setItem("AnswerVisible", false)
                 setSplash(false);
                 if(localStorage.getItem('isLeader')) {
                     socket.emit('request_ranking', {
@@ -225,6 +247,7 @@ const Question = props => {
               }
             }, 1000);
             localStorage.removeItem("answerData")
+            
         });
 
         socket.on("get_right_answer", (data) => {
@@ -234,20 +257,28 @@ const Question = props => {
 
         socket.on("timer_count", (data) => {
             updateBubbleSize();
+            updateAnswerBubbles();
+            console.log("Visible answer: ", visibleAnswers)
+
             setTimerValue(data)
             if (data === 10) {
-                setVisibleAnswers(true);
+                localStorage.setItem("AnswerVisible", true);
             }
 
-            let currentvisibleAnswer;
-            setVisibleAnswers(currentState_ => {
-                currentvisibleAnswer = currentState_;
-                return currentState_;  // don't actually change the state
-            })
+            // let currentvisibleAnswer;
+            // setVisibleAnswers(currentState_ => {
+            //     currentvisibleAnswer = currentState_;
+            //     return currentState_;  // don't actually change the state
+            // })
+            console.log("data: ", data == 1)
+            console.log("localStorage: ", localStorage.getItem("AnswerVisible") == "true")
 
-            if (data === 1 && currentvisibleAnswer === true) {
+            if (data === 1 && localStorage.getItem("AnswerVisible") == "true") {
                 setSplash(true);
             }
+            // if (data === 1 && currentvisibleAnswer === true) {
+            //     setSplash(true);
+            // }
             
         })
 
