@@ -4,7 +4,6 @@
     grid-template-rows: 1fr 1fr;
     height: 100vh;
     
-
     input {
         display: none;
     }
@@ -20,7 +19,6 @@
             text-decoration: underline;
         }
     }
-
 
     @keyframes example {
         0% {
@@ -51,7 +49,6 @@
     }
 
     .question-item {
-        //background: transparentize(white, 0.85); 
         grid-column-start: 3;
         grid-column-end: 5;
         grid-row-start: 1;
@@ -119,6 +116,7 @@
     }
 
     &.answer-item-bottom-left {
+
         grid-column-start: 1;
         grid-column-end: 3;
         grid-row-start: 2;
