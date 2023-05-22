@@ -82,14 +82,10 @@ const GameRoom = props => {
     const navigate = useHistory();
     const [questionTopic, setQuestionTopic] = useState([]);
     const [err, setErr] = useState(undefined);
-
     const { socket } = useSocket();
 
-    // establish a websocket connection (joins namespace for only the sender client sessionId (this ID is automatically generated in the server)
-    
     useEffect(() => {
         getTopics();
-
     }, [])
 
     function getTopics() {
