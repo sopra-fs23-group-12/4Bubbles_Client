@@ -3,7 +3,6 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
-import { useLocation } from 'react-router-dom';
 
 const Question = props => {
 
@@ -30,9 +29,6 @@ const Question = props => {
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
-
-    const data = useLocation();
-
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
@@ -90,11 +86,6 @@ const Question = props => {
     }
 
     const sendVote = (item) => {
-        //works:
-        // var myButton = document.getElementById("answer-item answer-item-top-left");
-        // console.log("index:", index);
-        // console.log("myButton:", myButton);
-        // myButton.style.transform = 'scale(2)';
 
         if (alreadyVoted === false || gameMode !== "standard") {
             setRadioValue(item)

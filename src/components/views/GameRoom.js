@@ -9,8 +9,6 @@ import RadioButtons from 'components/ui/RadioButtons';
 import Select from 'components/ui/Select';
 import BackIcon from 'components/ui/BackIcon';
 import { api, headers, handleError } from 'helpers/api';
-import { format } from "react-string-format";
-import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
 
@@ -85,13 +83,10 @@ const GameRoom = props => {
     const [questionTopic, setQuestionTopic] = useState([]);
     const [err, setErr] = useState(undefined);
 
-    const { socket, connect } = useSocket();
+    const { socket } = useSocket();
 
     // establish a websocket connection (joins namespace for only the sender client sessionId (this ID is automatically generated in the server)
     
-    /* const url = format(getDomainSocket());
-    connect(url, { transports: ['websocket'], upgrade: false })
-*/
     useEffect(() => {
         getTopics();
 
