@@ -99,14 +99,13 @@ const WaitingRoom = (props) => {
             </div>
 
             <div className="game-info">
-
-                question topic: {data.state.questionTopic}
-                <br />
                 game mode: {data.state.gameMode}
+                <br />
+                number of questions: {data.state.numOfQuestions}
                 <br />
                 difficulty: {data.state.difficulty}
                 <br />
-                number of questions: {data.state.numOfQuestions}
+                question topic: {data.state.questionTopic}
             </div>
 
             <div className="exit-button" onClick={() => history.push('/welcomepage')}>
