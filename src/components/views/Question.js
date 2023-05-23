@@ -150,7 +150,6 @@ const Question = props => {
                 seconds = seconds - 1;
                 if (seconds <= 3) {
                     setPopupValue(true);
-
                 }
     
               if (seconds ===  0) {
