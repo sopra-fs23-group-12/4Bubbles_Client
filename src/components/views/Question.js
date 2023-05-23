@@ -158,15 +158,16 @@ const Question = props => {
     useEffect(() => {
 
 
-        console.log("socket acknowledged as connected in useEffect:", socket.connected);
-
-
         socket.emit('join_room', {
             userId: userId,
             bearerToken: bearerToken,
             roomCode: roomCode,
             type: "CLIENT"
         })
+
+        console.log("socket acknowledged as connected in useEffect:", socket.connected);
+
+
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
@@ -363,7 +364,7 @@ const Question = props => {
                                             <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                         </label>
                                     </div>
-                        
+
 
                             }
                         )}
