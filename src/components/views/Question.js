@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
 import { useHistory } from 'react-router-dom';
+import {format} from "react-string-format";
+import {getDomainSocket} from "../../helpers/getDomainSocket";
 
 const Question = props => {
 
@@ -29,7 +31,7 @@ const Question = props => {
     const [visibleAnswers, setVisibleAnswers] = useState(false);
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
-    const { socket } = useSocket();
+    const { socket, connect } = useSocket();
     const userId = localStorage.getItem("userId");
     const bearerToken = localStorage.getItem("token");
     const history = useHistory();
@@ -134,9 +136,12 @@ const Question = props => {
     }
 
     const updateSocketConnection = () =>{
-        socket.connect();
+        // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
+        const roomCode = localStorage.getItem("roomCode");
+        const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
+        connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
 
-        console.log("socket connected: ", socket.connected);
+        console.log("socket connected in updateSocket: ", socket.connected);
 
     }
     useEffect(() => {
@@ -300,10 +305,10 @@ const Question = props => {
         console.log("exit button clicked")
 
         localStorage.removeItem("answerData");
-        localStorage.removeItem("answer0");
         localStorage.removeItem("answer1");
         localStorage.removeItem("answer2");
         localStorage.removeItem("answer3");
+        localStorage.removeItem("answer4");
         localStorage.removeItem("question");
         localStorage.removeItem("correctAnswer");
         localStorage.setItem("AnswerVisible", "false");
@@ -332,29 +337,34 @@ const Question = props => {
                             </Bubble>
                         </div>
 
-                        {/* 4 answer bubbles */}
-                        {answer.map((item, index, size) => {
 
-                                if (item === null || visibleAnswers === false) {
-                                    return null;
-                                }
+                            <div className="exit-button" onClick={ () => exit() } >exit</div>
 
-                                if (splash === false) {
+                            {/* 4 answer bubbles */}
+                            {answer.map((item, index, size) => {
+
+                                    if (item === null || visibleAnswers === false) {
+                                        return null;
+                                    }
+
+                                    if (splash === false) {
+                                        return <div key={item} className={cssClasses[index]}>
+                                            <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                            <label htmlFor={item}>
+                                                <div>
+                                                    < Bubble style={{ width: ((bubbleSize[index]*50/numberOfPlayers + 50)+"%")}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    }
                                     return <div key={item} className={cssClasses[index]}>
-                                        <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                        <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                         <label htmlFor={item}>
-                                            <div>
-                                                < Bubble style={{ width: ((bubbleSize[index]*50/numberOfPlayers + 50)+"%")}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
-                                            </div>
+                                            <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                         </label>
                                     </div>
-                                }
-                                return <div key={item} className={cssClasses[index]}>
-                                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                                    <label htmlFor={item}>
-                                        <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
-                                    </label>
-                                </div>
+                        
+
                             }
                         )}
 
