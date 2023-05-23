@@ -13,7 +13,7 @@ export default function BottomBanner(props) {
                 <p>2. click on "Add to Home Screen"</p>
                 <p>3. go to Home Screen and open 4Bubbles-App</p>
              <h3>Android</h3>
-                <p>1. click on the share-icon in Safari</p>
+                <p>1. click on the three dots in chrome</p>
                 <p>2. click on "Add to Home Screen"</p>
                 <p>3. go to Home Screen and open 4Bubbles-App</p>
                 <div>
