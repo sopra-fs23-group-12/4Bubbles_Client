@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import '../../styles/ui/bottom-banner.scss';
 
 export default function BottomBanner(props) {
-    const [showPopUp, setShowPopup] = useState(true);
     const [showMessage, setShowMessage] = useState(false);
 
-    return showPopUp === true ? (
+    return (
         <div className="bottom-banner">
             <div className="botttom-banner__container">
                 <div>For the best user experience add this web-app to your homescreen. You don't know how to do it? Click <a onClick={() => setShowMessage(true)}>here</a> for further info!</div>
@@ -23,6 +22,4 @@ export default function BottomBanner(props) {
                 </div>
                 </div>
             </div>
-        </div>
-    ) : null;
-}
+        </div>)};
