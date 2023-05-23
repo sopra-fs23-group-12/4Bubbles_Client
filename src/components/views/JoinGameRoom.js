@@ -41,6 +41,7 @@ const JoinGameRoom = () => {
   const [roomCode, setRoomCode] = useState("");
   const userId = localStorage.getItem("userId");
   const bearerToken = localStorage.getItem("token");
+  const [error, setError] = useState("");
 
   const { socket, connect } = useSocket();
 
@@ -84,7 +85,13 @@ const JoinGameRoom = () => {
       });
     })
 
-
+    socket.on("an_error_occured", (response) => {
+      console.log("an_error_occurred received from the server, response: ")
+      console.log(response)
+      
+      setError(response);
+    }
+    )
   }, [socket])
 
   const toHomepage = () => {
@@ -99,8 +106,11 @@ const JoinGameRoom = () => {
           value={roomCode}
           onChange={rC => setRoomCode(rC)}
         ></FormField>
+        {error ? <div className="error-msg">{error}</div> : null}
       </div>
-      <Bubble onClick={joinRoom}> Enter Game </Bubble>
+      <div className="login button-container">
+        <Bubble onClick={joinRoom}> Enter Game </Bubble>
+      </div>
       <BackIcon onClick={toHomepage}></BackIcon>
     </BaseContainer>
   );

@@ -48,7 +48,6 @@ export default function Ranking(props) {
         return b[1] - a[1];
     });
 
-
     const tmpUsers = sortable.map((item, i) => {
         let id = item[0];
         let result = jsObjects.filter(obj => {
@@ -58,8 +57,7 @@ export default function Ranking(props) {
     })
 
     // eslint-disable-next-line
-    const [users, setUsers] = useState(tmpUsers);
-
+    const [users] = useState(tmpUsers);
 
     const setStatistics = async () => {
         if (final) {

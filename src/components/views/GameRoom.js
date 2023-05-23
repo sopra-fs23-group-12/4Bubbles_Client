@@ -38,7 +38,7 @@ const gameMode = [
         value: 'standard',
     },
     {
-        name: '3,2,1...',
+        name: '1,2 oder 3',
         value: '3,2,1...',
     },
 ]
@@ -82,14 +82,10 @@ const GameRoom = props => {
     const navigate = useHistory();
     const [questionTopic, setQuestionTopic] = useState([]);
     const [err, setErr] = useState(undefined);
-
     const { socket } = useSocket();
 
-    // establish a websocket connection (joins namespace for only the sender client sessionId (this ID is automatically generated in the server)
-    
     useEffect(() => {
         getTopics();
-
     }, [])
 
     function getTopics() {
@@ -196,7 +192,7 @@ const GameRoom = props => {
                         />
                         standard: You can only choose your answer once.
                         < br/>
-                        3,2,1...: You can change your answer until the timer runs out.
+                        1,2 oder 3: You can change your answer until the timer runs out.
                 </SettingsContainer>
                 <SettingsContainer title="Choose a difficulty:">
                     <RadioButtons
