@@ -1,4 +1,11 @@
+.exit-button {
+    position: fixed;
+    top: 2%;
+    left: 2%;
+}
+
 .question-wrapper {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1fr 1fr;

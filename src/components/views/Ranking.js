@@ -110,6 +110,7 @@ export default function Ranking(props) {
         localStorage.removeItem("answer2");
         localStorage.removeItem("answer3");
         localStorage.removeItem("question");
+        localStorage.removeItem("correctAnswer");
         localStorage.setItem("AnswerVisible", "false");
         localStorage.setItem("showRanking", "false")
 

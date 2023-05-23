@@ -84,6 +84,10 @@ const Question = props => {
 
     }
 
+    const updateCorrectAnswer = () => {
+        setCorrectAnswer(localStorage.getItem("correctAnswer"));
+    }
+
     const updateBubbleSize = () =>{
         setBubbleSize1(0);
         setBubbleSize2(0);
@@ -129,11 +133,27 @@ const Question = props => {
         setAlreadyVoted(true);
     }
 
+    const updateSocketConnection = () =>{
+        socket.connect();
+
+        console.log("socket connected: ", socket.connected);
+
+    }
     useEffect(() => {
+        updateSocketConnection();
         updateBubbleSize();
         updateAnswerBubbles();
+        updateCorrectAnswer();
         updateQuestionBubble();
         updateRanking();
+
+
+    });
+
+    useEffect(() => {
+
+
+        console.log("socket acknowledged as connected in useEffect:", socket.connected);
 
 
         socket.emit('join_room', {
@@ -142,12 +162,6 @@ const Question = props => {
             roomCode: roomCode,
             type: "CLIENT"
         })
-    });
-
-    useEffect(() => {
-
-
-        console.log("socket acknowledged as connected in useEffect:", socket.connected);
 
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
@@ -232,6 +246,7 @@ const Question = props => {
 
         socket.on("get_right_answer", (data) => {
             console.log("right answer arrived:", data)
+            localStorage.setItem("correctAnswer", data);
             setCorrectAnswer(data)
         })
 
@@ -252,7 +267,7 @@ const Question = props => {
             if (data === 1 && currentvisibleAnswer === true) {
                 setSplash(true);
             }
-
+            console.log("timer: ", data);
         })
 
         //to adjust the bigger bubble sizes
@@ -277,7 +292,7 @@ const Question = props => {
             setVotingArray(array);
         })
 
-        // eslint-disable-next-line
+
     }, [roomCode]);
 
     const exit = () =>{
@@ -290,6 +305,7 @@ const Question = props => {
         localStorage.removeItem("answer2");
         localStorage.removeItem("answer3");
         localStorage.removeItem("question");
+        localStorage.removeItem("correctAnswer");
         localStorage.setItem("AnswerVisible", "false");
         localStorage.setItem("showRanking", "false");
 
