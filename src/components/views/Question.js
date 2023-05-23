@@ -3,7 +3,7 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Question = props => {
 
@@ -32,10 +32,7 @@ const Question = props => {
     const { socket } = useSocket();
     const userId = localStorage.getItem("userId");
     const bearerToken = localStorage.getItem("token");
-
-
-
-    const data = useLocation();
+    const history = useHistory();
 
 
     const roomCode = localStorage.roomCode
@@ -68,38 +65,11 @@ const Question = props => {
         setShowRanking(localStorage.getItem("showRanking") === "true");
         console.log("show ranking:", showRanking);
     }
-    const updateBubbleSize = () =>{
-        setBubbleSize1(0);
-        setBubbleSize2(0);
-        setBubbleSize3(0);
-        setBubbleSize4(0);
-
-        if (votingArray !== null) {
-            for (let i = 0; i < votingArray.length - 1; i = i + 2) {
-                console.log("votingArray: " + votingArray)
-                console.log("answer1: " + answer1 + " answer2: " + answer2 + " answer3: " + answer3 + " answer4: " + answer4)
-                console.log("answer: " + answer)
-                console.log("answers: " + answers)
-                if (votingArray[i] === answer1) {
-                    setBubbleSize1(votingArray[i + 1])  
-                }
-                else if (votingArray[i] === answer2) {
-                    setBubbleSize2(votingArray[i + 1])   
-                }
-                else if (votingArray[i] === answer3) {
-                    setBubbleSize3(votingArray[i + 1])
-                }
-                else if (votingArray[i] === answer4) {
-                    setBubbleSize4(votingArray[i + 1])
-                }
-                console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)     
-                }
-        }
-    }
 
     const updateQuestionBubble = () =>{
         setQuestionValue(localStorage.getItem("question"));
     }
+
     const updateAnswerBubbles = () => {
         setAnswer1Value(localStorage.getItem("answer1"))
         setAnswer2Value(localStorage.getItem("answer2"))
@@ -114,12 +84,36 @@ const Question = props => {
 
     }
 
+    const updateBubbleSize = () =>{
+        setBubbleSize1(0);
+        setBubbleSize2(0);
+        setBubbleSize3(0);
+        setBubbleSize4(0);
+
+        if (votingArray !== null) {
+            for (let i = 0; i < votingArray.length - 1; i = i + 2) {
+                console.log("votingArray: " + votingArray)
+                console.log("answer1: " + answer1 + " answer2: " + answer2 + " answer3: " + answer3 + " answer4: " + answer4)
+                console.log("answer: " + answer)
+                console.log("answers: " + answers)
+                if (votingArray[i] === answer1) {
+                    setBubbleSize1(votingArray[i + 1])
+                }
+                else if (votingArray[i] === answer2) {
+                    setBubbleSize2(votingArray[i + 1])
+                }
+                else if (votingArray[i] === answer3) {
+                    setBubbleSize3(votingArray[i + 1])
+                }
+                else if (votingArray[i] === answer4) {
+                    setBubbleSize4(votingArray[i + 1])
+                }
+                console.log("bubbleSize1: " + bubbleSize1 + " bubbleSize2: " + bubbleSize2 + " bubbleSize3: " + bubbleSize3 + " bubbleSize4: " + bubbleSize4)
+            }
+        }
+    }
+
     const sendVote = (item) => {
-        //works:
-        // var myButton = document.getElementById("answer-item answer-item-top-left");
-        // console.log("index:", index);
-        // console.log("myButton:", myButton);
-        // myButton.style.transform = 'scale(2)';
 
         if (alreadyVoted === false || gameMode !== "standard") {
             setRadioValue(item)
@@ -140,9 +134,6 @@ const Question = props => {
         updateAnswerBubbles();
         updateQuestionBubble();
         updateRanking();
-      });
-
-    useEffect(() => {
 
 
         socket.emit('join_room', {
@@ -151,10 +142,14 @@ const Question = props => {
             roomCode: roomCode,
             type: "CLIENT"
         })
+    });
 
-        console.log("socket acknowledged as connected in useEffect:", socket.connected);     
+    useEffect(() => {
 
 
+        console.log("socket acknowledged as connected in useEffect:", socket.connected);
+
+        //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
             console.log("question arrived:", data)
             localStorage.setItem("question", data);
@@ -167,7 +162,7 @@ const Question = props => {
             console.log("ranking arrived:", JSON.parse(data));
             const rank = JSON.parse(data)['ranking'];
             const fin = JSON.parse(data)['final_round'][0];
-    
+
             console.log(rank);
             setRanking(rank);
             setFinal(fin);
@@ -186,19 +181,19 @@ const Question = props => {
 
         socket.on("get_answers", (data) => {
 
+
             localStorage.setItem("answer1", data[0]);
             localStorage.setItem("answer2", data[1]);
             localStorage.setItem("answer3", data[2]);
             localStorage.setItem("answer4", data[3]);
             localStorage.setItem("answerData", data);
-            
 
             setAnswer1Value(data[0])
             setAnswer2Value(data[1])
             setAnswer3Value(data[2])
             setAnswer4Value(data[3])
             setAnswersValue(data)
-            //console.log("answers arrived:", data)
+            console.log("answers arrived:", data)
         })
 
         socket.on("end_of_question", (data) => {
@@ -208,30 +203,31 @@ const Question = props => {
                 seconds = seconds - 1;
                 if (seconds <= 3) {
                     setPopupValue(true);
+
                 }
-    
-              if (seconds ===  0) {
-                setVisibleAnswers(false);
-                localStorage.setItem("AnswerVisible", "false")
-                setSplash(false);
-                if(localStorage.getItem('isLeader')) {
-                    socket.emit('request_ranking', {
-                        userId: localStorage.userId,
-                        remainingTime: timerValue,
-                        roomCode: roomCode,
-                        type: "CLIENT"
-                    });
+
+                if (seconds ===  0) {
+                    setVisibleAnswers(false);
+                    localStorage.setItem("AnswerVisible", "false")
+                    setSplash(false);
+                    if(localStorage.getItem('isLeader')) {
+                        socket.emit('request_ranking', {
+                            userId: localStorage.userId,
+                            remainingTime: timerValue,
+                            roomCode: roomCode,
+                            type: "CLIENT"
+                        });
+                    }
+                    clearInterval(interval);
                 }
-                clearInterval(interval);
-              }
             }, 1000);
+
             localStorage.removeItem("answerData");
             localStorage.removeItem("answer0");
             localStorage.removeItem("answer1");
             localStorage.removeItem("answer2");
             localStorage.removeItem("answer3");
             localStorage.removeItem("question");
-            
         });
 
         socket.on("get_right_answer", (data) => {
@@ -241,29 +237,22 @@ const Question = props => {
 
         socket.on("timer_count", (data) => {
             updateBubbleSize();
-            updateAnswerBubbles();
-            console.log("Visible answer: ", visibleAnswers)
-
             setTimerValue(data)
             if (data === 10) {
+                setVisibleAnswers(true);
                 localStorage.setItem("AnswerVisible", "true");
             }
 
-            // let currentvisibleAnswer;
-            // setVisibleAnswers(currentState_ => {
-            //     currentvisibleAnswer = currentState_;
-            //     return currentState_;  // don't actually change the state
-            // })
-            console.log("data: ", data == 1)
-            console.log("localStorage: ", localStorage.getItem("AnswerVisible") == "true")
+            let currentvisibleAnswer;
+            setVisibleAnswers(currentState_ => {
+                currentvisibleAnswer = currentState_;
+                return currentState_;  // don't actually change the state
+            })
 
-            if (data === 1 && localStorage.getItem("AnswerVisible") == "true") {
+            if (data === 1 && currentvisibleAnswer === true) {
                 setSplash(true);
             }
-            // if (data === 1 && currentvisibleAnswer === true) {
-            //     setSplash(true);
-            // }
-            
+
         })
 
         //to adjust the bigger bubble sizes
@@ -284,12 +273,28 @@ const Question = props => {
                 array[i] = stringvalue;
                 array[i+1] = intkey;
                 i = i+2;
-            };
+            }
             setVotingArray(array);
         })
 
         // eslint-disable-next-line
     }, [roomCode]);
+
+    const exit = () =>{
+
+        console.log("exit button clicked")
+
+        localStorage.removeItem("answerData");
+        localStorage.removeItem("answer0");
+        localStorage.removeItem("answer1");
+        localStorage.removeItem("answer2");
+        localStorage.removeItem("answer3");
+        localStorage.removeItem("question");
+        localStorage.setItem("AnswerVisible", "false");
+        localStorage.setItem("showRanking", "false");
+
+        history.push('/welcomepage');
+    }
 
     return (
         <>
@@ -297,10 +302,12 @@ const Question = props => {
                 (showRanking === true && ranking !== null) ?
                     <Ranking ranking={ranking} final={final} />
                     :
+
                     <div className="question-wrapper">
 
+                        <div className="exit-button" onClick={ () => exit() } >exit</div>
                         {/* question bubble */}
-                        <div className="question-item"> 
+                        <div className="question-item">
                             <div className="timer">
                                 {timerValue}
                             </div>
@@ -312,27 +319,27 @@ const Question = props => {
                         {/* 4 answer bubbles */}
                         {answer.map((item, index, size) => {
 
-                            if (item === null || visibleAnswers === false) {
-                                return null;
-                            }
+                                if (item === null || visibleAnswers === false) {
+                                    return null;
+                                }
 
-                            if (splash === false) {
-                                return <div key={item} className={cssClasses[index]}>
-                                    <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                                    <label htmlFor={item}>
-                                    <div>
-                                        < Bubble style={{ width: ((bubbleSize[index]*50/numberOfPlayers + 50)+"%")}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
+                                if (splash === false) {
+                                    return <div key={item} className={cssClasses[index]}>
+                                        <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                        <label htmlFor={item}>
+                                            <div>
+                                                < Bubble style={{ width: ((bubbleSize[index]*50/numberOfPlayers + 50)+"%")}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
+                                            </div>
+                                        </label>
                                     </div>
+                                }
+                                return <div key={item} className={cssClasses[index]}>
+                                    <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                    <label htmlFor={item}>
+                                        <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                     </label>
                                 </div>
                             }
-                            return <div key={item} className={cssClasses[index]}>
-                                <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                                <label htmlFor={item}>
-                                    <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
-                                </label>
-                            </div>
-                        }
                         )}
 
                         {/* pop up window */}
