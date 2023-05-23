@@ -96,9 +96,7 @@ const WaitingRoom = (props) => {
                 room code:
                 <br />
                 {data.state.roomCode}
-            </div>
-
-            <div className="game-info">
+                <div className="game-info">
                 game mode: {data.state.gameMode}
                 <br />
                 number of questions: {data.state.numOfQuestions}
@@ -107,6 +105,9 @@ const WaitingRoom = (props) => {
                 <br />
                 question topic: {data.state.questionTopic}
             </div>
+            </div>
+
+
 
             <div className="exit-button" onClick={() => history.push('/welcomepage')}>
                 exit

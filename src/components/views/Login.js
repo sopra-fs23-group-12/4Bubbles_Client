@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import {useHistory } from 'react-router-dom';
 import 'styles/views/Login.scss';
 import { Bubble } from 'components/ui/Bubble';
+import BottomBanner from "components/ui/BottomBanner";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -98,6 +99,7 @@ const Login = props => {
       <div className="login sopra-text">
        by sopra 2023
       </div>
+      <BottomBanner />
     </BaseContainer>
   );
 };
