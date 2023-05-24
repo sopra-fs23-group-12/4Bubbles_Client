@@ -14,7 +14,7 @@ const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
 
-    const { socket, connect } = useSocket();
+    const { socket, connect, disconnect } = useSocket();
 
 
     if(data.state === undefined) {
@@ -55,10 +55,13 @@ const WaitingRoom = (props) => {
     useEffect(() => {
         //infos coming from backend
         //returns a list of members since that is the only thing in the state that changes
-        console.log("socket acknowledged as connected in useEffect:", socket.connected);
-        if(!socket.connected) {
-            //history.push({pathname: '/game-end', state: 'user_left'})
+
+        console.log(localStorage.getItem('leaderReloaded'));
+        if(localStorage.getItem('leaderReloaded') === 'true') {
+            history.push({pathname: '/game-end', state: 'user_left'})
+            localStorage.removeItem('leaderReloaded');
         }
+
         socket.on("joined_players", (incomingData) => {
             setMembers(incomingData);
             data.state.members = incomingData;
@@ -99,8 +102,6 @@ const WaitingRoom = (props) => {
             socket.off('joined_players');
             socket.off('get_question');
             socket.off('game_started');
-
-
         };
     }, [socket])
 
@@ -110,6 +111,7 @@ const WaitingRoom = (props) => {
             roomCode: roomCode,
             type: "CLIENT"
         });
+        localStorage.setItem('leaderReloaded', 'true');
         history.push('/welcomepage')
     }
 
