@@ -13,17 +13,32 @@ import PopUpAlert from 'components/ui/PopUp';
 const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
+
+    const { socket, connect } = useSocket();
+
+
+    if(data.state === undefined) {
+        data.state = JSON.parse(localStorage.getItem('dataState'));
+        socket.emit('join_room', {
+            userId: localStorage.getItem('userId'),
+            bearerToken: localStorage.getItem('token'),
+            roomCode: data.state.roomCode,
+            type: "CLIENT"
+          })
+    }
+
     const [members, setMembers] = useState(data.state.members)
 
     localStorage.setItem('users', JSON.stringify(data.state.members));
     localStorage.setItem('numberOfPlayers', data.state.members.length);
+    localStorage.setItem('dataState', JSON.stringify(data.state));
 
-    const { socket, connect } = useSocket();
 
     // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
     const roomCode = localStorage.getItem("roomCode");
     const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
     connect(url, { transports: ['websocket'], upgrade: false, roomCode: roomCode })
+
 
 
     const startGame = async () => {
