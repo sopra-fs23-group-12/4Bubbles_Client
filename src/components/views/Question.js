@@ -298,7 +298,7 @@ const Question = props => {
                                     <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
                                     <label htmlFor={item}>
                                         <div>
-                                            < Bubble style={{ width: ((bubbleSize[index] * 50 / numberOfPlayers + 50) + "%") }} id={cssClasses[index]} className="bubble-button--answer">{item}</Bubble>
+                                            < Bubble style={{ width: ((bubbleSize[index] * 80 / numberOfPlayers + 80) + "px") }} id={cssClasses[index]} className="bubble-button--answer">{item}</Bubble>
                                         </div>
                                     </label>
                                 </div>
@@ -306,7 +306,7 @@ const Question = props => {
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} />
                                 <label htmlFor={item}>
-                                    <Bubble style={{ width: ((bubbleSize[index] * 50 / numberOfPlayers + 50) + "%") }} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble style={{ width: ((bubbleSize[index] * 80 / numberOfPlayers + 80) + "px") }} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
                         }
