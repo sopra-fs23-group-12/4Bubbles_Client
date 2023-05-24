@@ -178,7 +178,12 @@ const GameRoom = props => {
                                 key: 'topic',
                             })} />
                 </SettingsContainer>
-                <SettingsContainer title="Choose a game mode:">
+                <SettingsContainer>
+                <div className="container">
+                    <span className="title">Choose a game mode:</span>
+                    <span className="question-mark"></span>
+                </div>
+    
                     <RadioButtons
                         name="gameMode"
                         items={gameMode}
@@ -190,9 +195,6 @@ const GameRoom = props => {
                                 key: 'gameMode',
                             })} 
                         />
-                        standard: You can only choose your answer once.
-                        < br/>
-                        1,2 oder 3: You can change your answer until the timer runs out.
                 </SettingsContainer>
                 <SettingsContainer title="Choose a difficulty:">
                     <RadioButtons
@@ -220,12 +222,7 @@ const GameRoom = props => {
                 </SettingsContainer>
                 <div className="error-message">
                     {err !== undefined ? err : null}
-
-
-
                 </div>
-
-
                 <Bubble onClick={() => doSubmit()}>Start<br />Game</Bubble>
             </div>
             <BackIcon />

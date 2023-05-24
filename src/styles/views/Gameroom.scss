@@ -1,12 +1,68 @@
 @import 'styles/theme';
 
 .gameroom-container {
-    // auch hier, color variablen definieren und farben etwas vereinheitlichen?
     color: rgba(1, 21, 45, 0.85);
-
 }
 
 .error-message {
     color: white;
     padding: 10px 20px;
+    margin-left: 100px;
 }
+
+.question-mark {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    //background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.question-mark::after {
+    content: '?';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.question-mark:hover::before {
+    content: 'In standard mode you can choose your answer only once, with 1,2 oder 3 you can adapt your vote until the time is up.';
+    height: 82px;
+    width: 180px;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background: #f0f8ff;
+    border: 1px solid #01152D;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #01152D;
+    white-space: pre-wrap;
+    z-index: 1;
+    line-height: 1.2;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+  }
+
+  .title {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 2;
+        margin: 0;
+        font-family: "Jockey One", sans-serif;
+        color: #ffffff;
+        margin-right: 10px;
+  }
+

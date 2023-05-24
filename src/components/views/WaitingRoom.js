@@ -66,6 +66,7 @@ const WaitingRoom = (props) => {
             setMembers(incomingData);
             data.state.members = incomingData;
             localStorage.setItem('users', JSON.stringify(incomingData));
+            localStorage.setItem('numberOfPlayers', incomingData.length);
 
             // check if leader is still here
             let tmpLeaderLeft = true;
