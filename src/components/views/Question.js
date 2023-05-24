@@ -36,7 +36,6 @@ const Question = props => {
     const gameMode = localStorage.gameMode
     const numberOfPlayers = (Number(localStorage.numberOfPlayers))
 
-
     const answer = [
         answer1,
         answer2,
@@ -124,7 +123,6 @@ const Question = props => {
             const rank = JSON.parse(data)['ranking'];
             const fin = JSON.parse(data)['final_round'][0];
 
-            console.log(rank);
             setRanking(rank);
             setFinal(fin);
             setRadioValue(null);
@@ -147,16 +145,18 @@ const Question = props => {
             console.log("answers arrived:", data)
         })
 
-        socket.on("end_of_question", (data) => {
+        socket.on("end_of_question", () => {
             setSplash(true);
             let seconds = 5;
             const interval = setInterval(() => {
                 seconds = seconds - 1;
                 if (seconds <= 3) {
                     setPopupValue(true);
+                    console.log("popupValue: " + popupValue)
                 }
 
                 if (seconds === 0) {
+                    setPopupValue(null);
                     setVisibleAnswers(false);
                     setSplash(false);
                     if (localStorage.getItem('isLeader')) {
@@ -173,7 +173,7 @@ const Question = props => {
         });
 
         socket.on("get_right_answer", (data) => {
-            console.log("right answer arrived:", data)
+            console.log("right answer arrived:")
             setCorrectAnswer(data)
         })
 

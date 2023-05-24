@@ -14,7 +14,7 @@ const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
 
-    const { socket, connect, disconnect } = useSocket();
+    const { socket, connect } = useSocket();
 
 
     if(data.state === undefined) {
