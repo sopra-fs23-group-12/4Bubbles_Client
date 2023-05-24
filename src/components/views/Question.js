@@ -3,6 +3,7 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
+import { useHistory } from 'react-router-dom';
 
 const Question = props => {
 
@@ -29,6 +30,8 @@ const Question = props => {
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
+
+    const history = useHistory();
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
@@ -150,7 +153,6 @@ const Question = props => {
                 seconds = seconds - 1;
                 if (seconds <= 3) {
                     setPopupValue(true);
-
                 }
     
               if (seconds ===  0) {
@@ -215,14 +217,32 @@ const Question = props => {
             setVotingArray(array);
         })
 
+        window.addEventListener('popstate', leaveWaitingRoom);
+        window.addEventListener('beforeunload', leaveWaitingRoom);
+
+        return () => {
+            window.removeEventListener('popstate', leaveWaitingRoom);
+            window.removeEventListener('beforeunload', leaveWaitingRoom);
+
+        };
+
         // eslint-disable-next-line
     }, [roomCode]);
+
+    const leaveWaitingRoom = () => {
+        socket.emit('user_left_gameroom', {
+            message: localStorage.getItem('userId'),
+            roomCode: roomCode,
+            type: "CLIENT"
+        });
+        history.push('/welcomepage')
+    }
 
     return (
         <>
             {
                 (showRanking === true && ranking !== null) ?
-                    <Ranking ranking={ranking} final={final} />
+                    <Ranking ranking={ranking} final={final} leaveWaitingRoom={leaveWaitingRoom}/>
                     :
                     <div className="question-wrapper">
 
@@ -256,7 +276,7 @@ const Question = props => {
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} />
                                 <label htmlFor={item}>
-                                    <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble style={{ width: ((bubbleSize[index]*50/numberOfPlayers + 50)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
                         }

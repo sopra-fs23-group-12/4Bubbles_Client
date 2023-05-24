@@ -37,9 +37,9 @@
     border: none;
     border-radius: 0.3em;
     margin-bottom: 20px;
-    color: #01152D;
     background: transparentize(white, 0.75);
     font-weight: 600;
+    color: #01152D;
   }
 
   &.button-container {
@@ -75,4 +75,21 @@
     height: 2.5rem;
   }
 
+  ::-webkit-input-placeholder {
+    color: lightgrey; /* WebKit (Chrome, Safari, Opera) */
+  }
+  ::-moz-placeholder {
+    color: white; /* Mozilla Firefox 19+ */
+  }
+
+}
+
+#root {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }

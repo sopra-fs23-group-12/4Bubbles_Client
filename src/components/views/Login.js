@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import {useHistory } from 'react-router-dom';
 import 'styles/views/Login.scss';
 import { Bubble } from 'components/ui/Bubble';
+import BottomBanner from "components/ui/BottomBanner";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -13,14 +14,14 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
+
 const FormField = props => {
+  const isPasswordField = props.label.toLowerCase() === "password";
   return (
     <div className="login field">
-      {/* <label className="login label">
-        {props.label}
-      </label> */}
       <input
         className="login input"
+        type = {isPasswordField ? "password": "text"}
         placeholder={props.label}
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
@@ -98,6 +99,7 @@ const Login = props => {
       <div className="login sopra-text">
        by sopra 2023
       </div>
+      <BottomBanner />
     </BaseContainer>
   );
 };
