@@ -7,7 +7,6 @@ import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
 import PopUpAlert from 'components/ui/PopUp';
-import LeaderLeftPopUp from 'components/ui/LeaderLeftPopUp';
 
 // establish a websocket connection (joins namespace for only the sender client)
 
@@ -16,7 +15,6 @@ const WaitingRoom = (props) => {
     const data = useLocation();
 
     const { socket, connect } = useSocket();
-    const [leaderLeft, setLeaderLeft] = useState(false);
 
 
     if(data.state === undefined) {

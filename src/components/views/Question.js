@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
 import { useHistory } from 'react-router-dom';
-import LeaderLeftPopUp from 'components/ui/LeaderLeftPopUp';
 const Question = props => {
 
     const [correctAnswer, setCorrectAnswer] = useState(null);
@@ -30,7 +29,6 @@ const Question = props => {
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
-    const [leaderLeft, setLeaderLeft] = useState(false);
 
     const history = useHistory();
 
