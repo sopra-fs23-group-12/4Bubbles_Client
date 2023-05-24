@@ -1,8 +1,9 @@
 ## UZH SoPra Course FS23
 
+<img title="favicon" alt="Soap Bubble" src="/public/favicon.png" width="100">
 
 # 4Bubble Trivia 
-<img title="favicon" alt="Soap Bubble" src="/public/favicon.png" width="150">
+
 
 Make Trivia fun again!  \
 This is a trivia game with a focus on multiplayer aspects.
@@ -16,7 +17,7 @@ the safe road and follow your friend's choice ... or can you? \
 The game supports two game modes; standard locks your choice in, once you've cast your vote
 you cannot change it anymore. 3,2,1 ... let's you change your vote. Players in this game mode
 have to be extra careful when deciding whether to trust their friend's choice.
-If you chose the correct answer will be revealed when the time is up; if your
+Whether you chose the correct answer will be revealed when the time is up; if your
 bubble doesn't burst, you've made the correct choice!
 
 [Play here](https://sopra-fs23-group-12-client.ew.r.appspot.com). Enjoy!
@@ -27,7 +28,7 @@ You can find the corresponding server repository [here](https://github.com/sopra
 ## Technologies
 
 This project is a Node.js application running ReactJS with JavaScript.\
-Server-Client communications are handled with REST API and Socket.io with the [Netty-Socketio](https://github.com/mrniko/netty-socketio) library for the java server.
+Server-Client communications are handled with REST API and Socket.io with the [Netty-Socketio](https://github.com/mrniko/netty-socketio) library for the server.
 
 ## High-level Components
 
@@ -35,8 +36,8 @@ Our Client consists of four major components;
 
 * [Sign up](/src/components/views/Register.js) and [login](/src/components/views/Login.js) allow the user to create a new account or play with an existing one.
 * The [welcome page](/src/components/views/WelcomePage.js), where users can choose which action they would like 
-to do next (starting a game, joining a game or displaying their profile).
-* The [waiting room](/src/components/views/WaitingRoom.js), where everyone waits until all player have joined.
+to do next (starting a game, joining a game, or displaying their profile).
+* The [waiting room](/src/components/views/WaitingRoom.js) is where everyone waits until all players have joined.
 * The [question](/src/components/views/Question.js) and [ranking](/src/components/views/Ranking.js) pages, which are integral to the game itself. 
 Here the questions are  displayed, the votes are cast and the intermediate and final rankings are displayed.
 
@@ -68,7 +69,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Illustrations 
 <h6 align="center">
-  Login/Signup Page; here you can log in or create a new account.
+  Login/Signup Page; Here you can log in or create a new account.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/login.png" alt="login" width="200"></a>
@@ -76,7 +77,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   <br>
 </h6>
 <h6 align="center">
-  Welcomepage; here you can choose what you would like to do next.
+  Welcomepage; Here you can choose what you would like to do next.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/welcomepage.png" alt="welcomepage" width="200"></a>
@@ -84,7 +85,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   <br>
 </h6>
 <h6 align="center">
-  User Stats; every user can gain insight on their statistics.
+  User Stats; Every user can gain insight on their statistics.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/userprofile.jpg" alt="userprofile" width="200"></a>
@@ -92,7 +93,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   <br>
 </h6>
 <h6 align="center">
-  GameRoom; specify the settings for a new game.
+  GameRoom; Specify the settings for a new game.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/gameroom.png" alt="gameroom" width="200"></a>
@@ -100,7 +101,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   <br>
 </h6>
 <h6 align="center">
-  join a game; enter the room code displayed in the waiting room of the game you want to join.
+  Join a game; Enter the room code displayed in the waiting room of the game you want to join.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/joingame.png" alt="joingame" width="200"></a>
@@ -108,7 +109,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   <br>
 </h6>
 <h6 align="center">
-  Waiting Room; wait for players to join. From here on out the game is meant to be played in landscape mode.
+  Waiting Room; Wait for players to join. From here on out the game is meant to be played in landscape mode.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/waitingroom.png" alt="waitingroom" width="200"></a>
@@ -116,7 +117,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   <br>
 </h6>
 <h6 align="center">
-  Questions; cast your votes.
+  Questions; You have ten seconds to cast your votes.
   <br>
   <br>
   <a href="https://github.com/soprafs22-group17"><img src="/readmepics/question.png" alt="question" width="200"></a>
@@ -124,7 +125,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
   <br>
 </h6>
 <h6 align="center">
-  Ranking; after every question an intermediate ranking is displayed and when all questions have
+  Ranking; After every question an intermediate ranking is displayed. When all questions have
 been answered, the final ranking is shown.
   <br>
   <br>
@@ -167,12 +168,12 @@ Please read [contributions.md](https://github.com/sopra-fs23-group-12/4Bubbles_S
 
 * This project was build on the basis of the [SoPra Template FS23](https://github.com/HASEL-UZH/sopra-fs23-template-client) provided by the University of Zurich for the
   Software Engineering Lab (Softwarepraktikum) course supervised by [Professor Thomas Fritz](https://www.ifi.uzh.ch/en/hasel/people/fritz.html).
-* Special Thanks also to our Teaching Assistant [Valentin Hollenstein](https://github.com/v4lentin1879).
-* We are also very grateful to the creators and contributors of the external API [Open Trivia Database](https://opentdb.com/) which we used as source for 
+* Special Thanks also to our Teaching Assistant [Valentin Hollenstein](https://github.com/v4lentin1879) for his support.
+* We are also grateful to the creators and contributors of the external API [Open Trivia Database](https://opentdb.com/) which we used as source for 
 our questions.
 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
