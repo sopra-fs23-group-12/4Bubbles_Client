@@ -275,7 +275,7 @@ const Question = props => {
 
                     :
                     <div className="question-wrapper">
-
+                        <div className="exit-button" onClick={() => leaveWaitingRoom()} >exit</div>
                         {/* question bubble */}
                         <div className="question-item">
                             <div className="timer">
