@@ -5,8 +5,6 @@ import { headers, api } from 'helpers/api';
 
 import '../../styles/views/Ranking.scss';
 
-
-
 const RankingItem = (props) => {
     const { name, points, index } = props;
 
@@ -55,7 +53,7 @@ export default function Ranking(props) {
         let result = jsObjects.filter(obj => {
             return obj.id === parseInt(item)
         })
-        if(result.length < 1){
+        if (result.length < 1) {
             return undefined;
         }
         return { "name": result[0].username, "points": ranking[0][id] };
@@ -81,7 +79,7 @@ export default function Ranking(props) {
     useEffect(() => {
         setStatistics().catch(error => {
             console.error("Unhandled promise rejection:", error);
-          });
+        });
     }, [])
 
 
@@ -106,7 +104,6 @@ export default function Ranking(props) {
     return (
         <div className="ranking-page">
             {!final ? <div className="exit-button" onClick={leaveWaitingRoom}>exit</div> : null}
-
             <h1>{final ? "🏁 final ranking 🏁" : "intermediate ranking 🔥"}</h1>
             <div className="ranking-wrapper">
 

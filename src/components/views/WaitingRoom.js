@@ -14,7 +14,7 @@ const WaitingRoom = (props) => {
     const history = useHistory();
     const data = useLocation();
 
-    const { socket, connect } = useSocket();
+    const { socket, connect, disconnect } = useSocket();
 
 
     if(data.state === undefined) {
@@ -56,10 +56,28 @@ const WaitingRoom = (props) => {
         //infos coming from backend
         //returns a list of members since that is the only thing in the state that changes
 
+        console.log(localStorage.getItem('leaderReloaded'));
+        if(localStorage.getItem('leaderReloaded') === 'true') {
+            history.push({pathname: '/game-end', state: 'user_left'})
+            localStorage.removeItem('leaderReloaded');
+        }
+
         socket.on("joined_players", (incomingData) => {
             setMembers(incomingData);
             data.state.members = incomingData;
             localStorage.setItem('users', JSON.stringify(incomingData));
+
+            // check if leader is still here
+            let tmpLeaderLeft = true;
+            for(const item of incomingData) {
+                if(item.username === localStorage.getItem('leader')) {
+                    tmpLeaderLeft = false;
+                }
+            }
+            if(tmpLeaderLeft && localStorage.getItem('isLeader') !== 'true') {
+                console.log('leader left room');
+                history.push('/game-end');
+            }
         })
 
         socket.on("game_started", (incomingData) => {
@@ -81,7 +99,9 @@ const WaitingRoom = (props) => {
         return () => {
             window.removeEventListener('popstate', leaveWaitingRoom);
             window.removeEventListener('beforeunload', leaveWaitingRoom);
-
+            socket.off('joined_players');
+            socket.off('get_question');
+            socket.off('game_started');
         };
     }, [socket])
 
@@ -91,6 +111,7 @@ const WaitingRoom = (props) => {
             roomCode: roomCode,
             type: "CLIENT"
         });
+        localStorage.setItem('leaderReloaded', 'true');
         history.push('/welcomepage')
     }
 
@@ -137,7 +158,7 @@ const WaitingRoom = (props) => {
             <div className="exit-button" onClick={leaveWaitingRoom}>
                 exit
             </div>
-            <PopUpAlert />
+            <PopUpAlert />            
         </div>
     );
 };
