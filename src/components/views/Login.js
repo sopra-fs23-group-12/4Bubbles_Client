@@ -13,14 +13,14 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
+
 const FormField = props => {
+  const isPasswordField = props.label.toLowerCase() === "password";
   return (
     <div className="login field">
-      {/* <label className="login label">
-        {props.label}
-      </label> */}
       <input
         className="login input"
+        type = {isPasswordField ? "password": "text"}
         placeholder={props.label}
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
