@@ -78,7 +78,7 @@ const JoinGameRoom = () => {
       console.log("room_is_joined received from the server, response: ")
       console.log(response)
       // the response should contain a Json Object for the GameRoomDTO, specifying all the room configurations
-
+      localStorage.setItem('leader', response.leader.username);
       history.push({
         pathname: "/waitingroom",
         state: response
@@ -92,6 +92,11 @@ const JoinGameRoom = () => {
       setError(response);
     }
     )
+
+    return () => {
+      socket.off('an_error_occured');
+      socket.off('room_is_joined');
+  };
   }, [socket])
 
   const toHomepage = () => {

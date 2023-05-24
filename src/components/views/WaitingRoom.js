@@ -7,6 +7,7 @@ import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 import { useSocket } from 'components/context/socket';
 import PopUpAlert from 'components/ui/PopUp';
+import LeaderLeftPopUp from 'components/ui/LeaderLeftPopUp';
 
 // establish a websocket connection (joins namespace for only the sender client)
 
@@ -15,6 +16,7 @@ const WaitingRoom = (props) => {
     const data = useLocation();
 
     const { socket, connect } = useSocket();
+    const [leaderLeft, setLeaderLeft] = useState(false);
 
 
     if(data.state === undefined) {
@@ -60,6 +62,18 @@ const WaitingRoom = (props) => {
             setMembers(incomingData);
             data.state.members = incomingData;
             localStorage.setItem('users', JSON.stringify(incomingData));
+
+            // check if leader is still here
+            let tmpLeaderLeft = true;
+            for(const item of incomingData) {
+                if(item.username === localStorage.getItem('leader')) {
+                    tmpLeaderLeft = false;
+                }
+            }
+            if(tmpLeaderLeft && localStorage.getItem('isLeader') !== 'true') {
+                console.log('leader left room');
+                setLeaderLeft(true);
+            }
         })
 
         socket.on("game_started", (incomingData) => {
@@ -81,6 +95,10 @@ const WaitingRoom = (props) => {
         return () => {
             window.removeEventListener('popstate', leaveWaitingRoom);
             window.removeEventListener('beforeunload', leaveWaitingRoom);
+            socket.off('joined_players');
+            socket.off('get_question');
+            socket.off('game_started');
+
 
         };
     }, [socket])
@@ -137,6 +155,8 @@ const WaitingRoom = (props) => {
                 exit
             </div>
             <PopUpAlert />
+            { leaderLeft ? <LeaderLeftPopUp/> : null}
+            
         </div>
     );
 };
