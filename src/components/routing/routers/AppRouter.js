@@ -11,6 +11,7 @@ import JoinGameRoom from "components/views/JoinGameRoom";
 import Question from "components/views/Question";
 import Ranking from "components/views/Ranking";
 import ObscurePage from "components/views/ObscurePage";
+import GameEnd from "components/views/GameEnd";
 
 /**
  * Main router of your application.
@@ -57,6 +58,9 @@ const AppRouter = () => {
           <LoginGuard>
             <Login />
           </LoginGuard>
+        </Route>
+        <Route exact path="/game-end">
+            <GameEnd />
         </Route>
         <Route exact path="/register">
           <LoginGuard>

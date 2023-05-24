@@ -72,7 +72,7 @@ const WaitingRoom = (props) => {
             }
             if(tmpLeaderLeft && localStorage.getItem('isLeader') !== 'true') {
                 console.log('leader left room');
-                setLeaderLeft(true);
+                history.push('/game-end');
             }
         })
 
@@ -154,9 +154,7 @@ const WaitingRoom = (props) => {
             <div className="exit-button" onClick={leaveWaitingRoom}>
                 exit
             </div>
-            <PopUpAlert />
-            { leaderLeft ? <LeaderLeftPopUp/> : null}
-            
+            <PopUpAlert />            
         </div>
     );
 };

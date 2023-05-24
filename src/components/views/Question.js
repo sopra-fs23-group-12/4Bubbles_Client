@@ -111,7 +111,9 @@ const Question = props => {
 
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
-
+        if(!socket.connected) {
+            history.push({pathname: '/game-end', state: 'user_left'})
+        }
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
             console.log("question arrived:", data)
@@ -210,7 +212,7 @@ const Question = props => {
             }
             if (tmpLeaderLeft && localStorage.getItem('isLeader') !== 'true') {
                 console.log('leader left room');
-                setLeaderLeft(true);
+                history.push('/game-end');
             }
         })
 
@@ -270,8 +272,6 @@ const Question = props => {
                 (showRanking === true && ranking !== null) ?
                     <>
                         <Ranking ranking={ranking} final={final} leaveWaitingRoom={leaveWaitingRoom} />
-                        {leaderLeft ? <LeaderLeftPopUp /> : null}
-
                     </>
 
 
@@ -324,7 +324,6 @@ const Question = props => {
                             </div >
                             : null
                         }
-                        {leaderLeft ? <LeaderLeftPopUp /> : null}
                     </div >
             }</>
 
