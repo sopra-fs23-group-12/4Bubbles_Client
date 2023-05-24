@@ -55,7 +55,10 @@ const WaitingRoom = (props) => {
     useEffect(() => {
         //infos coming from backend
         //returns a list of members since that is the only thing in the state that changes
-
+        console.log("socket acknowledged as connected in useEffect:", socket.connected);
+        if(!socket.connected) {
+            history.push({pathname: '/game-end', state: 'user_left'})
+        }
         socket.on("joined_players", (incomingData) => {
             setMembers(incomingData);
             data.state.members = incomingData;
