@@ -3,6 +3,7 @@ import { Bubble } from 'components/ui/Bubble';
 import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
+import { useHistory } from 'react-router-dom';
 
 const Question = props => {
 
@@ -29,6 +30,8 @@ const Question = props => {
     const [splash, setSplash] = useState(false);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
     const { socket } = useSocket();
+
+    const history = useHistory();
 
     const roomCode = localStorage.roomCode
     const gameMode = localStorage.gameMode
@@ -215,14 +218,32 @@ const Question = props => {
             setVotingArray(array);
         })
 
+        window.addEventListener('popstate', leaveWaitingRoom);
+        window.addEventListener('beforeunload', leaveWaitingRoom);
+
+        return () => {
+            window.removeEventListener('popstate', leaveWaitingRoom);
+            window.removeEventListener('beforeunload', leaveWaitingRoom);
+
+        };
+
         // eslint-disable-next-line
     }, [roomCode]);
+
+    const leaveWaitingRoom = () => {
+        socket.emit('user_left_gameroom', {
+            message: localStorage.getItem('userId'),
+            roomCode: roomCode,
+            type: "CLIENT"
+        });
+        history.push('/welcomepage')
+    }
 
     return (
         <>
             {
                 (showRanking === true && ranking !== null) ?
-                    <Ranking ranking={ranking} final={final} />
+                    <Ranking ranking={ranking} final={final} leaveWaitingRoom={leaveWaitingRoom}/>
                     :
                     <div className="question-wrapper">
 

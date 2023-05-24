@@ -5,6 +5,8 @@ import { headers, api } from 'helpers/api';
 
 import '../../styles/views/Ranking.scss';
 
+
+
 const RankingItem = (props) => {
     const { name, points, index } = props;
 
@@ -34,7 +36,7 @@ const RankingItem = (props) => {
 
 
 export default function Ranking(props) {
-    const { final, ranking } = props;
+    const { final, ranking, leaveWaitingRoom } = props;
     const history = useHistory();
 
     const jsObjects = JSON.parse(localStorage.getItem('users'));
@@ -53,8 +55,11 @@ export default function Ranking(props) {
         let result = jsObjects.filter(obj => {
             return obj.id === parseInt(item)
         })
+        if(result.length < 1){
+            return undefined;
+        }
         return { "name": result[0].username, "points": ranking[0][id] };
-    })
+    }).filter(Boolean);
 
     // eslint-disable-next-line
     const [users] = useState(tmpUsers);
@@ -100,7 +105,7 @@ export default function Ranking(props) {
 
     return (
         <div className="ranking-page">
-            {!final ? <div className="exit-button" onClick={() => history.push('/welcomepage')}>exit</div> : null}
+            {!final ? <div className="exit-button" onClick={leaveWaitingRoom}>exit</div> : null}
 
             <h1>{final ? "🏁 final ranking 🏁" : "intermediate ranking 🔥"}</h1>
             <div className="ranking-wrapper">
