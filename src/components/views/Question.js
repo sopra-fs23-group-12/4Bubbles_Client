@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import '../../styles/views/Question.scss';
 import Ranking from './Ranking';
 import { useHistory } from 'react-router-dom';
-import {format} from "react-string-format";
-import {getDomainSocket} from "../../helpers/getDomainSocket";
+import { format } from "react-string-format";
+import { getDomainSocket } from "../../helpers/getDomainSocket";
 
 const Question = props => {
 
@@ -63,12 +63,12 @@ const Question = props => {
     ]
 
 
-    const updateRanking = () =>{
+    const updateRanking = () => {
         setShowRanking(localStorage.getItem("showRanking") === "true");
         console.log("show ranking:", showRanking);
     }
 
-    const updateQuestionBubble = () =>{
+    const updateQuestionBubble = () => {
         setQuestionValue(localStorage.getItem("question"));
     }
 
@@ -80,7 +80,7 @@ const Question = props => {
 
         if (localStorage.getItem("AnswerVisible") === "true") {
             setVisibleAnswers(true);
-        }else {
+        } else {
             setVisibleAnswers(false);
         }
 
@@ -90,7 +90,7 @@ const Question = props => {
         setCorrectAnswer(localStorage.getItem("correctAnswer"));
     }
 
-    const updateBubbleSize = () =>{
+    const updateBubbleSize = () => {
         setBubbleSize1(0);
         setBubbleSize2(0);
         setBubbleSize3(0);
@@ -135,7 +135,7 @@ const Question = props => {
         setAlreadyVoted(true);
     }
 
-    const updateSocketConnection = () =>{
+    const updateSocketConnection = () => {
         // join websocket connection again, since there was a disconnect when the push to /waitingroom happened
         const roomCode = localStorage.getItem("roomCode");
         const url = format(getDomainSocket() + "?roomCode={0}", roomCode);
@@ -225,11 +225,11 @@ const Question = props => {
                     setPopupValue(true);
                 }
 
-                if (seconds ===  0) {
+                if (seconds === 0) {
                     setVisibleAnswers(false);
                     localStorage.setItem("AnswerVisible", "false")
                     setSplash(false);
-                    if(localStorage.getItem('isLeader')) {
+                    if (localStorage.getItem('isLeader')) {
                         socket.emit('request_ranking', {
                             userId: localStorage.userId,
                             remainingTime: timerValue,
@@ -284,23 +284,23 @@ const Question = props => {
             const array = [];
             let i = 0;
 
-            for (let value in data){
-                console.log( "value: " + value.toString() + " , amountOfVotes: " + data[value]) ;
+            for (let value in data) {
+                console.log("value: " + value.toString() + " , amountOfVotes: " + data[value]);
                 stringvalue = value.toString();
                 intkey = parseInt(data[value])
                 console.log("strigvalue " + stringvalue + typeof stringvalue)
-                console.log("intkey " +intkey + typeof intkey)
+                console.log("intkey " + intkey + typeof intkey)
                 array[i] = stringvalue;
-                array[i+1] = intkey;
-                i = i+2;
+                array[i + 1] = intkey;
+                i = i + 2;
             }
             setVotingArray(array);
         })
 
 
-    }, [roomCode]);
+    }, []);
 
-    const exit = () =>{
+    const exit = () => {
 
         console.log("exit button clicked")
 
@@ -326,7 +326,7 @@ const Question = props => {
 
                     <div className="question-wrapper">
 
-                        <div className="exit-button" onClick={ () => exit() } >exit</div>
+                        <div className="exit-button" onClick={() => exit()} >exit</div>
                         {/* question bubble */}
                         <div className="question-item">
                             <div className="timer">
@@ -338,42 +338,37 @@ const Question = props => {
                         </div>
 
 
-                            <div className="exit-button" onClick={ () => exit() } >exit</div>
+                        <div className="exit-button" onClick={() => exit()} >exit</div>
 
-                            {/* 4 answer bubbles */}
-                            {answer.map((item, index, size) => {
+                        {/* 4 answer bubbles */}
+                        {answer.map((item, index, size) => {
 
-                                    if (item === null || visibleAnswers === false) {
-                                        return null;
-                                    }
+                            if (item === null || visibleAnswers === false) {
+                                return null;
+                            }
 
-                                    if (splash === false) {
-                                        return <div key={item} className={cssClasses[index]}>
-                                            <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                                            <label htmlFor={item}>
-                                                <div>
-                                                    < Bubble style={{ width: ((bubbleSize[index]*50/numberOfPlayers + 50)+"%")}} id={cssClasses[index]}  className="bubble-button--answer">{item}</Bubble>
-                                                </div>
-                                            </label>
+                            if (splash === false) {
+                                return <div key={item} className={cssClasses[index]}>
+                                    <input type="radio" id={item} name={index} value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
+                                    <label htmlFor={item}>
+                                        <div>
+                                            < Bubble style={{ width: ((bubbleSize[index] * 50 / numberOfPlayers + 50) + "%") }} id={cssClasses[index]} className="bubble-button--answer">{item}</Bubble>
                                         </div>
-                                    }
-                                    return <div key={item} className={cssClasses[index]}>
-                                        <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} onChange={() => sendVote(item)} />
-                                        <label htmlFor={item}>
-                                            <Bubble style={{ width: ((100)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
-                                        </label>
-                                    </div>
-
-
+                                    </label>
+                                </div>
                             }
 
                             return <div key={item} className={cssClasses[index]}>
                                 <input type="radio" id={item} name="fav_language" value={item} checked={radioValue === item} />
                                 <label htmlFor={item}>
-                                    <Bubble style={{ width: ((bubbleSize[index]*50/numberOfPlayers + 50)+"%")}} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
+                                    <Bubble style={{ width: ((bubbleSize[index] * 50 / numberOfPlayers + 50) + "%") }} id={cssClasses[index]} className={(correctAnswer === null || item === correctAnswer) ? "bubble-button--answer" : "bubble-button--splashed bubble-button--answer"}>{item}</Bubble>
                                 </label>
                             </div>
+
+
                         }
+
+
                         )}
 
                         {/* pop up window */}
