@@ -111,6 +111,11 @@ const Question = props => {
 
         console.log(localStorage.getItem('leaderReloaded'));
         if(localStorage.getItem('leaderReloaded') === 'true') {
+            socket.emit('user_left_gameroom', {
+                message: localStorage.getItem('userId'),
+                roomCode: roomCode,
+                type: "CLIENT"
+            });
             history.push({pathname: '/game-end', state: 'user_left'})
             localStorage.removeItem('leaderReloaded');
         }
@@ -257,7 +262,7 @@ const Question = props => {
         };
 
         // eslint-disable-next-line
-    }, [roomCode]);
+    }, []);
 
     const leaveWaitingRoom = () => {
         socket.emit('user_left_gameroom', {
