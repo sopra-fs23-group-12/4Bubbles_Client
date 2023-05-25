@@ -108,9 +108,7 @@ const Question = props => {
 
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
-        if(!socket.connected) {
-            history.push({pathname: '/game-end', state: 'user_left'})
-        }
+
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
             console.log("question arrived:", data)
