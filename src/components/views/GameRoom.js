@@ -94,6 +94,7 @@ const GameRoom = props => {
 
     useEffect(() => {
         getTopics();
+        localStorage.removeItem('leaderReloaded');
     }, [])
 
     function getTopics() {
