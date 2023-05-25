@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../../styles/ui/pop-up-alert.scss';
 import { useHistory } from 'react-router-dom';
 

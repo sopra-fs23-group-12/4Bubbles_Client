@@ -76,14 +76,6 @@ const numOfQuestions = [
         value: '15',
     },
 ]
-/*
-localStorage.removeItem('gameMode');
-localStorage.removeItem('dataState');
-localStorage.removeItem('roomCode');
-localStorage.removeItem('isLeader');
-localStorage.removeItem('numberOfPlayers');
-localStorage.removeItem('users');*/
-
 
 const GameRoom = props => {
     const [reducerState, dispatch] = useReducer(reducer, {});
