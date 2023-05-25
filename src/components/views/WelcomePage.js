@@ -49,8 +49,12 @@ const WelcomePage = props => {
     }
 
     useEffect(() => {
+        
         disconnect();
     });
+
+
+
 
     return (
         <BaseContainer>

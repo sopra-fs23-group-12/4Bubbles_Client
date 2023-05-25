@@ -10,6 +10,8 @@ const GameEnd = (props) => {
 
   const data = useLocation();
 
+
+
   return (
     <BaseContainer className="login form container">
       <LeaderLeftPopUp state={data.state}/>

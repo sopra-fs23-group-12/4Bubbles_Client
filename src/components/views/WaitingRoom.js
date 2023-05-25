@@ -112,7 +112,9 @@ const WaitingRoom = (props) => {
             roomCode: roomCode,
             type: "CLIENT"
         });
-        localStorage.setItem('leaderReloaded', 'true');
+        if(localStorage.getItem('isLeader') === 'true') {
+            localStorage.setItem('leaderReloaded', 'true');
+        }
         history.push('/welcomepage')
     }
 

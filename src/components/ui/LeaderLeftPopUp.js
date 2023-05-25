@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 export default function LeaderLeftPopUp(props) {
   const {state} = props;
   const history = useHistory();
+
   return  (
     <div className="pop-up pop-up-leader-left">
       <div className="pop-up__container">

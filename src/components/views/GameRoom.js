@@ -86,6 +86,10 @@ const GameRoom = props => {
 
     useEffect(() => {
         getTopics();
+        localStorage.removeItem('leaderReloaded');
+        localStorage.removeItem('leader');
+        localStorage.removeItem('isLeader');
+
     }, [])
 
     function getTopics() {
@@ -109,7 +113,7 @@ const GameRoom = props => {
     const doSubmit = async () => {
 
 
-        if(reducerState.topic === undefined ||reducerState.difficulty === undefined || reducerState.gameMode === undefined || reducerState.numOfQuestions === undefined) {
+        if (reducerState.topic === undefined || reducerState.difficulty === undefined || reducerState.gameMode === undefined || reducerState.numOfQuestions === undefined) {
             setErr('Please define all settings above.')
             return;
         }
@@ -161,7 +165,7 @@ const GameRoom = props => {
         }
     }
 
-    
+
     return (
         <BaseContainer>
             <div className="gameroom-container">
@@ -179,11 +183,11 @@ const GameRoom = props => {
                             })} />
                 </SettingsContainer>
                 <SettingsContainer>
-                <div className="container">
-                    <span className="title">Choose a game mode:</span>
-                    <span className="question-mark"></span>
-                </div>
-    
+                    <div className="container">
+                        <span className="title">Choose a game mode:</span>
+                        <span className="question-mark"></span>
+                    </div>
+
                     <RadioButtons
                         name="gameMode"
                         items={gameMode}
@@ -193,8 +197,8 @@ const GameRoom = props => {
                                 type: 'UPDATE',
                                 value: e.target.value,
                                 key: 'gameMode',
-                            })} 
-                        />
+                            })}
+                    />
                 </SettingsContainer>
                 <SettingsContainer title="Choose a difficulty:">
                     <RadioButtons
