@@ -262,7 +262,7 @@ const Question = props => {
         };
 
         // eslint-disable-next-line
-    }, []);
+    }, [roomCode]);
 
     const leaveWaitingRoom = () => {
         socket.emit('user_left_gameroom', {
