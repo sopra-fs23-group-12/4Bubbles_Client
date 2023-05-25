@@ -72,7 +72,8 @@ const JoinGameRoom = () => {
   }
 
   useEffect(() => {
-
+    localStorage.removeItem('leaderReloaded');
+    localStorage.removeItem('leader');
     //everytime an event happens triggered by the socket, this function is called
     socket.on("room_is_joined", (response) => {
       console.log("room_is_joined received from the server, response: ")
