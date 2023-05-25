@@ -109,6 +109,12 @@ const Question = props => {
     useEffect(() => {
         console.log("socket acknowledged as connected in useEffect:", socket.connected);
 
+        console.log(localStorage.getItem('leaderReloaded'));
+        if(localStorage.getItem('leaderReloaded') === 'true') {
+            history.push({pathname: '/game-end', state: 'user_left'})
+            localStorage.removeItem('leaderReloaded');
+        }
+
         //everytime an event happens triggered by the socket, this function is called
         socket.on("get_question", (data) => {
             console.log("question arrived:", data)
@@ -259,6 +265,9 @@ const Question = props => {
             roomCode: roomCode,
             type: "CLIENT"
         });
+        if(localStorage.getItem('isLeader') === 'true') {
+            localStorage.setItem('leaderReloaded', 'true');
+        }
         history.push('/welcomepage')
     }
 
