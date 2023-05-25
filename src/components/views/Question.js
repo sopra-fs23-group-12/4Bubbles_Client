@@ -282,7 +282,7 @@ const Question = props => {
 
                     :
                     <div className="question-wrapper">
-                        <div className="exit-button" onClick={() => leaveWaitingRoom()} >exit</div>
+                        <div className="exit-button" style={{zIndex: 100}} onClick={() => leaveWaitingRoom()} >exit</div>
                         {/* question bubble */}
                         <div className="question-item">
                             <div className="timer">
